@@ -1,3 +1,6 @@
+import { Search, Menu, Info, ShoppingBag, ChevronDown, ChevronLeft, ChevronRight, Plus, ArrowUpRight, Heart, User } from 'lucide-react';
+
+
 const Header = () => {
     return (
         <header className="border-b border-gray-200">
