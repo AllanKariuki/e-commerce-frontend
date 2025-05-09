@@ -8,12 +8,12 @@ import MainLayout from './components/layouts/MainLayout';
 function App() {
   return (
     <Router>
-      <div className='min-h-screen bg-white'>
-        <Routes>
-          <Route path="/" element={<MainLayout><Index /></MainLayout>} />
-          <Route path="/product/:id" element={<MainLayout><ProductDetail /></MainLayout>} />
-        </Routes>
-      </div>
+      
+      <Routes>
+        <Route path="/" element={<MainLayout><Index /></MainLayout>} />
+        <Route path="/product/:id" element={<MainLayout><ProductDetail /></MainLayout>} />
+      </Routes>
+      
     </Router>
   )
 }
