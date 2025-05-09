@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Reviewscontent from './ReviewsContent';
+import ReviewsContent from './ReviewsContent';
 
 
 const ProductTabs = () => {

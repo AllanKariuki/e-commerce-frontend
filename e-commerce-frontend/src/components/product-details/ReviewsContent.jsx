@@ -1,3 +1,5 @@
+import { Heart, ShoppingCart, ChevronDown, Dot, ShoppingBag, Truck, Star, ChevronDownCircle, ChevronRightCircle, ChevronLeftCircle,  } from 'lucide-react';
+
 const Reviewscontent = () => {
     const reviews = [
         {
