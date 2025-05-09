@@ -1,4 +1,4 @@
-import { Heart, ShoppingCart, ChevronDown, Star, ChevronDownCircle, ChevronRightCircle, ChevronLeftCircle } from 'lucide-react';
+import { Heart, ShoppingCart, ChevronLeft, Star, ChevronRight } from 'lucide-react';
 
 
 const RelatedProductsCarousel = () => {
@@ -36,11 +36,20 @@ const RelatedProductsCarousel = () => {
       return (
         <div className="mt-12">
           <h2 className="text-xl font-medium mb-6">You may also like</h2>
-          
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div className="flex items-center space-x-2 justify-end mb-6">
+            <button className="w-8 h-8 bg-gray-100 bg-opacity-70 rounded-full flex items-center justify-center">
+              <ChevronLeft size={16} className="text-gray-400" />
+            </button>
+            <button className="w-8 h-8 bg-gray-100 bg-opacity-70 rounded-full flex items-center justify-center">
+              <ChevronRight size={16} />
+            </button>
+            
+          </div>
+
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 flex text-center">
             {products.map((product) => (
               <div key={product.id} className="bg-gray-50 p-4">
-                <div className="bg-white mb-2">
+                <div className="mb-2">
                   <img 
                     src={product.image} 
                     alt={product.name} 
