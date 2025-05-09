@@ -1,3 +1,6 @@
+import { Heart, ShoppingCart, ChevronDown, Star, ChevronDownCircle, ChevronRightCircle, ChevronLeftCircle } from 'lucide-react';
+
+
 const RelatedProductsCarousel = () => {
     const products = [
         {

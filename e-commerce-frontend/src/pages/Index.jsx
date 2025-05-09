@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Search, Menu, Info, ShoppingBag, ChevronDown, ChevronLeft, ChevronRight, Plus, ArrowUpRight, Heart, User } from 'lucide-react';
 import ProductDetailCard from "../components/ProductDetailCard";
+import StayInTouch from "../components/StayInTouch";
 
 const Index = () => {
 
@@ -237,6 +238,7 @@ const Index = () => {
             </div>
           </div>
         </div>
+        <StayInTouch />
         </>
     
     )

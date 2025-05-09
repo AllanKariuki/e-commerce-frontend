@@ -8,7 +8,7 @@ const ProductImages = () =>{
 
     return (
         <div>
-            <div className="bg-gray-100 w-full aspect-square mb-2 roudned-lg">
+            <div className="bg-gray-100 w-full aspect-square mb-2 rounded-lg">
                 <img 
                     src="https://images.unsplash.com/photo-1601758123927-2f3c4b8a1d5e?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60" 
                     alt="Product" 
