@@ -1,10 +1,24 @@
+import { useState } from 'react';
+
 const ProductImages = () =>{
-    const thumbnails = [
+    const allThumbnails = [
+        "https://images.unsplash.com/photo-1601758123927-2f3c4b8a1d5e?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60",
+        "https://images.unsplash.com/photo-1601758123927-2f3c4b8a1d5e?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60",
+        "https://images.unsplash.com/photo-1601758123927-2f3c4b8a1d5e?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60",
         "https://images.unsplash.com/photo-1601758123927-2f3c4b8a1d5e?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60",
         "https://images.unsplash.com/photo-1601758123927-2f3c4b8a1d5e?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60",
         "https://images.unsplash.com/photo-1601758123927-2f3c4b8a1d5e?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60",
         "https://images.unsplash.com/photo-1601758123927-2f3c4b8a1d5e?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60"
+
     ]
+
+    const [visibleThumbnails, setVisibleThumbnails] = useState(allThumbnails.slice(0, 4));
+    const [remainingThumbnails, setRemainingThumbnails] = useState(allThumbnails.slice(4));
+
+    const handleMoreClick = () => {
+        setVisibleThumbnails(remainingThumbnails.slice(0, 4));
+        setRemainingThumbnails(remainingThumbnails.slice(4).concat(visibleThumbnails));
+    };
 
     return (
         <div>
@@ -16,11 +30,11 @@ const ProductImages = () =>{
                 />
             </div>
 
-            <div className="flex space-x-2 mt-2">
-                {thumbnails.map((thumb, index) => (
+            <div className="grid grid-cols-5 space-x-1 mt-2">
+                {visibleThumbnails.map((thumb, index) => (
                     <div
                         key={index}
-                        className={`w-20 h-20 border-2 ${index === 0 ? 'border-gray-400' : 'border-gray-200'} rounded-lg cursor-pointer`}
+                        className={`w-34 h-24 border-2 ${index === 0 ? 'border-gray-400' : 'border-gray-200'} rounded-lg cursor-pointer`}
                         >
                         <img
                             src={thumb}
@@ -29,9 +43,14 @@ const ProductImages = () =>{
                         />
                     </div>
                 ))}
-                <div className="flex items-center justify-center w-20 h-20 border-1 rounded border-gray-200 text-center text-gray-500">
-                    <span className="text-sm">+{thumbnails.length - 4} More</span>
-                </div>
+                {remainingThumbnails.length > 0 && (
+                    <div
+                        className="flex items-center justify-center w-34 h-24 border-1 rounded border-gray-200 text-center text-gray-500 cursor-pointer"
+                        onClick={handleMoreClick}
+                    >
+                        <span className="text-sm">+{remainingThumbnails.length} More</span>
+                    </div>
+                )}
             </div>
 
         </div>
