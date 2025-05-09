@@ -4,6 +4,7 @@ import './App.css'
 import Index from './pages/Index';
 import ProductDetail from './pages/ProductDetail';
 import MainLayout from './components/layouts/MainLayout';
+import CartPage from './pages/CartPage';
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
       <Routes>
         <Route path="/" element={<MainLayout><Index /></MainLayout>} />
         <Route path="/product/:id" element={<MainLayout><ProductDetail /></MainLayout>} />
+        <Route path="/cart" element={<MainLayout><CartPage /></MainLayout>} />
       </Routes>
       
     </Router>
