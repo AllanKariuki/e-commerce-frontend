@@ -16,9 +16,9 @@ const ProductDetail = () => {
             <div className="text-sm text-gray-500 mb-2">
                 <nav className="flex">
                     <span>Clothes and shoes</span>
-                    <span className="mx-2">/</span>
+                    <span className="mx-2">.</span>
                     <span>Shoes</span>
-                    <span className="mx-2">/</span>
+                    <span className="mx-2">.</span>
                     <span>Reebok</span>
                 </nav>
             </div>

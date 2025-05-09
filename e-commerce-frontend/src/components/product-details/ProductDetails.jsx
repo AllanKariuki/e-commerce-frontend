@@ -1,11 +1,11 @@
 import { useState } from "react";
-import { Heart, ShoppingCart, ChevronDown, ShoppingBag, Truck, Star, ChevronDownCircle, ChevronRightCircle, ChevronLeftCircle,  } from 'lucide-react';
+import { Heart, ShoppingCart, ChevronDown, Dot, ShoppingBag, Truck, Star, ChevronDownCircle, ChevronRightCircle, ChevronLeftCircle,  } from 'lucide-react';
 
 
 const ProductDetails = () => {
     const [ selectedSize, setSelectedSize ] = useState('41');
 
-    const sizes = [ 41, 42, 43, 44, 45 ];
+    const sizes = [ 40.5, 41, 42, 43, 44, 45, 46 ];
     const colors = [
         { name: 'Grey', value: 'bg-gray-200' },
         { name: 'White', value: 'bg-white border border-gray-200' },
@@ -28,7 +28,7 @@ const ProductDetails = () => {
 
             <h1 className="text-4xl font-medium my-4">Shoes Reebok Zig Kinetica 3</h1>
       
-      <div className="flex items-center my-4">
+      <div className="flex items-center my-8">
         <div className="flex text-yellow-400">
           {[1, 2, 3, 4].map((star) => (
             <Star key={star} size={16} fill="currentColor" />
@@ -37,15 +37,18 @@ const ProductDetails = () => {
         <span className="text-sm text-gray-500 ml-2">48 reviews</span>
       </div>
       
-      <div className="text-5xl font-bold mb-6">$199.00</div>
+      <div className="text-5xl font-bold my-12">$199.00</div>
       
       <div className="mb-4">
-        <div className="font-medium mb-2">Color </div>
+        <div className="font-medium mb-2 flex">Color 
+          <Dot className="text-gray-200 rounded-full"/> 
+          <span className="text-gray-300">{selectedColor}</span> 
+        </div>
         <div className="flex space-x-2">
           {colors.map((color) => (
             <button
               key={color.name}
-              className={`w-8 h-8 rounded-md ${color.value} ${selectedColor === color.name ? 'ring-1 shadow-md ring-gray-300' : ''}`}
+              className={`w-12 h-16 rounded-md ${color.value} ${selectedColor === color.name ? 'ring-1 shadow-md ring-gray-300' : ''}`}
               onClick={() => setSelectedColor(color.name)}
               aria-label={`Select ${color.name} color`}
             />
@@ -53,9 +56,13 @@ const ProductDetails = () => {
         </div>
       </div>
       
-      <div className="mb-6">
-        <div className="flex justify-between items-center mb-2">
-          <span className="font-medium">Size</span>
+      <div className="my-10">
+        <div className="flex justify-between items-center my-2">
+          <div className="font-medium flex">
+            Size
+            <Dot className="text-gray-200 rounded-full"/> 
+            <span className="text-gray-300">EU Men</span>
+          </div>
       
         </div>
         
