@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Search, Menu, Info, ShoppingBag, ChevronDown, ChevronLeft, ChevronRight, Plus, ArrowUpRight, Heart, User } from 'lucide-react';
-
+import ProductDetailCard from "../components/ProductDetailCard";
 
 const Index = () => {
 
@@ -15,8 +15,7 @@ const Index = () => {
     };
 
     return (
-        <div className="min-h-screen bg-white">
-        
+        <>  
       
         {/* Hero Slider */}
         <div className="relative overflow-hidden bg-stone-200 h-160 rounded-2xl mx-2">
@@ -238,12 +237,8 @@ const Index = () => {
             </div>
           </div>
         </div>
-
-        <StayInTouch/>
-        
-        <Footer />
-
-    </div>
+        </>
+    
     )
 }
 
