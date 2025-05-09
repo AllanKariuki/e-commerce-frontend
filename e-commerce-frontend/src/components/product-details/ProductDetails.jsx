@@ -15,7 +15,7 @@ const ProductDetails = () => {
 
     return (
         <div>
-            <div className="flex my-2">
+            <div className="flex items-center my-2">
                 <div className="w-8 h-8 bg-black rounded-full flex items-center justify-center">
                     <img 
                         src="https://images.unsplash.com/photo-1601758123927-2f3c4b8a1d5e?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60" 
@@ -56,7 +56,7 @@ const ProductDetails = () => {
         </div>
       </div>
       
-      <div className="my-10">
+      <div className="my-8">
         <div className="flex justify-between items-center my-2">
           <div className="font-medium flex">
             Size
@@ -84,7 +84,7 @@ const ProductDetails = () => {
         <button className="text-sm text-gray-500">Size guide</button>
       </div>
       
-      <div className="flex mb-4">
+      <div className="flex mb-2">
         <button className="flex-1 bg-black text-white py-3 px-6 flex items-center justify-center rounded-md hover:shadow-md">
           <ShoppingBag size={20} className="mr-2" />
           Add to cart
