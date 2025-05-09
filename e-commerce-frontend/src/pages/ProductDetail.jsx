@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams } from 'react-router-dom';
 import { Heart, ShoppingCart, ChevronDown, Star, ChevronDownCircle, ChevronRightCircle, ChevronLeftCircle } from 'lucide-react';
-import ProductImages from "./components/product-details/ProductImages";
+import ProductImages from "../components/product-details/ProductImages";
 
 const ProductDetail = () => {
     const { id } = useParams();
