@@ -101,7 +101,7 @@ const CartPage = () => {
                 </button>
             </div>
 
-              <div className="bg-white rounded-lg shadow p-4">
+              <div className="bg-white rounded-lg shadow-md p-4">
                 {/* Header with select all and delete */}
                 
                 

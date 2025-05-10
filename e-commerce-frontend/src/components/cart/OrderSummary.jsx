@@ -15,7 +15,7 @@ const OrderSummary = ({
       };
     
       return (
-        <div className="bg-white rounded-lg shadow p-6 mt-5">
+        <div className="bg-white rounded-lg shadow-lg p-6 mt-5">
           <h2 className="text-lg font-medium mb-4">Order Summary</h2>
           
           {/* Coupon input field */}
