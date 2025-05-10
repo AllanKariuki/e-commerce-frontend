@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 import { CreditCard, ChevronRight, ArrowLeft, Truck, Package, Clock, MapPin } from 'lucide-react';
+import PaymentCard from '../components/checkout/PaymentCard';
+import PaymentMethodOption from '../components/checkout/PaymentMethodOption';
+import DeliveryMethodOption from '../components/checkout/DeliveryMethodOption';
 
 const Checkout = () => {
  const [selectedPayment, setSelectedPayment] = useState("apple");

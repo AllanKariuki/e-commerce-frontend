@@ -1,4 +1,5 @@
 import { Trash2, ShoppingCart, Check, ChevronRight, Plus, Minus } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 const OrderSummary = ({
     subtotal,
@@ -13,6 +14,7 @@ const OrderSummary = ({
         alert(`Applying coupon: ${couponCode}`);
         setCouponCode('');
       };
+      const navigate = useNavigate();
     
       return (
         <div className="bg-white rounded-lg shadow-lg p-6 mt-5">
@@ -56,7 +58,7 @@ const OrderSummary = ({
           </div>
           
           {/* Checkout button */}
-          <button className="w-full bg-black text-white rounded-3xl py-3 flex items-center justify-center mt-6">
+          <button className="w-full bg-black text-white rounded-3xl py-3 flex items-center justify-center mt-6" onClick={() => navigate('/checkout')}>
             Go to Checkout
             <ChevronRight size={16} className="ml-1" />
           </button>
