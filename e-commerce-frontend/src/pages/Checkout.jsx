@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { CreditCard, ChevronRight, ArrowLeft, Truck, Package, Clock, MapPin } from 'lucide-react';
+import { CreditCard, ChevronRight, ArrowLeft, Truck, Package, Clock, MapPin, ArrowRight } from 'lucide-react';
 import PaymentCard from '../components/checkout/PaymentCard';
 import PaymentMethodOption from '../components/checkout/PaymentMethodOption';
 import DeliveryMethodOption from '../components/checkout/DeliveryMethodOption';
@@ -16,16 +16,16 @@ const Checkout = () => {
   const itemCount = 36;
 
   return (
-    <div className="flex h-screen bg-gray-50">
+    <div className="flex flex-col xl:flex-row gap-16 h-screen max-w-5/6 mx-auto">
       {/* Main checkout area */}
-      <div className="flex-1 p-8 max-w-4xl mx-auto">
+      <div className="flex-1 p-8 max-w-full mx-auto">
         <div className="mb-8">
           <button className="flex items-center text-gray-500 text-sm">
             <ArrowLeft size={16} className="mr-1" /> Back to card
           </button>
         </div>
 
-        <h1 className="text-4xl font-bold mb-1">Checkout</h1>
+        <h1 className="text-5xl font-bold mb-1">Checkout</h1>
         <p className="text-gray-500 mb-8">a checkout is a counter where you pay for things you are buying</p>
 
         {/* Contact Information */}
@@ -80,7 +80,7 @@ const Checkout = () => {
         {/* Delivery Method */}
         <div className="mb-8">
           <h2 className="text-lg font-semibold mb-4">2. Delivery method</h2>
-          <div className="grid grid-cols-3 gap-3 mb-4">
+          <div className="grid grid-cols-4 gap-5 mb-4 w-full">
             <DeliveryMethodOption 
               icon={<Truck size={18} />} 
               label="Same-day" 
@@ -99,24 +99,25 @@ const Checkout = () => {
               selected={selectedDelivery === "normal"}
               onClick={() => setSelectedDelivery("normal")} 
             />
-          </div>
-          <div className="flex items-start">
-            <MapPin size={20} className="mr-2 mt-1 text-gray-400" />
-            <div>
-              <label className="block text-sm text-gray-500 mb-1">Zip code</label>
-              <input 
-                type="text" 
-                className="w-32 border-b border-gray-200 py-2 focus:outline-none focus:border-black" 
-                defaultValue="05488"
-              />
+            <div className="flex items-center">
+              <MapPin size={20} className="mr-2 mt-1 text-gray-400" />
+              <div>
+                <label className="block text-sm text-gray-500 mb-1">Zip code</label>
+                <input 
+                  type="text" 
+                  className=" border-b border-gray-200 py-2 focus:outline-none focus:border-black" 
+                  defaultValue="05488"
+                />
+              </div>
             </div>
           </div>
+          
         </div>
 
         {/* Payment Method */}
         <div>
           <h2 className="text-lg font-semibold mb-4">3. Payment method</h2>
-          <div className="grid grid-cols-3 gap-3">
+          <div className="grid grid-cols-6 gap-3">
             <PaymentMethodOption 
               selected={selectedPayment === "google"} 
               onClick={() => setSelectedPayment("google")}
@@ -155,7 +156,7 @@ const Checkout = () => {
       </div>
 
       {/* Order summary */}
-      <div className="w-96 bg-white p-8 shadow-lg">
+      <div className="w-120 h-2/3 mt-10 bg-white p-8 shadow-lg">
         <div className="mb-6">
           <PaymentCard 
             cardNumber="5478" 
@@ -169,32 +170,32 @@ const Checkout = () => {
         </div>
 
         <div className="border-t border-gray-200 pt-6">
-          <div className="text-3xl font-bold mb-6">{itemCount} items</div>
+          <div className="text-4xl text-center font-bold mb-6">{itemCount} items</div>
           
           <div className="space-y-3 mb-8">
             <div className="flex justify-between">
               <span className="text-gray-600">Subtotal</span>
-              <span>€ {subtotal.toFixed(2)}</span>
+              <span>$ {subtotal.toFixed(2)}</span>
             </div>
             <div className="flex justify-between">
               <span className="text-gray-600">Discount</span>
-              <span>- € {discount.toFixed(2)} ({discountPercentage}%)</span>
+              <span>- $ {discount.toFixed(2)} ({discountPercentage}%)</span>
             </div>
             <div className="flex justify-between">
               <span className="text-gray-600">Delivery Service</span>
-              <span>+ € {deliveryFee.toFixed(2)}</span>
+              <span>+ $ {deliveryFee.toFixed(2)}</span>
             </div>
           </div>
 
           <div className="border-t border-gray-200 pt-4 mb-8">
             <div className="flex justify-between items-center">
               <span className="text-lg font-semibold">Total</span>
-              <span className="text-2xl font-bold">€ {total.toFixed(2)}</span>
+              <span className="text-2xl font-bold">$ {total.toFixed(2)}</span>
             </div>
           </div>
 
           <button className="w-full bg-black hover:bg-gray-900 text-white py-4 rounded-lg font-medium transition-colors">
-            Pay <ChevronRight size={16} className="inline ml-1" />
+            Pay <ArrowRight size={16} className="inline ml-1" />
           </button>
         </div>
       </div>
