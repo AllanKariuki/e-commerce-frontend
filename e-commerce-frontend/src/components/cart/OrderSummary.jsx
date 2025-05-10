@@ -15,48 +15,48 @@ const OrderSummary = ({
       };
     
       return (
-        <div className="bg-white rounded-lg shadow p-6">
+        <div className="bg-white rounded-lg shadow p-6 mt-5">
           <h2 className="text-lg font-medium mb-4">Order Summary</h2>
           
           {/* Coupon input field */}
-          <div className="flex mb-6">
-            <input 
-              type="text" 
+          <div className="flex items-center mb-6 w-full max-w-md bg-gray-100 rounded-full py-1 px-1">
+            <input
+              type="email"
               placeholder="Coupon Code" 
               value={couponCode}
               onChange={(e) => setCouponCode(e.target.value)}
-              className="flex-grow border rounded-l-md px-3 py-2 text-sm"
+              className="flex-1 px-4 py-2 text-sm decoration-none bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-400"
             />
             <button 
               onClick={applyCoupon}
-              className="bg-gray-800 text-white px-4 py-2 rounded-r-md text-sm"
-            >
+              className="w-36 py-2 bg-black text-white font-semibold rounded-full hover:bg-gray-800">
               Apply
             </button>
           </div>
+        
           
           {/* Price breakdown */}
-          <div className="space-y-3 text-sm">
+          <div className="space-y-5 text-sm">
             <div className="flex justify-between">
-              <span>Subtotal</span>
+              <span className='text-gray-500'>Subtotal</span>
               <span>${subtotal}</span>
             </div>
-            <div className="flex justify-between text-red-500">
-              <span>Discount ({discountPercentage}%)</span>
-              <span>-${discount}</span>
+            <div className="flex justify-between">
+              <span className='text-gray-500'>Discount ({discountPercentage}%)</span>
+              <span className='text-red-500'>-${discount}</span>
             </div>
             <div className="flex justify-between">
-              <span>Delivery Fee</span>
+              <span className='text-gray-500'>Delivery Fee</span>
               <span>${deliveryFee}</span>
             </div>
-            <div className="border-t pt-3 mt-3 flex justify-between font-medium text-lg">
+            <div className="border-t border-gray-200 pt-3 mt-3 flex justify-between font-medium text-lg">
               <span>Total</span>
               <span>${total}</span>
             </div>
           </div>
           
           {/* Checkout button */}
-          <button className="w-full bg-gray-800 text-white rounded-md py-3 flex items-center justify-center mt-6">
+          <button className="w-full bg-black text-white rounded-3xl py-3 flex items-center justify-center mt-6">
             Go to Checkout
             <ChevronRight size={16} className="ml-1" />
           </button>
