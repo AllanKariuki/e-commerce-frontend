@@ -1,21 +1,22 @@
 import React, { useState } from 'react';
 import { ShoppingBag, Plus } from 'lucide-react';
+import CargoPants from '../assets/images/cargo-pants.jpg';
 
 const ProductDetailCard = () => {
   const [isHovering, setIsHovering] = useState(false);
   
   return (
     <div 
-      className="bg-white rounded-3xl overflow-hidden max-w-sm shadow-md mb-2 h-100 bg-gray-500 relative"
+      className="bg-white rounded-3xl overflow-hidden max-w-sm shadow-md mb-2 h-120 bg-gray-500 relative"
       onMouseEnter={() => setIsHovering(true)}
       onMouseLeave={() => setIsHovering(false)}
     >
       {/* Product Image Section */}
       <div className="relative">
         <img 
-          src="/api/placeholder/400/500" 
+          src={CargoPants || "/assets/images/cargo-pants.jpg"}
           alt="Brown linen shirt" 
-          className="w-full h-96 object-cover"
+          className="w-full h-full object-cover"
         />
         
         {/* Add to Favorites Button */}

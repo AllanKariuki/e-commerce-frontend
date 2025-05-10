@@ -220,7 +220,7 @@ const Index = () => {
                 <button className="w-8 h-8 bg-gray-100 bg-opacity-70 rounded-full flex items-center justify-center">
                   <ChevronRight size={16} />
                 </button>
-                <a href="#" className="text-xs ml-2">View all</a>
+                <a href="/products" className="text-xs ml-2">View all</a>
               </div>
             </div>
             <h4 className='flex mx-auto justify-center items-center text-5xl max-w-1/3 my-10 text-black'>
