@@ -61,7 +61,7 @@ const CartPage = () => {
       };
     
       return (
-        <div className="max-w-6xl mx-auto p-6 bg-gray-50">
+        <div className="max-w-5/6 mx-auto p-6">
           <h1 className="text-3xl font-bold text-center mb-8">Your Shopping Cart</h1>
           
           {/* Checkout Process Indicator */}
@@ -72,26 +72,38 @@ const CartPage = () => {
             <div className="flex-grow">
               <h2 className="text-xl font-medium mb-4">Your cart</h2>
               
+              <div 
+                className="flex 
+                    justify-between 
+                    items-center 
+                    mb-4 pb-2 p-3
+                    border-1 
+                    border-gray-200 
+                    rounded-full"
+                >
+                <label className="flex items-center">
+                <input 
+                    type="checkbox" 
+                    checked={selectAll} 
+                    onChange={() => setSelectAll(!selectAll)}
+                    className="mr-2"
+                />
+                <span>Select All</span>
+                </label>
+                <button 
+                onClick={deleteSelectedItems}
+                className="bg-black
+                text-white 
+                py-3 px-5 rounded-3xl text-sm flex 
+                items-center"
+                >
+                Delete
+                </button>
+            </div>
+
               <div className="bg-white rounded-lg shadow p-4">
                 {/* Header with select all and delete */}
-                <div className="flex justify-between items-center mb-4 pb-2 border-b">
-                  <label className="flex items-center">
-                    <input 
-                      type="checkbox" 
-                      checked={selectAll} 
-                      onChange={() => setSelectAll(!selectAll)}
-                      className="mr-2"
-                    />
-                    <span>Select All</span>
-                  </label>
-                  <button 
-                    onClick={deleteSelectedItems}
-                    className="bg-gray-800 text-white py-1 px-4 rounded-md text-sm flex items-center"
-                  >
-                    <Trash2 size={16} className="mr-1" />
-                    Delete
-                  </button>
-                </div>
+                
                 
                 {/* Cart Items */}
                 <div className="space-y-4">
