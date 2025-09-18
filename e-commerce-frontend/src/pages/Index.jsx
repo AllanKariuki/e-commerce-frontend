@@ -125,7 +125,6 @@ const Index = () => {
               Products and catalog
             </h4> 
             
-            {/* Product cards row - matching the image */}
             <div className="grid grid-cols-4 gap-5 overflow-x-auto">
 
               <ProductDetailCard/>
