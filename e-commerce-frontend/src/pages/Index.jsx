@@ -6,6 +6,8 @@ import FreshArrivals from "../components/index/FreshArrivals";
 import Promotions from "../components/index/Promotions";
 import FAQS from "../components/index/FAQS";
 import BrandStory from "../components/index/BrandStory";
+import Testimonials from "../components/index/Testimonials";
+import Categories from "../components/index/Categories";
 
 const Index = () => {
 
@@ -135,6 +137,13 @@ const Index = () => {
           </div>
         </div>
 
+        {/* Categories Section */}
+        <Categories />
+
+        {/* Testimonials Section */}
+        <Testimonials />
+
+         {/* Brand Story Section */}
         <BrandStory />
 
         <FAQS />
