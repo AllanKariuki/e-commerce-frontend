@@ -1,4 +1,8 @@
-import { ChevronLeft, ChevronRight } from 'lucide-react'
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+import SuedeJacket from '../../assets/images/cool-denim.jpg';
+import Jacket2 from '../../assets/images/hoodie.jpg';
+import Jacket3 from '../../assets/images/sweat-shirt.jpg';
+import Image4 from '../../assets/images/woolen-denim.jpg';
 import React from 'react'
 
 const FreshArrivals = () => {
@@ -26,7 +30,7 @@ const FreshArrivals = () => {
 
               <div className="rounded-2xl overflow-hidden bg-gray-100 relative w-full max-w-sm">
                 <div className="h-80">
-                  <img src="/api/placeholder/240/320" alt="Suede-effect jacket" className="w-full h-full object-cover" />
+                  <img src={SuedeJacket} alt="Suede-effect jacket" className="absolute inset-0 w-full h-full object-cover" />
                   <button className="absolute top-3 right-3 bg-white text-sm px-3 py-2 rounded-full shadow-sm w-30">
                     Overshirts
                   </button>
@@ -48,7 +52,7 @@ const FreshArrivals = () => {
 
               <div className="rounded-2xl overflow-hidden bg-gray-100 relative w-full max-w-sm">
                 <div className="h-80">
-                  <img src="/api/placeholder/240/320" alt="Suede-effect jacket" className="w-full h-full object-cover" />
+                  <img src={Jacket2} alt="Hoodie" className="absolute inset-0 w-full h-full object-cover" />
                   <button className="absolute top-3 right-3 bg-white text-sm px-3 py-2 rounded-full shadow-sm w-30">
                     Overshirts
                   </button>
@@ -70,7 +74,7 @@ const FreshArrivals = () => {
 
               <div className="rounded-2xl overflow-hidden bg-gray-100 relative w-full max-w-sm">
                 <div className="h-80">
-                  <img src="/api/placeholder/240/320" alt="Suede-effect jacket" className="w-full h-full object-cover" />
+                  <img src={Jacket3} alt="Hoodie" className="absolute inset-0 w-full h-full object-cover" />
                   <button className="absolute top-3 right-3 bg-white text-sm px-3 py-2 rounded-full shadow-sm w-30">
                     Overshirts
                   </button>
@@ -92,7 +96,7 @@ const FreshArrivals = () => {
 
               <div className="rounded-2xl overflow-hidden bg-gray-100 relative w-full max-w-sm">
                 <div className="h-80">
-                  <img src="/api/placeholder/240/320" alt="Suede-effect jacket" className="w-full h-full object-cover" />
+                  <img src={Image4} alt="Hoodie" className="absolute inset-0 w-full h-full object-cover" />
                   <button className="absolute top-3 right-3 bg-white text-sm px-3 py-2 rounded-full shadow-sm w-30">
                     Overshirts
                   </button>
