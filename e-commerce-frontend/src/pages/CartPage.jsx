@@ -67,7 +67,7 @@ const CartPage = () => {
           {/* Checkout Process Indicator */}
           {/* <CheckoutSteps currentStep={1} /> */}
           
-          <div className="mt-8 flex flex-col lg:flex-row gap-6">
+          <div className="mt-8 grid grid-cols-1 lg:grid-cols-2 gap-6">
             {/* Cart Items Section */}
             <div className="flex-grow">
               <h2 className="text-xl font-medium mb-4">Your cart</h2>
@@ -81,25 +81,25 @@ const CartPage = () => {
                     border-gray-200 
                     rounded-full"
                 >
-                <label className="flex items-center">
-                <input 
-                    type="checkbox" 
-                    checked={selectAll} 
-                    onChange={() => setSelectAll(!selectAll)}
-                    className="mr-2"
-                />
-                <span>Select All</span>
-                </label>
-                <button 
-                onClick={deleteSelectedItems}
-                className="bg-black
-                text-white 
-                py-3 px-5 rounded-3xl text-sm flex 
-                items-center"
-                >
-                Delete
-                </button>
-            </div>
+                  <label className="flex items-center">
+                    <input 
+                        type="checkbox" 
+                        checked={selectAll} 
+                        onChange={() => setSelectAll(!selectAll)}
+                        className="mr-2"
+                    />
+                    <span>Select All</span>
+                  </label>
+                  <button 
+                    onClick={deleteSelectedItems}
+                    className="bg-black
+                    text-white 
+                    py-3 px-5 rounded-3xl text-sm flex 
+                    items-center"
+                    >
+                    Delete
+                  </button>
+              </div>
 
               <div className="bg-white rounded-lg shadow-md p-4">
                 {/* Header with select all and delete */}
@@ -119,7 +119,7 @@ const CartPage = () => {
             </div>
             
             {/* Order Summary Section */}
-            <div className="w-full lg:w-96">
+            <div className="w-full lg:w-96 h-full">
               <OrderSummary 
                 subtotal={subtotal}
                 discount={discount}
