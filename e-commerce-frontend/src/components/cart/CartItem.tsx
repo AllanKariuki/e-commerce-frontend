@@ -1,7 +1,11 @@
 import { Trash2, Plus, Minus } from 'lucide-react';
 
 
-const CartItem = ({ item, updateQuantity }) => {
+const CartItem = ({ 
+  item, 
+  updateQuantity, 
+  removeItem 
+}) => {
     return (
         <div className="flex items-center border-b-1 border-gray-200 pb-4">
           
@@ -29,26 +33,29 @@ const CartItem = ({ item, updateQuantity }) => {
           </div>
 
             <div className='flex flex-col items-end h-full'>
-                <button className="ml-4 text-red-500 top-2 flex justify-end">
-                <Trash2 size={16} />
+                <button 
+                  className="ml-4 text-red-500 top-2 flex justify-end"
+                  onClick={() => removeItem(item.id)}
+                  >
+                  <Trash2 size={16} />
                 </button>
                 <div></div>
                 {/* Quantity controls */}
                 <div className="flex items-center rounded-2xl px-1 bg-gray-100">
                 <button 
-                onClick={() => updateQuantity(item.id, item.quantity - 1)}
-                className="w-8 h-8 flex items-center justify-center"
-                >
-                <Minus size={16} />
+                  onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                  className="w-8 h-8 flex items-center justify-center"
+                  >
+                  <Minus size={16} />
                 </button>
                 <div className="w-8 h-8 flex items-center justify-center">
-                {item.quantity}
+                  {item.quantity}
                 </div>
                 <button 
-                onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                className="w-8 h-8 flex items-center justify-center"
+                  onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                  className="w-8 h-8 flex items-center justify-center"
                 >
-                <Plus size={16} />
+                  <Plus size={16} />
                 </button>
                 </div>
             </div>          

@@ -17,7 +17,7 @@ const OrderSummary = ({
       const navigate = useNavigate();
     
       return (
-        <div className="bg-white rounded-lg shadow-lg p-6 mt-5">
+        <div className="bg-white rounded-lg shadow-lg p-6 my-5">
           <h2 className="text-lg font-medium mb-4">Order Summary</h2>
           
           {/* Coupon input field */}
@@ -58,7 +58,11 @@ const OrderSummary = ({
           </div>
           
           {/* Checkout button */}
-          <button className="w-full bg-black text-white rounded-3xl py-3 flex items-center justify-center mt-6" onClick={() => navigate('/checkout')}>
+          <button 
+            className="w-full bg-black text-white 
+            rounded-3xl py-3 flex items-center justify-center mt-6" 
+            onClick={() => navigate('/checkout')}
+          >
             Go to Checkout
             <ChevronRight size={16} className="ml-1" />
           </button>
