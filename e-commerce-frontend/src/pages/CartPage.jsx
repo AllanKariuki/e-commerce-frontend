@@ -53,6 +53,10 @@ const CartPage = () => {
           ));
         }
       };
+
+      const handleRemoveItem = (id) => {
+        setCartItems(cartItems.filter(item => item.id !== id));
+      }
     
       // Handle item deletion
       const deleteSelectedItems = () => {
@@ -112,6 +116,7 @@ const CartPage = () => {
                       key={item.id} 
                       item={item} 
                       updateQuantity={updateQuantity}
+                      removeItem={handleRemoveItem}
                     />
                   ))}
                 </div>
