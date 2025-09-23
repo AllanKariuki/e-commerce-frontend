@@ -8,10 +8,12 @@ import FAQS from "../components/index/FAQS";
 import BrandStory from "../components/index/BrandStory";
 import Testimonials from "../components/index/Testimonials";
 import Categories from "../components/index/Categories";
+import { useNavigate } from "react-router-dom";
 
 const Index = () => {
 
     const [currentSlide, setCurrentSlide] = useState(0);
+    const navigate = useNavigate();
   
     const nextSlide = () => {
         setCurrentSlide((prev) => (prev + 1) % 3);
@@ -51,7 +53,11 @@ const Index = () => {
                   
                   <div className='flex align-center left-1/2 transform -translate-x-1/2 absolute mb-0 z-30 bottom-20'>
                     
-                    <button className="bg-white text-black px-6 py-3 rounded-full flex align-center mb-0">
+                    <button 
+                      className="bg-white text-black px-6 py-3 
+                      rounded-full flex align-center mb-0"
+                      onClick={() => navigate('/products')}
+                    >
                       <span className="font-medium">Start shopping</span>
                     </button>
 

@@ -9,10 +9,13 @@ const axiosInstance = axios.create({
 
 const setupInterceptors = (auth) => {
     axiosInstance.interceptors.request.use( async (config) => {
-        const token = getToken();
-        if (token) {
-            config.headers.Authorization = `Bearer ${token}`;
-        }
+        if (window.location.href.includes('orders')) {
+            const token = getToken();
+            if (token) {
+                config.headers.Authorization = `Bearer ${token}`;
+            }
+            return config;
+        }        
         return config;
     }, (error) => {
         return Promise.reject(error);
