@@ -7,12 +7,12 @@ const ProductDetailCard = () => {
   
   return (
     <div 
-      className="bg-white rounded-3xl overflow-hidden max-w-sm shadow-md mb-2 h-120 bg-gray-500 relative"
+      className="bg-white rounded-3xl overflow-hidden max-w-sm shadow-md mb-2 h-120 relative"
       onMouseEnter={() => setIsHovering(true)}
       onMouseLeave={() => setIsHovering(false)}
     >
       {/* Product Image Section */}
-      <div className="relative">
+      <div className="relative h-full w-full">
         <img 
           src={CargoPants || "/assets/images/cargo-pants.jpg"}
           alt="Brown linen shirt" 
