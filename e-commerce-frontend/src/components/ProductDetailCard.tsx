@@ -1,9 +1,10 @@
 import { useState } from 'react';
-import { ShoppingBag, Plus } from 'lucide-react';
+import { ShoppingBag, Plus, Heart } from 'lucide-react';
 import CargoPants from '../assets/images/cargo-pants.jpg';
 
 const ProductDetailCard = () => {
   const [isHovering, setIsHovering] = useState(false);
+  const [isFavorited, setIsFavorited] = useState<boolean>(false);
   
   return (
     <div 
@@ -18,9 +19,22 @@ const ProductDetailCard = () => {
           alt="Brown linen shirt" 
           className="w-full h-full object-cover"
         />
+
+        <div className={`absolute top-4 left-4 transition-all duration-300 opacity-100 translate-y-0 cursor-pointer`}>
+            <button
+              onClick={() => setIsFavorited(!isFavorited)}
+              className={`w-10 h-10 rounded-full backdrop-blur-sm border border-white/20 flex items-center cursor-pointer justify-center mb-2 transition-colors ${
+                isFavorited 
+                  ? 'bg-red-500 text-white' 
+                  : 'bg-white/90 text-gray-700 hover:bg-white'
+              }`}
+            >
+              <Heart size={18} fill={isFavorited ? 'currentColor' : 'none'} />
+            </button>
+          </div>
         
         {/* Add to Favorites Button */}
-        <button className="absolute top-4 right-4 rounded-full bg-white p-2">
+        <button className="absolute top-4 right-4 rounded-full bg-white p-2 cursor-pointer">
           <Plus size={18} />
         </button>
       </div>
