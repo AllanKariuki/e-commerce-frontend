@@ -1,5 +1,6 @@
 import ProductsFilter from "../components/product/ProductsFilter";
 import ProductDetailCard from "../components/ProductDetailCard";
+import RecentFinds from "../components/product/RecentFinds";
 
 const Products = () => {
     return (
@@ -18,12 +19,8 @@ const Products = () => {
                         ))}
                     </div>
 
-                    <span className="text-lg font-medium py-2 px-4 my-6 rounded-full text-gray-800 bg-gray-100">Your recent finds</span>
-                    <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 mt-8">
-                        {[...Array(5)].map((_, i) => (
-                            <ProductDetailCard key={i} />
-                        ))}
-                    </div>
+                    {/* Recent Finds Component */}
+                    <RecentFinds />
                 </div>
                 
             </div>
