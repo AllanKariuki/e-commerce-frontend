@@ -1,7 +1,18 @@
 import { Trash2, ShoppingCart, Check, ChevronRight, Plus, Minus } from 'lucide-react';
+import type React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const OrderSummary = ({
+interface OrderSummaryProps {
+  subtotal: number;
+  discount: number;
+  discountPercentage: number;
+  deliveryFee: number;
+  total: number;
+  couponCode: string;
+  setCouponCode: (code: string) => void;
+}
+
+const OrderSummary: React.FC<OrderSummaryProps> = ({
     subtotal,
     discount,
     discountPercentage,
