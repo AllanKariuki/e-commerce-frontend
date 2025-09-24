@@ -1,12 +1,21 @@
 import { Search, Menu, Info, ShoppingBag, ChevronDown, ChevronLeft, ChevronRight, Plus, ArrowUpRight, Heart, User } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import type { RootState } from '../../store';
 
 
 const Header = () => {
+  const navigate = useNavigate();
+  const wishlistCount = useSelector((state: RootState) => state.wishlist.items.length);
+  const params = new URLSearchParams(window.location.search);
+  const type = params.get('type');
+  console.log(type);
+
     return (
         <header className="border-b border-gray-200">
           <div className="container mx-auto px-4 py-3 flex items-center justify-between">
             {/* Logo */}
-            <div className="flex items-center">
+            <div className="flex items-center cursor-pointer" onClick={() => navigate('/')}>
               <span className="font-bold text-xl">BR.</span>
               <span className="font-bold text-xl text-gray-300">F</span>
             </div>
@@ -25,11 +34,22 @@ const Header = () => {
             
             {/* Icons */}
             <div className="flex items-center space-x-6">
-              <div className="relative">
-                <ShoppingBag size={20} />
+              <div className="relative cursor-pointer hover:shadow-md">
+                <ShoppingBag size={20} onClick={() => navigate('/cart')} />
                 <span className="absolute -top-2 -right-2 bg-yellow-400 text-xs w-4 h-4 rounded-full flex items-center justify-center">4</span>
               </div>
-              <Heart size={20} />
+              <div className="relative cursor-pointer hover:shadow-md">
+                <Heart 
+                  size={20} 
+                  onClick={() => navigate('/wishlist')}
+                  className={wishlistCount > 0 ? 'text-red-500 fill-red-500' : 'text-gray-600'} 
+                />
+                {wishlistCount > 0 && (
+                  <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs w-4 h-4 rounded-full flex items-center justify-center">
+                    {wishlistCount}
+                  </span>
+                )}
+              </div>
               <div className="w-8 h-8 rounded-full bg-gray-200 overflow-hidden">
                 <User size={20} className="mx-auto mt-1" />
               </div>
@@ -69,25 +89,46 @@ const Header = () => {
                 </div>
                 
                 <div className="flex items-center space-x-2">
-                  <button className="bg-black text-white text-xs px-4 py-2 rounded-full">
+                  <button 
+                    onClick={() => navigate('/products?type=men')} 
+                    className={`text-xs px-4 py-2 rounded-full border border-gray-200 cursor-pointer hover:bg-gray-50 hover:border-gray-300 
+                    ${type === 'men' ? 'bg-black text-white': 'bg-white text-black'}`}>
                     Men
                   </button>
-                  <button className="bg-white text-black text-xs px-4 py-2 rounded-full border border-gray-200">
+                  <button 
+                    onClick={() => navigate('/products?type=women')} 
+                    className={`text-xs px-4 py-2 rounded-full border border-gray-200 cursor-pointer hover:bg-gray-50 hover:border-gray-300 
+                    ${type === 'women' ? 'bg-black text-white': 'bg-white text-black'}`}>
                     Women
                   </button>
-                  <button className="bg-white text-black text-xs px-4 py-2 rounded-full border border-gray-200">
+                  <button 
+                    onClick={() => navigate('/products?type=children')} 
+                    className={`text-xs px-4 py-2 rounded-full border border-gray-200 cursor-pointer hover:bg-gray-50 hover:border-gray-300 
+                    ${type === 'children' ? 'bg-black text-white': 'bg-white text-black'}`}>
                     Children
                   </button>
-                  <button className="bg-white text-black text-xs px-4 py-2 rounded-full border border-gray-200">
-                    Sports 
+                  <button 
+                    onClick={() => navigate('/products?type=sports')} 
+                    className={`text-xs px-4 py-2 rounded-full border border-gray-200 cursor-pointer hover:bg-gray-50 hover:border-gray-300 
+                    ${type === 'sports' ? 'bg-black text-white': 'bg-white text-black'}`}>
+                    Sports
                   </button>
-                  <button className="bg-white text-black text-xs px-4 py-2 rounded-full border border-gray-200">
+                  <button 
+                    onClick={() => navigate('/products?type=brands')} 
+                    className={`text-xs px-4 py-2 rounded-full border border-gray-200 cursor-pointer hover:bg-gray-50 hover:border-gray-300 
+                    ${type === 'brands' ? 'bg-black text-white': 'bg-white text-black'}`}>
                     Brands
                   </button>
-                  <button className="bg-white text-black text-xs px-4 py-2 rounded-full border border-gray-200">
+                  <button 
+                    onClick={() => navigate('/products?type=new')} 
+                    className={`text-xs px-4 py-2 rounded-full border border-gray-200 cursor-pointer hover:bg-gray-50 hover:border-gray-300 
+                    ${type === 'new' ? 'bg-black text-white': 'bg-white text-black'}`}>
                     New 
                   </button>
-                  <button className="bg-white text-black text-xs px-4 py-2 rounded-full border border-gray-200">
+                  <button 
+                    onClick={() => navigate('/products?type=sale')} 
+                    className={`text-xs px-4 py-2 rounded-full border border-gray-200 cursor-pointer hover:bg-gray-50 hover:border-gray-300 
+                    ${type === 'sale' ? 'bg-black text-white': 'bg-white text-black'}`}>
                     Sale
                   </button>
                 </div>

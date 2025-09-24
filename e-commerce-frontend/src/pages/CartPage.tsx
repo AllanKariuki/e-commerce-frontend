@@ -3,11 +3,12 @@ import { Trash2, ShoppingCart, Check, ChevronRight, Plus, Minus } from 'lucide-r
 import CartItem from '../components/cart/CartItem';
 import CheckoutSteps from '../components/cart/CheckoutSteps';
 import OrderSummary from '../components/cart/OrderSummary';
+import type { CartItemType } from '../types/cart';
 
 const CartPage = () => {
-    const [cartItems, setCartItems] = useState([
+    const [cartItems, setCartItems] = useState<CartItemType[]>([
         {
-          id: 1,
+          id: "1",
           name: 'N20 Gas',
           size: 'Small',
           color: 'White',
@@ -16,7 +17,7 @@ const CartPage = () => {
           image: '/api/placeholder/50/50'
         },
         {
-          id: 2,
+          id: "2",
           name: 'Laughing Gas',
           size: 'Medium',
           color: 'Red',
@@ -25,7 +26,7 @@ const CartPage = () => {
           image: '/api/placeholder/50/50'
         },
         {
-          id: 3,
+          id: "3",
           name: 'Ammonium Gas',
           size: 'Large',
           color: 'Blue',
@@ -35,8 +36,8 @@ const CartPage = () => {
         }
       ]);
     
-      const [selectAll, setSelectAll] = useState(false);
-      const [couponCode, setCouponCode] = useState('');
+      const [selectAll, setSelectAll] = useState<boolean>(false);
+      const [couponCode, setCouponCode] = useState<string>('');
       const discountPercentage = 20;
     
       // Calculate totals
@@ -46,7 +47,7 @@ const CartPage = () => {
       const total = subtotal - discount + deliveryFee;
     
       // Handle quantity changes
-      const updateQuantity = (id, newQuantity) => {
+      const updateQuantity = (id: string, newQuantity: number) => {
         if (newQuantity >= 1) {
           setCartItems(cartItems.map(item => 
             item.id === id ? { ...item, quantity: newQuantity } : item
@@ -54,7 +55,7 @@ const CartPage = () => {
         }
       };
 
-      const handleRemoveItem = (id) => {
+      const handleRemoveItem = (id: string) => {
         setCartItems(cartItems.filter(item => item.id !== id));
       }
     
@@ -65,15 +66,15 @@ const CartPage = () => {
       };
     
       return (
-        <div className="max-w-5/6 mx-auto p-6">
+        <div className="max-w-7/8 mx-auto p-6">
           <h1 className="text-3xl font-bold text-center mb-8">Your Shopping Cart</h1>
           
           {/* Checkout Process Indicator */}
           {/* <CheckoutSteps currentStep={1} /> */}
           
-          <div className="mt-8 grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div className="mt-8 grid grid-cols-1 lg:grid-cols-3 gap-6">
             {/* Cart Items Section */}
-            <div className="flex-grow">
+            <div className="grid col-span-2">
               <h2 className="text-xl font-medium mb-4">Your cart</h2>
               
               <div 

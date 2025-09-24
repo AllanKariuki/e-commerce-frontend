@@ -1,7 +1,14 @@
 import { Trash2, Plus, Minus } from 'lucide-react';
+import type { CartItemType } from '../../types/cart';
+import type React from 'react';
 
+interface CartItemProps {
+  item: CartItemType;
+  updateQuantity: (id: string, newQuantity: number) => void;
+  removeItem: (id: string) => void;
+}
 
-const CartItem = ({ 
+const CartItem: React.FC<CartItemProps> = ({ 
   item, 
   updateQuantity, 
   removeItem 

@@ -27,7 +27,7 @@ const Index = () => {
         <>  
       
         {/* Hero Slider */}
-        <div className="relative overflow-hidden bg-stone-200 h-160 rounded-2xl mx-2">
+        <div className="relative overflow-hidden bg-stone-200 h-160 rounded-2xl">
           <div 
             className="flex transition-transform duration-500 h-full"
             style={{ transform: `translateX(-${currentSlide * 100}%)` }}
@@ -131,7 +131,7 @@ const Index = () => {
               Products and catalog
             </h4> 
             
-            <div className="grid grid-cols-4 gap-5 overflow-x-auto">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-5 overflow-x-auto">
 
               <ProductDetailCard/>
               <ProductDetailCard />
