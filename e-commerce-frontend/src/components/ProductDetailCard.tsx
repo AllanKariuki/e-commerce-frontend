@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { ShoppingBag, Plus } from 'lucide-react';
 import CargoPants from '../assets/images/cargo-pants.jpg';
 
