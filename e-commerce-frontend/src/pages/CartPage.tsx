@@ -66,15 +66,15 @@ const CartPage = () => {
       };
     
       return (
-        <div className="max-w-5/6 mx-auto p-6">
+        <div className="max-w-7/8 mx-auto p-6">
           <h1 className="text-3xl font-bold text-center mb-8">Your Shopping Cart</h1>
           
           {/* Checkout Process Indicator */}
           {/* <CheckoutSteps currentStep={1} /> */}
           
-          <div className="mt-8 grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div className="mt-8 grid grid-cols-1 lg:grid-cols-3 gap-6">
             {/* Cart Items Section */}
-            <div className="flex-grow">
+            <div className="grid col-span-2">
               <h2 className="text-xl font-medium mb-4">Your cart</h2>
               
               <div 

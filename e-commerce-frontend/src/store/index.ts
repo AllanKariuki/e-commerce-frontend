@@ -1,8 +1,9 @@
 import { configureStore } from '@reduxjs/toolkit'
+import wishlistReducer from './wishlistSlice'
 
 export const store = configureStore({
   reducer: {
-    // Add your reducers here
+    wishlist: wishlistReducer,
   },
 })
 

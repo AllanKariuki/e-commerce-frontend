@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import FAQItem from './FAQItem';
 
 const FAQS = () => {
-  const [openIndex, setOpenIndex] = useState(null);
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   const faqs = [
     {

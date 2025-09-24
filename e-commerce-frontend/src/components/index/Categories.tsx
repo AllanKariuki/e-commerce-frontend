@@ -1,6 +1,8 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom';
 
 const Categories = () => {
+  const navigate = useNavigate();
   const categories = [
     { name: "Outerwear", gradient: "from-indigo-500 to-purple-600" },
     { name: "Streetwear", gradient: "from-pink-400 to-red-500" },
@@ -14,7 +16,13 @@ const Categories = () => {
         <h2 className="text-3xl md:text-4xl font-light text-center mb-12">Shop by Category</h2>
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
           {categories.map((category, index) => (
-            <div key={index} className={`relative h-48 rounded-2xl bg-gradient-to-br ${category.gradient} cursor-pointer transform hover:scale-105 transition-transform duration-300 overflow-hidden`}>
+            <div 
+              key={index} 
+              className={`relative h-48 rounded-2xl bg-gradient-to-br 
+                ${category.gradient} cursor-pointer transform hover:scale-105 
+                transition-transform duration-300 overflow-hidden`}
+              onClick={() => navigate('/products?type=' + category.name.toLowerCase())}
+              >
               <div className="absolute bottom-6 left-6 text-white font-semibold text-xl">
                 {category.name}
               </div>
