@@ -98,9 +98,9 @@ const RecentFindsCard: React.FC<RecentFindsItemProps> = ({
     const navigate = useNavigate();
 
     return (
-        <div className="bg-gray-100 rounded-2xl overflow-hidden relative group hover:shadow-lg transition-shadow duration-300">
+        <div className="rounded-2xl overflow-hidden relative group hover:shadow-lg transition-shadow duration-300">
             {/* Product Image */}
-            <div className="aspect-square relative overflow-hidden">
+            <div className="aspect-square relative overflow-hidden rounded-b-2xl">
                 <img 
                     src={image} 
                     alt={name}
@@ -109,7 +109,7 @@ const RecentFindsCard: React.FC<RecentFindsItemProps> = ({
                 
                 {/* Quick View Button */}
                 <button 
-                    className="absolute bottom-3 left-3 bg-white rounded-full px-4 py-2 
+                    className="absolute bottom-3 left-3 bg-gray-50 rounded-full px-4 py-2 
                     text-sm font-medium shadow-sm opacity-0 group-hover:opacity-100 
                     transition-opacity duration-200 hover:bg-gray-50 cursor-pointer"
                     onClick={() => navigate(`/product/${id}`)}
@@ -121,7 +121,7 @@ const RecentFindsCard: React.FC<RecentFindsItemProps> = ({
                 <div className="absolute bottom-3 right-3">
                     <WishlistButton 
                         item={wishlistItem}
-                        className="bg-blue-600 text-white hover:bg-blue-700"
+                        className="bg-white text-gray-900 hover:bg-gray-100 cursor-pointer"
                         size={16}
                     />
                 </div>
