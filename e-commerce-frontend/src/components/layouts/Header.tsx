@@ -1,7 +1,13 @@
 import { Search, Menu, Info, ShoppingBag, ChevronDown, ChevronLeft, ChevronRight, Plus, ArrowUpRight, Heart, User } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 
 const Header = () => {
+  const navigate = useNavigate();
+  const params = new URLSearchParams(window.location.search);
+  const type = params.get('type');
+  console.log(type);
+
     return (
         <header className="border-b border-gray-200">
           <div className="container mx-auto px-4 py-3 flex items-center justify-between">
@@ -69,25 +75,46 @@ const Header = () => {
                 </div>
                 
                 <div className="flex items-center space-x-2">
-                  <button className="bg-black text-white text-xs px-4 py-2 rounded-full">
+                  <button 
+                    onClick={() => navigate('/products?type=men')} 
+                    className={`text-xs px-4 py-2 rounded-full border border-gray-200 cursor-pointer hover:bg-gray-50 hover:border-gray-300 
+                    ${type === 'men' ? 'bg-black text-white': 'bg-white text-black'}`}>
                     Men
                   </button>
-                  <button className="bg-white text-black text-xs px-4 py-2 rounded-full border border-gray-200">
+                  <button 
+                    onClick={() => navigate('/products?type=women')} 
+                    className={`text-xs px-4 py-2 rounded-full border border-gray-200 cursor-pointer hover:bg-gray-50 hover:border-gray-300 
+                    ${type === 'women' ? 'bg-black text-white': 'bg-white text-black'}`}>
                     Women
                   </button>
-                  <button className="bg-white text-black text-xs px-4 py-2 rounded-full border border-gray-200">
+                  <button 
+                    onClick={() => navigate('/products?type=children')} 
+                    className={`text-xs px-4 py-2 rounded-full border border-gray-200 cursor-pointer hover:bg-gray-50 hover:border-gray-300 
+                    ${type === 'children' ? 'bg-black text-white': 'bg-white text-black'}`}>
                     Children
                   </button>
-                  <button className="bg-white text-black text-xs px-4 py-2 rounded-full border border-gray-200">
-                    Sports 
+                  <button 
+                    onClick={() => navigate('/products?type=sports')} 
+                    className={`text-xs px-4 py-2 rounded-full border border-gray-200 cursor-pointer hover:bg-gray-50 hover:border-gray-300 
+                    ${type === 'sports' ? 'bg-black text-white': 'bg-white text-black'}`}>
+                    Sports
                   </button>
-                  <button className="bg-white text-black text-xs px-4 py-2 rounded-full border border-gray-200">
+                  <button 
+                    onClick={() => navigate('/products?type=brands')} 
+                    className={`text-xs px-4 py-2 rounded-full border border-gray-200 cursor-pointer hover:bg-gray-50 hover:border-gray-300 
+                    ${type === 'brands' ? 'bg-black text-white': 'bg-white text-black'}`}>
                     Brands
                   </button>
-                  <button className="bg-white text-black text-xs px-4 py-2 rounded-full border border-gray-200">
+                  <button 
+                    onClick={() => navigate('/products?type=new')} 
+                    className={`text-xs px-4 py-2 rounded-full border border-gray-200 cursor-pointer hover:bg-gray-50 hover:border-gray-300 
+                    ${type === 'new' ? 'bg-black text-white': 'bg-white text-black'}`}>
                     New 
                   </button>
-                  <button className="bg-white text-black text-xs px-4 py-2 rounded-full border border-gray-200">
+                  <button 
+                    onClick={() => navigate('/products?type=sale')} 
+                    className={`text-xs px-4 py-2 rounded-full border border-gray-200 cursor-pointer hover:bg-gray-50 hover:border-gray-300 
+                    ${type === 'sale' ? 'bg-black text-white': 'bg-white text-black'}`}>
                     Sale
                   </button>
                 </div>
