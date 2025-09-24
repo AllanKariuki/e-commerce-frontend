@@ -9,7 +9,6 @@ const Header = () => {
   const wishlistCount = useSelector((state: RootState) => state.wishlist.items.length);
   const params = new URLSearchParams(window.location.search);
   const type = params.get('type');
-  console.log(type);
 
     return (
         <header className="border-b border-gray-200">
