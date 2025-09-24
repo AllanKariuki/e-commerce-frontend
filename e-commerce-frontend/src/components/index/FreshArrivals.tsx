@@ -26,11 +26,17 @@ const FreshArrivals = () => {
               Fresh arrivals and new selections
             </h4>       
             {/* Product cards row - matching the image */}
-            <div className="grid grid-cols-4 gap-5 overflow-x-auto mb-20">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-5 overflow-x-auto mb-20">
 
-              <div className="rounded-2xl overflow-hidden bg-gray-100 relative w-full max-w-sm">
+              <div 
+                className="rounded-2xl overflow-hidden 
+                bg-gray-100 relative w-full max-w-sm"
+                >
                 <div className="h-80">
-                  <img src={SuedeJacket} alt="Suede-effect jacket" className="absolute inset-0 w-full h-full object-cover" />
+                  <img 
+                    src={SuedeJacket} 
+                    alt="Suede-effect jacket" 
+                    className="absolute inset-0 w-full h-full object-cover" />
                   <button className="absolute top-3 right-3 bg-white text-sm px-3 py-2 rounded-full shadow-sm w-30">
                     Overshirts
                   </button>
