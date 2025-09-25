@@ -1,5 +1,5 @@
 import React from 'react';
-import { Heart, Star, Eye } from 'lucide-react';
+import { Heart, Star, Eye, ChevronRight } from 'lucide-react';
 import WishlistButton from '../wishlist/WishlistButton';
 
 // Import images
@@ -159,9 +159,12 @@ const RecentFinds: React.FC = () => {
     return (
         <div className="mt-8">
             <div className="flex items-center justify-between mb-6">
-                <span className="text-lg font-medium py-2 px-4 rounded-full text-gray-800 bg-gray-100">
-                    Your recent finds
-                </span>
+                <div className="flex align-baseline items-center gap-2">
+                    <span className="text-lg font-medium py-2 rounded-full text-gray-800">
+                        Your recent finds
+                    </span>
+                    <ChevronRight size={20}  className='text-gray-800'/>
+                </div>
                 <button className="text-sm text-gray-600 hover:text-gray-900 transition-colors">
                     View All
                 </button>
