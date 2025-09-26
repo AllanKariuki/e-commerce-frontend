@@ -4,8 +4,11 @@ import Jacket2 from '../../assets/images/hoodie.jpg';
 import Jacket3 from '../../assets/images/sweat-shirt.jpg';
 import Image4 from '../../assets/images/woolen-denim.jpg';
 import React from 'react'
+import { useNavigate } from 'react-router-dom';
 
 const FreshArrivals = () => {
+  const navigate = useNavigate();
+
   return (
      <div className="py-8">
         <div className="container mx-auto px-4"> 
@@ -42,7 +45,11 @@ const FreshArrivals = () => {
                   </button>
                 </div>
                 
-                <div className="flex justify-between bg-white rounded-xl w-full max-w-xs mx-auto relative py-3 bottom-4 px-4 shadow-sm">
+                <div 
+                  className="flex justify-between bg-white rounded-xl 
+                  w-full max-w-xs mx-auto relative py-3 bottom-4 px-4 shadow-sm"
+                  onClick={() => navigate('/products?q=string')}
+                >
                   <div>
                     <h3 className="font-medium">Suede-effect jacket</h3>
                     <div className="flex items-center gap-2">

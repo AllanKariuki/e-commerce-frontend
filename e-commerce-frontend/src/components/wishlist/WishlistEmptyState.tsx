@@ -26,7 +26,7 @@ const WishlistEmptyState: React.FC = () => {
             
             <button
                 onClick={handleStartShopping}
-                className="flex items-center gap-2 bg-black text-white px-6 py-3 rounded-lg hover:bg-gray-800 transition-colors duration-200"
+                className="flex items-center gap-2 bg-black text-white px-6 py-3 rounded-lg hover:bg-gray-800 transition-colors duration-200 cursor-pointer"
             >
                 <ShoppingBag size={20} />
                 Start Shopping
