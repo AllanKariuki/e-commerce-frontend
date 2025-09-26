@@ -1,5 +1,5 @@
-import React from 'react';
-import { Heart, Star, Eye, ChevronRight } from 'lucide-react';
+import React, { useRef } from 'react';
+import { Star, ChevronRight, ChevronLeft } from 'lucide-react';
 import WishlistButton from '../wishlist/WishlistButton';
 
 // Import images
@@ -54,6 +54,26 @@ const recentFindsData: RecentFindsItemProps[] = [
     {
         id: 'rf4',
         name: 'Urban Style',
+        brand: 'Adien Selly',
+        price: 50,
+        rating: 4.2,
+        reviewCount: 12,
+        image: woolenDenim,
+        inStock: true,
+    },
+    {
+        id: 'rf5',
+        name: 'Some wear',
+        brand: 'Adien Selly',
+        price: 50,
+        rating: 4.2,
+        reviewCount: 12,
+        image: woolenDenim,
+        inStock: true,
+    },
+    {
+        id: 'rf4',
+        name: 'Classic Style',
         brand: 'Adien Selly',
         price: 50,
         rating: 4.2,
@@ -156,6 +176,26 @@ const RecentFindsCard: React.FC<RecentFindsItemProps> = ({
 };
 
 const RecentFinds: React.FC = () => {
+    const scrollContainerRef = useRef<HTMLDivElement>(null);
+
+    const scrollLeft = () => {
+        if (scrollContainerRef.current) {
+            scrollContainerRef.current.scrollBy({
+                left: -300,
+                behavior: 'smooth'
+            });
+        }
+    };
+
+    const scrollRight = () => {
+        if (scrollContainerRef.current) {
+            scrollContainerRef.current.scrollBy({
+                left: 300,
+                behavior: 'smooth'
+            });
+        }
+    };
+
     return (
         <div className="mt-8">
             <div className="flex items-center justify-between mb-6">
@@ -163,18 +203,55 @@ const RecentFinds: React.FC = () => {
                     <span className="text-lg font-medium py-2 rounded-full text-gray-800">
                         Your recent finds
                     </span>
-                    <ChevronRight size={20}  className='text-gray-800'/>
+                    <ChevronRight size={20} className='text-gray-800'/>
                 </div>
-                <button className="text-sm text-gray-600 hover:text-gray-900 transition-colors">
-                    View All
-                </button>
+                
+                <div className="flex items-center gap-4">
+                    {/* Navigation Controls */}
+                    <div className="flex gap-2">
+                        <button 
+                            onClick={scrollLeft}
+                            className="p-2 rounded-full border border-gray-300 hover:border-gray-400 hover:bg-gray-50 text-gray-700 transition-all duration-200"
+                        >
+                            <ChevronLeft size={16} />
+                        </button>
+                        <button 
+                            onClick={scrollRight}
+                            className="p-2 rounded-full border border-gray-300 hover:border-gray-400 hover:bg-gray-50 text-gray-700 transition-all duration-200"
+                        >
+                            <ChevronRight size={16} />
+                        </button>
+                    </div>
+                    
+                    <button className="text-sm text-gray-600 hover:text-gray-900 transition-colors">
+                        View All
+                    </button>
+                </div>
             </div>
             
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+            {/* Horizontal Scrollable Container */}
+            <div 
+                ref={scrollContainerRef}
+                className="flex gap-4 overflow-x-auto pb-4 scrollbar-hide"
+                style={{
+                    scrollbarWidth: 'none',
+                    msOverflowStyle: 'none',
+                }}
+            >
                 {recentFindsData.map((item) => (
-                    <RecentFindsCard key={item.id} {...item} />
+                    <div key={item.id} className="flex-shrink-0 w-64">
+                        <RecentFindsCard {...item} />
+                    </div>
                 ))}
             </div>
+            
+            <style dangerouslySetInnerHTML={{
+                __html: `
+                    .scrollbar-hide::-webkit-scrollbar {
+                        display: none;
+                    }
+                `
+            }} />
         </div>
     );
 };
