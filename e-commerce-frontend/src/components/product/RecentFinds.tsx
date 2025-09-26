@@ -181,7 +181,7 @@ const RecentFinds: React.FC = () => {
     const scrollLeft = () => {
         if (scrollContainerRef.current) {
             scrollContainerRef.current.scrollBy({
-                left: -300,
+                left: -272, // Width of one card (256px) + gap (16px) = 272px
                 behavior: 'smooth'
             });
         }
@@ -190,7 +190,7 @@ const RecentFinds: React.FC = () => {
     const scrollRight = () => {
         if (scrollContainerRef.current) {
             scrollContainerRef.current.scrollBy({
-                left: 300,
+                left: 272, // Width of one card (256px) + gap (16px) = 272px
                 behavior: 'smooth'
             });
         }
@@ -229,13 +229,15 @@ const RecentFinds: React.FC = () => {
                 </div>
             </div>
             
-            {/* Horizontal Scrollable Container */}
+            {/* Horizontal Scrollable Container - Show exactly 4 items */}
             <div 
                 ref={scrollContainerRef}
                 className="flex gap-4 overflow-x-auto pb-4 scrollbar-hide"
                 style={{
                     scrollbarWidth: 'none',
                     msOverflowStyle: 'none',
+                    width: '100%',
+                    maxWidth: '1104px', // 4 cards * 256px + 3 gaps * 16px = 1104px
                 }}
             >
                 {recentFindsData.map((item) => (
