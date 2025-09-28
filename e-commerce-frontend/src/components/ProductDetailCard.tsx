@@ -1,8 +1,12 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { ShoppingBag, Plus, Heart } from 'lucide-react';
-import CargoPants from '../assets/images/cargo-pants.jpg';
+import type { Product } from '../types/product';
 
-const ProductDetailCard = () => {
+interface ProductDetailCardProps {
+  product: Product;
+}
+
+const ProductDetailCard: React.FC<ProductDetailCardProps> = ({ product }) => {
   const [isHovering, setIsHovering] = useState(false);
   const [isFavorited, setIsFavorited] = useState<boolean>(false);
   
@@ -15,7 +19,7 @@ const ProductDetailCard = () => {
       {/* Product Image Section */}
       <div className="relative h-full w-full">
         <img 
-          src={CargoPants || "/assets/images/cargo-pants.jpg"}
+          src={product.image || '/assets/images/cargo-pants.jpg'}
           alt="Brown linen shirt" 
           className="w-full h-full object-cover"
         />

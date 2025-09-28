@@ -1,12 +1,6 @@
 import React, { useRef } from 'react';
 import { Star, ChevronRight, ChevronLeft } from 'lucide-react';
 import WishlistButton from '../wishlist/WishlistButton';
-
-// Import images
-import coolDenim from '../../assets/images/cool-denim.jpg';
-import hoodie from '../../assets/images/hoodie.jpg';
-import sweatShirt from '../../assets/images/sweat-shirt.jpg';
-import woolenDenim from '../../assets/images/woolen-denim.jpg';
 import { useNavigate } from 'react-router-dom';
 
 interface RecentFindsItemProps {
@@ -28,7 +22,7 @@ const recentFindsData: RecentFindsItemProps[] = [
         price: 50,
         rating: 4.2,
         reviewCount: 12,
-        image: hoodie,
+        image: '/assets/images/hoodie.jpg',
         inStock: true,
     },
     {
@@ -38,7 +32,7 @@ const recentFindsData: RecentFindsItemProps[] = [
         price: 60,
         rating: 4.2,
         reviewCount: 12,
-        image: coolDenim,
+        image: '/assets/images/cool-denim.jpg',
         inStock: true,
     },
     {
@@ -48,7 +42,7 @@ const recentFindsData: RecentFindsItemProps[] = [
         price: 50,
         rating: 4.2,
         reviewCount: 12,
-        image: sweatShirt,
+        image: '/assets/images/sweat-shirt.jpg',
         inStock: true,
     },
     {
@@ -58,7 +52,7 @@ const recentFindsData: RecentFindsItemProps[] = [
         price: 50,
         rating: 4.2,
         reviewCount: 12,
-        image: woolenDenim,
+        image: '/assets/images/woolen-denim.jpg',
         inStock: true,
     },
     {
@@ -68,7 +62,7 @@ const recentFindsData: RecentFindsItemProps[] = [
         price: 50,
         rating: 4.2,
         reviewCount: 12,
-        image: woolenDenim,
+        image: '/assets/images/woolen-denim.jpg',
         inStock: true,
     },
     {
@@ -78,7 +72,7 @@ const recentFindsData: RecentFindsItemProps[] = [
         price: 50,
         rating: 4.2,
         reviewCount: 12,
-        image: woolenDenim,
+        image: '/assets/images/woolen-denim.jpg',
         inStock: true,
     },
 ];
