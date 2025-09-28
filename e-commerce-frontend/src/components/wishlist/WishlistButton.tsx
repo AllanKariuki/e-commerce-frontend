@@ -1,8 +1,8 @@
 import React from 'react';
 import { Heart } from 'lucide-react';
 import { useDispatch, useSelector } from 'react-redux';
-import { addToWishlist, removeFromWishlist } from '../../store/wishlistSlice';
-import type { RootState } from '../../store';
+import { addToWishlist, removeFromWishlist } from '../../redux/store/wishlistSlice';
+import type { RootState } from '../../redux/store';
 import type { WishlistItem } from '../../types/wishlist';
 
 interface WishlistButtonProps {

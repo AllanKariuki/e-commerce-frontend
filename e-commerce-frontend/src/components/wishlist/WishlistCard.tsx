@@ -2,7 +2,7 @@ import React from 'react';
 import { Heart, ShoppingBag, Star, Eye } from 'lucide-react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { removeFromWishlist } from '../../store/wishlistSlice';
+import { removeFromWishlist } from '../../redux/store/wishlistSlice';
 import type { WishlistItem } from '../../types/wishlist';
 
 interface WishlistCardProps {

@@ -1,22 +1,12 @@
 import type { WishlistItem } from '../types/wishlist';
 
-// Import images
-import coolDenim from '../assets/images/cool-denim.jpg';
-import hoodie from '../assets/images/hoodie.jpg';
-import sweatShirt from '../assets/images/sweat-shirt.jpg';
-import woolenDenim from '../assets/images/woolen-denim.jpg';
-import cargoPants from '../assets/images/cargo-pants.jpg';
-import stayInTouch1 from '../assets/images/stay-in-touch-1.jpg';
-import stayInTouch2 from '../assets/images/stay-in-touch-2.jpg';
-import stayInTouch3 from '../assets/images/stay-in-touch-3jpg.jpg';
-
 export const sampleWishlistItems: Omit<WishlistItem, 'dateAdded'>[] = [
     {
         id: 'w1',
         name: 'Premium Hoodie - Comfortable and Stylish',
         price: 89.99,
         originalPrice: 119.99,
-        image: hoodie,
+        image: '/assets/images/hoodie.jpg',
         brand: 'Urban Style',
         rating: 4.2,
         reviewCount: 128,
@@ -30,7 +20,7 @@ export const sampleWishlistItems: Omit<WishlistItem, 'dateAdded'>[] = [
         name: 'Cool Denim Jacket - Vintage Style',
         price: 149.99,
         originalPrice: 199.99,
-        image: coolDenim,
+        image: '/assets/images/cool-denim.jpg',
         brand: 'Denim Co',
         rating: 4.5,
         reviewCount: 89,
@@ -44,7 +34,7 @@ export const sampleWishlistItems: Omit<WishlistItem, 'dateAdded'>[] = [
         name: 'Cozy Sweat Shirt - Perfect for Casual Days',
         price: 79.99,
         originalPrice: 99.99,
-        image: sweatShirt,
+        image: '/assets/images/sweat-shirt.jpg',
         brand: 'Comfort Zone',
         rating: 4.3,
         reviewCount: 156,
@@ -57,7 +47,7 @@ export const sampleWishlistItems: Omit<WishlistItem, 'dateAdded'>[] = [
         id: 'w4',
         name: 'Woolen Denim - Premium Quality',
         price: 199.99,
-        image: woolenDenim,
+        image: '/assets/images/woolen-denim.jpg',
         brand: 'Premium Denim',
         rating: 4.7,
         reviewCount: 67,
@@ -71,7 +61,7 @@ export const sampleWishlistItems: Omit<WishlistItem, 'dateAdded'>[] = [
         name: 'Cargo Pants - Utility and Style Combined',
         price: 119.99,
         originalPrice: 149.99,
-        image: cargoPants,
+        image: '/assets/images/cargo-pants.jpg',
         brand: 'Outdoor Gear',
         rating: 4.1,
         reviewCount: 203,
@@ -85,7 +75,7 @@ export const sampleWishlistItems: Omit<WishlistItem, 'dateAdded'>[] = [
         name: 'Classic Button Down Shirt',
         price: 69.99,
         originalPrice: 89.99,
-        image: stayInTouch1,
+        image: '/assets/images/stay-in-touch-1.jpg',
         brand: 'Classic Wear',
         rating: 4.4,
         reviewCount: 112,
@@ -98,7 +88,7 @@ export const sampleWishlistItems: Omit<WishlistItem, 'dateAdded'>[] = [
         id: 'w7',
         name: 'Casual Summer Tee',
         price: 39.99,
-        image: stayInTouch2,
+        image: '/assets/images/stay-in-touch-2.jpg',
         brand: 'Summer Vibes',
         rating: 4.0,
         reviewCount: 88,
@@ -112,7 +102,7 @@ export const sampleWishlistItems: Omit<WishlistItem, 'dateAdded'>[] = [
         name: 'Elegant Formal Shirt',
         price: 99.99,
         originalPrice: 129.99,
-        image: stayInTouch3,
+        image: '/assets/images/stay-in-touch-3jpg.jpg',
         brand: 'Formal Elegance',
         rating: 4.6,
         reviewCount: 145,

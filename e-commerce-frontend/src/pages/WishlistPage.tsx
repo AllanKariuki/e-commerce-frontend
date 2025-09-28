@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Heart, Filter, Grid3X3, List, Trash2, ShoppingBag } from 'lucide-react';
-import type { RootState } from '../store';
-import { clearWishlist } from '../store/wishlistSlice';
+import type { RootState } from '../redux/store';
+import { clearWishlist } from '../redux/store/wishlistSlice';
 import WishlistCard from '../components/wishlist/WishlistCard';
 import WishlistEmptyState from '../components/wishlist/WishlistEmptyState';
 import WishlistDemo from '../components/wishlist/WishlistDemo';
