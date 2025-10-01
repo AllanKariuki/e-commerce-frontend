@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { ShoppingBag, Plus, Heart } from 'lucide-react';
 import type { Product } from '../types/product';
+import { useNavigate } from 'react-router-dom';
 
 interface ProductDetailCardProps {
   product: Product;
@@ -9,12 +10,14 @@ interface ProductDetailCardProps {
 const ProductDetailCard: React.FC<ProductDetailCardProps> = ({ product }) => {
   const [isHovering, setIsHovering] = useState(false);
   const [isFavorited, setIsFavorited] = useState<boolean>(false);
+  const navigate = useNavigate();
   
   return (
     <div 
-      className="bg-white rounded-3xl overflow-hidden max-w-sm shadow-md mb-2 h-120 relative"
+      className="bg-white rounded-3xl overflow-hidden max-w-sm shadow-md mb-2 h-120 relative cursor-pointer"
       onMouseEnter={() => setIsHovering(true)}
       onMouseLeave={() => setIsHovering(false)}
+      onClick={() => navigate(`/product/${product.id}`)}
     >
       {/* Product Image Section */}
       <div className="relative h-full w-full">
