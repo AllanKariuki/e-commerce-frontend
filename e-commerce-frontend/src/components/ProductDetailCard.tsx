@@ -22,7 +22,7 @@ const ProductDetailCard: React.FC<ProductDetailCardProps> = ({ product }) => {
       {/* Product Image Section */}
       <div className="relative h-full w-full">
         <img 
-          src={product.main_image !== null ? product.main_image.image : '/assets/images/cargo-pants.jpg'}
+          src={ product.main_image?.image || '/assets/images/cargo-pants.jpg'}
           alt="Brown linen shirt" 
           className="w-full h-full object-cover"
         />
