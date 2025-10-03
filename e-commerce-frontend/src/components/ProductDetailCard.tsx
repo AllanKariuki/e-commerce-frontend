@@ -22,7 +22,7 @@ const ProductDetailCard: React.FC<ProductDetailCardProps> = ({ product }) => {
       {/* Product Image Section */}
       <div className="relative h-full w-full">
         <img 
-          src={product.image || '/assets/images/cargo-pants.jpg'}
+          src={product.main_image !== null ? product.main_image.image : '/assets/images/cargo-pants.jpg'}
           alt="Brown linen shirt" 
           className="w-full h-full object-cover"
         />
@@ -55,7 +55,7 @@ const ProductDetailCard: React.FC<ProductDetailCardProps> = ({ product }) => {
         {/* Category Tag */}
         <div className="flex">
           <span className="px-4 py-2 rounded-full border border-gray-200 text-sm">
-            Men
+            {product.category_name}
           </span>
         </div>
 
@@ -70,13 +70,18 @@ const ProductDetailCard: React.FC<ProductDetailCardProps> = ({ product }) => {
                 className="w-full h-full object-cover" 
               />
             </div>
-            <h2 className="text-xl font-medium">100% linen Mao collar shirt</h2>
+            <div className="space-y-2">
+              <h2 className="text-xl font-medium">{product.name}</h2>
+              <h2 className="text-md font-small">{product.description}</h2>
+            </div>
+            
           </div>
 
           {/* Price Information */}
           <div className="flex items-center gap-2">
-            <span className="font-medium text-lg">$49.50</span>
-            <span className="text-gray-500 line-through text-sm">$55.99</span>
+            <span className="font-medium text-lg">Ksh. {product.price}</span>
+            {/* Show this if the image has discount */}
+            {/* <span className="text-gray-500 line-through text-sm">Ksh. 55.99</span> */}
           </div>
 
           {/* Product Reference */}
