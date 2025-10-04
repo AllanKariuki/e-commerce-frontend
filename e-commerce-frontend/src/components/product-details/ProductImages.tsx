@@ -1,19 +1,14 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
+import type { Image } from '../../types/product';
 
-const ProductImages = () =>{
-    const allThumbnails = [
-        "https://images.unsplash.com/photo-1601758123927-2f3c4b8a1d5e?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60",
-        "https://images.unsplash.com/photo-1601758123927-2f3c4b8a1d5e?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60",
-        "https://images.unsplash.com/photo-1601758123927-2f3c4b8a1d5e?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60",
-        "https://images.unsplash.com/photo-1601758123927-2f3c4b8a1d5e?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60",
-        "https://images.unsplash.com/photo-1601758123927-2f3c4b8a1d5e?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60",
-        "https://images.unsplash.com/photo-1601758123927-2f3c4b8a1d5e?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60",
-        "https://images.unsplash.com/photo-1601758123927-2f3c4b8a1d5e?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60"
+interface ProductImagesProps {
+    productImages: Image[] | [];
+}
 
-    ]
+const ProductImages: React.FC<ProductImagesProps> = ({ productImages }) =>{
 
-    const [visibleThumbnails, setVisibleThumbnails] = useState(allThumbnails.slice(0, 4));
-    const [remainingThumbnails, setRemainingThumbnails] = useState(allThumbnails.slice(4));
+    const [visibleThumbnails, setVisibleThumbnails] = useState(productImages.slice(0, 4));
+    const [remainingThumbnails, setRemainingThumbnails] = useState(productImages.slice(4));
 
     const handleMoreClick = () => {
         setVisibleThumbnails(remainingThumbnails.slice(0, 4));
@@ -23,10 +18,10 @@ const ProductImages = () =>{
     return (
         <div>
             <div className="bg-gray-100 w-full h-5/6 aspect-square mb-2 rounded-lg">
-                <img 
-                    src="https://images.unsplash.com/photo-1601758123927-2f3c4b8a1d5e?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60" 
-                    alt="Product" 
-                    className="w-full h-full object-contain" 
+                <img
+                    src={productImages[0]?.image || ''}
+                    alt="Product"
+                    className="w-full h-full object-contain"
                 />
             </div>
 
@@ -37,7 +32,7 @@ const ProductImages = () =>{
                         className={`w-34 h-24 border-2 ${index === 0 ? 'border-gray-400' : 'border-gray-200'} rounded-lg cursor-pointer`}
                         >
                         <img
-                            src={thumb}
+                            src={thumb.image || ''}
                             alt={`Thumbnail ${index + 1}`}
                             className="w-full h-full object-cover" 
                         />
