@@ -1,4 +1,4 @@
-export interface ImageResponse {
+export interface Image {
     id: number;
     image: string | null;
     is_main: boolean;
@@ -13,8 +13,8 @@ export interface Product {
     units_in_stock: number,
     image: string | null,
     category_name: number,
-    main_image: ImageResponse,
-    product_images: ImageResponse[],
+    main_image: Image | null,
+    product_images: Image[] | [],
 }
 
 export interface Category {
