@@ -5,6 +5,14 @@ export interface Image {
     product: number;
 }
 
+export interface Review {
+    product: number;
+    user: number;
+    rating: number;
+    comment: string;
+    created_at: string;
+}
+
 export interface Product {
     id: number,
     name: string,
@@ -15,6 +23,10 @@ export interface Product {
     category_name: number,
     main_image: Image | null,
     product_images: Image[] | [],
+    sizes: string[] | [],
+    colors: string[] | [],
+    material: string | null,
+    reviews: Review[] | [],
 }
 
 export interface Category {
