@@ -38,7 +38,7 @@ const ProductDetail = () => {
                     
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 mt-4">
                     <ProductImages productImages={productImages} />
-                    <ProductDetails />
+                    <ProductDetails product={product} />
                 </div>
 
                 <ProductTabs /> 
