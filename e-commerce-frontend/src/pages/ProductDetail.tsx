@@ -44,7 +44,7 @@ const ProductDetail = () => {
                     <ProductDetails product={product} />
                 </div>
 
-                <ProductTabs /> 
+                <ProductTabs product={product} />
 
                 <RelatedProductsCarousel />
 
