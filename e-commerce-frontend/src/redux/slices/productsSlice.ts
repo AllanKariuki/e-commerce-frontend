@@ -89,6 +89,8 @@ const productsSlice = createSlice({
 export const selectProducts = (state: { products: ProductState }) => state.products.products;
 export const selectTotalProducts = (state: { products: ProductState }) => state.products.total;
 export const selectedProduct = (state: { products: ProductState }) => state.products.selectedProduct
+export const selectIsLoading = (state: { products: ProductState }) => state.products.loading;
+export const selectError = (state: { products: ProductState }) => state.products.error;
 
 export const {} = productsSlice.actions;
 export default productsSlice.reducer;
