@@ -1,14 +1,22 @@
 import { Search, Menu, Info, ShoppingBag, ChevronDown, ChevronLeft, ChevronRight, Plus, ArrowUpRight, Heart, User } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import type { RootState } from '../../redux/store';
+import { useDispatch, useSelector } from 'react-redux';
+import { type AppDispatch, type RootState } from '../../redux/store';
+import { fetchCategories, selectedCategories } from '../../redux/slices/categorySlice';
+import { useEffect } from 'react';
 
 
 const Header = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch<AppDispatch>();
   const wishlistCount = useSelector((state: RootState) => state.wishlist.items.length);
   const params = new URLSearchParams(window.location.search);
   const type = params.get('type');
+  const categories = useSelector(selectedCategories);
+
+  useEffect(() => {
+    dispatch(fetchCategories() as any);
+  }, [dispatch]);
 
     return (
         <header className="border-b border-gray-200">
@@ -87,8 +95,19 @@ const Header = () => {
                   </div>
                 </div>
                 
-                <div className="flex items-center space-x-2">
-                  <button 
+                <div className="flex items-center space-x-2 overflow-x-auto">
+                  {categories.map((category, index) => {
+                    return (
+                      <button 
+                        key={index}
+                        onClick={() => navigate(`/products?category_name=${category.name}`)} 
+                        className={`text-xs px-4 py-2 rounded-full border border-gray-200 cursor-pointer hover:bg-gray-50 hover:border-gray-300 
+                        ${type === category.name ? 'bg-black text-white': 'bg-white text-black'}`}>
+                        {category.name}
+                      </button>
+                    );
+                  })}
+                  {/* <button 
                     onClick={() => navigate('/products?type=men')} 
                     className={`text-xs px-4 py-2 rounded-full border border-gray-200 cursor-pointer hover:bg-gray-50 hover:border-gray-300 
                     ${type === 'men' ? 'bg-black text-white': 'bg-white text-black'}`}>
@@ -129,7 +148,7 @@ const Header = () => {
                     className={`text-xs px-4 py-2 rounded-full border border-gray-200 cursor-pointer hover:bg-gray-50 hover:border-gray-300 
                     ${type === 'sale' ? 'bg-black text-white': 'bg-white text-black'}`}>
                     Sale
-                  </button>
+                  </button> */}
                 </div>
               </div>
           </div>
