@@ -54,6 +54,11 @@ export interface ProductState {
     total: number;
 }
 
+export interface ProductsResponse {
+    pagination: Pagination;
+    products: Product[];
+}
+
 export interface CategoryState {
     categories: Category[];
     loading: boolean;
