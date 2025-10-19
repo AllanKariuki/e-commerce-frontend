@@ -20,14 +20,13 @@ const Products = () => {
     const [ratingsFilter, setRatingsFilter] = useState<number | undefined>();
     const [colorFilter, setColorFilter] = useState<string | undefined>();
 
-    console.log("Category name: ", categoryName);
     useEffect(() => {
-        if (categoryName) {
-            dispatch(fetchProducts({ category: categoryName.toLowerCase() }) as any);
+        if (categoryName || minPrice || maxPrice || sizeFilter || colorFilter || ratingsFilter) {
+            dispatch(fetchProducts({ category: categoryName?.toLowerCase(), minPrice, maxPrice, sizeFilter, colorFilter, ratingsFilter }) as any);
             return;
         }
         dispatch(fetchProducts as any);
-    }, [dispatch, categoryName]);
+    }, [dispatch, categoryName, minPrice, maxPrice, sizeFilter, colorFilter, ratingsFilter]);
 
     const handleColorChange = (color: string) => {
         setColorFilter(color);
