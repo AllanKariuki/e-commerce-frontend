@@ -1,6 +1,8 @@
 import { Sliders, Star, X, Filter } from 'lucide-react'
 import React from 'react'
 import Slider from "@mui/material/Slider";
+import { useSelector } from 'react-redux';
+import { selectedCategories } from '../../redux/slices/categorySlice';
 
 
 interface ProductFilterProps {
@@ -29,10 +31,10 @@ const ProductsFilter: React.FC<ProductFilterProps> = ({
 }) => {
   // Count active filters
   const activeFiltersCount = [minPrice && minPrice > 0, maxPrice && maxPrice < 500, sizeFilter, colorFilter, ratingsFilter].filter(Boolean).length;
-
-  const categories = [
-    'T-Shirts', 'Hoodies', 'Jeans', 'Shoes', 'Accessories', 'Jackets', 'Sweaters', 'Shorts'
-  ];
+  const categories = useSelector(selectedCategories);
+//   const categories = [
+//     'T-Shirts', 'Hoodies', 'Jeans', 'Shoes', 'Accessories', 'Jackets', 'Sweaters', 'Shorts'
+//   ];
 
   const brands = [
     'Nike', 'Adidas', 'H&M', 'Zara', 'Uniqlo', 'Gap', 'Lacoste', 'Puma'
@@ -67,14 +69,14 @@ const ProductsFilter: React.FC<ProductFilterProps> = ({
             <div>
                 <h3 className="font-medium text-gray-900 mb-3 text-sm uppercase tracking-wide">Categories</h3>
                 <div className="space-y-2 max-h-40 overflow-y-auto">
-                    {categories.map((category) => (
-                        <label key={category} className="flex items-center cursor-pointer group">
+                    {categories.map((category, index) => (
+                        <label key={index} className="flex items-center cursor-pointer group">
                             <input 
                                 type="checkbox" 
                                 className="rounded border-gray-300 text-blue-600 focus:ring-blue-500 focus:ring-2" 
                             />
                             <span className="ml-2 text-sm text-gray-700 group-hover:text-gray-900 transition-colors">
-                                {category}
+                                {category.name}
                             </span>
                         </label>
                     ))}
