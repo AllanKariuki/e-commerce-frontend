@@ -13,18 +13,19 @@ const ProductState: ProductState = {
 
 export const fetchProducts = createAsyncThunk(
     'products/fetchProducts',
-    async (params: { page?: number; limit?: number; category?: number; search?: string } = {}, { rejectWithValue }) => {
+    async (params: { page?: number; limit?: number; category?: string; search?: string } = {}, { rejectWithValue }) => {
         try {
             console.log('Fetching products');
             
             const query = new URLSearchParams();
             if (params.page) query.append('page', params.page.toString());
             if (params.limit) query.append('limit', params.limit.toString());
-            if (params.category) query.append('category', params.category.toString());
+            if (params.category) query.append('category_name', params.category.toString());
             if (params.search) query.append('search', params.search);
             
             const queryString = query.toString();
             const url = queryString ? `/products?${queryString}` : '/products';
+            console.log('Fetching products from:', url);
             const response = await get<Product[]>(url);
             return response;
         } catch (error: any) {
