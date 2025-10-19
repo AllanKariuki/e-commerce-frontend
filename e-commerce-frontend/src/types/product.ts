@@ -34,8 +34,20 @@ export interface Category {
     description: string,
 }
 
+export interface Pagination {
+    next: any;
+    previous: any;
+    count: number;
+    total_pages: number;
+    current_page: number;
+    page_size: number;
+    has_next: boolean;
+    has_previous: boolean;
+}
+
 export interface ProductState {
     products: Product[];
+    pagination: Pagination | {};
     selectedProduct: Product | null;
     loading: boolean;
     error: string | null;
