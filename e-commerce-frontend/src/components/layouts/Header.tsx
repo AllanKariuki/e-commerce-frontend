@@ -11,7 +11,7 @@ const Header = () => {
   const dispatch = useDispatch<AppDispatch>();
   const wishlistCount = useSelector((state: RootState) => state.wishlist.items.length);
   const params = new URLSearchParams(window.location.search);
-  const type = params.get('type');
+  const type = params.get('category-name');
   const categories = useSelector(selectedCategories);
 
   useEffect(() => {
@@ -101,54 +101,13 @@ const Header = () => {
                       <button 
                         key={index}
                         onClick={() => navigate(`/products?category-name=${category.name}`)} 
-                        className={`text-xs px-4 py-2 rounded-full border border-gray-200 cursor-pointer hover:bg-gray-50 hover:border-gray-300 
-                        ${type === category.name ? 'bg-black text-white': 'bg-white text-black'}`}>
+                        className={`text-xs px-4 py-2 rounded-full border border-gray-200 cursor-pointer hover:border-gray-300 
+                        ${type === category.name ? 'bg-black text-white hover:bg-black/80': 'bg-white text-black hover:bg-gray-50'}`}>
                         {category.name}
                       </button>
                     );
                   })}
-                  {/* <button 
-                    onClick={() => navigate('/products?type=men')} 
-                    className={`text-xs px-4 py-2 rounded-full border border-gray-200 cursor-pointer hover:bg-gray-50 hover:border-gray-300 
-                    ${type === 'men' ? 'bg-black text-white': 'bg-white text-black'}`}>
-                    Men
-                  </button>
-                  <button 
-                    onClick={() => navigate('/products?type=women')} 
-                    className={`text-xs px-4 py-2 rounded-full border border-gray-200 cursor-pointer hover:bg-gray-50 hover:border-gray-300 
-                    ${type === 'women' ? 'bg-black text-white': 'bg-white text-black'}`}>
-                    Women
-                  </button>
-                  <button 
-                    onClick={() => navigate('/products?type=children')} 
-                    className={`text-xs px-4 py-2 rounded-full border border-gray-200 cursor-pointer hover:bg-gray-50 hover:border-gray-300 
-                    ${type === 'children' ? 'bg-black text-white': 'bg-white text-black'}`}>
-                    Children
-                  </button>
-                  <button 
-                    onClick={() => navigate('/products?type=sports')} 
-                    className={`text-xs px-4 py-2 rounded-full border border-gray-200 cursor-pointer hover:bg-gray-50 hover:border-gray-300 
-                    ${type === 'sports' ? 'bg-black text-white': 'bg-white text-black'}`}>
-                    Sports
-                  </button>
-                  <button 
-                    onClick={() => navigate('/products?type=brands')} 
-                    className={`text-xs px-4 py-2 rounded-full border border-gray-200 cursor-pointer hover:bg-gray-50 hover:border-gray-300 
-                    ${type === 'brands' ? 'bg-black text-white': 'bg-white text-black'}`}>
-                    Brands
-                  </button>
-                  <button 
-                    onClick={() => navigate('/products?type=new')} 
-                    className={`text-xs px-4 py-2 rounded-full border border-gray-200 cursor-pointer hover:bg-gray-50 hover:border-gray-300 
-                    ${type === 'new' ? 'bg-black text-white': 'bg-white text-black'}`}>
-                    New 
-                  </button>
-                  <button 
-                    onClick={() => navigate('/products?type=sale')} 
-                    className={`text-xs px-4 py-2 rounded-full border border-gray-200 cursor-pointer hover:bg-gray-50 hover:border-gray-300 
-                    ${type === 'sale' ? 'bg-black text-white': 'bg-white text-black'}`}>
-                    Sale
-                  </button> */}
+                  
                 </div>
               </div>
           </div>
