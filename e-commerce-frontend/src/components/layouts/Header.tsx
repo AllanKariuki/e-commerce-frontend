@@ -100,7 +100,7 @@ const Header = () => {
                     return (
                       <button 
                         key={index}
-                        onClick={() => navigate(`/products?category_name=${category.name}`)} 
+                        onClick={() => navigate(`/products?category-name=${category.name}`)} 
                         className={`text-xs px-4 py-2 rounded-full border border-gray-200 cursor-pointer hover:bg-gray-50 hover:border-gray-300 
                         ${type === category.name ? 'bg-black text-white': 'bg-white text-black'}`}>
                         {category.name}
