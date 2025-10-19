@@ -18,6 +18,7 @@ const Products = () => {
     const [maxPrice, setMaxPrice] = useState<number | undefined>();
     const [sizeFilter, setSizeFilter] = useState<string | undefined>();
     const [ratingsFilter, setRatingsFilter] = useState<number | undefined>();
+    const [colorFilter, setColorFilter] = useState<string | undefined>();
 
     console.log("Category name: ", categoryName);
     useEffect(() => {
@@ -28,6 +29,19 @@ const Products = () => {
         dispatch(fetchProducts as any);
     }, [dispatch, categoryName]);
 
+    const handleColorChange = (color: string) => {
+        setColorFilter(color);
+    }
+
+    const handleSizeChange = (size: string) => {
+        setSizeFilter(size);
+    }
+
+    const handlePriceChange = (priceRange: { min?: number; max?: number }) => {
+        setMinPrice(priceRange.min);
+        setMaxPrice(priceRange.max);
+    }
+
     return (
         <div className="">
             <h2 className="text-5xl text-center font-semibold my-6">Products Page</h2>
@@ -35,13 +49,14 @@ const Products = () => {
                 <div className="hidden xl:block">
                     <ProductsFilter 
                         minPrice={minPrice}
-                        setMinPrice={setMinPrice}
                         maxPrice={maxPrice}
-                        setMaxPrice={setMaxPrice}
                         sizeFilter={sizeFilter}
-                        setSizeFilter={setSizeFilter}
+                        onSizeChange={handleSizeChange}
                         ratingsFilter={ratingsFilter}
                         setRatingsFilter={setRatingsFilter}
+                        colorFilter={colorFilter}
+                        onColorChange={handleColorChange}
+                        onPriceRangeChange={handlePriceChange}
                     />
                 </div>
                 
