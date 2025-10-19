@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import type { Product, ProductState } from "../../types/product";
+import type { Product, ProductsResponse, ProductState } from "../../types/product";
 import { get } from "../../api";
 
 const ProductState: ProductState = {
@@ -32,7 +32,7 @@ export const fetchProducts = createAsyncThunk(
             const queryString = query.toString();
             const url = queryString ? `/products?${queryString}` : '/products';
             
-            const response = await get<Product[]>(url);
+            const response = await get<ProductsResponse>(url);
             return response;
         } catch (error: any) {
             console.log('Error fetching products:', error);
@@ -71,8 +71,9 @@ const productsSlice = createSlice({
             })
             .addCase(fetchProducts.fulfilled, (state, action) => {
                 state.loading = false;
-                state.products = action.payload;
-                state.total = action.payload.length;
+                state.products = action.payload.products;
+                state.pagination = action.payload.pagination;
+                state.total = action.payload.pagination.count;
             })
             .addCase(fetchProducts.rejected, (state, action) => {
                 state.loading = false;
