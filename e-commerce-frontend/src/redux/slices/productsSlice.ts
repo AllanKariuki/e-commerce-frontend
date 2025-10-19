@@ -4,6 +4,7 @@ import { get } from "../../api";
 
 const ProductState: ProductState = {
     products: [],
+    pagination: {},
     selectedProduct: null,
     loading: false,
     error: null,
@@ -30,7 +31,7 @@ export const fetchProducts = createAsyncThunk(
 
             const queryString = query.toString();
             const url = queryString ? `/products?${queryString}` : '/products';
-            console.log('Fetching products from:', url);
+            
             const response = await get<Product[]>(url);
             return response;
         } catch (error: any) {
