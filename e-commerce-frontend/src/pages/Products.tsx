@@ -41,6 +41,14 @@ const Products = () => {
         setMaxPrice(priceRange.max);
     }
 
+    const handleClearFilters = () => {
+        setMinPrice(undefined);
+        setMaxPrice(undefined);
+        setSizeFilter(undefined);
+        setColorFilter(undefined);
+        setRatingsFilter(undefined);
+    }
+
     return (
         <div className="">
             <h2 className="text-5xl text-center font-semibold my-6">Products Page</h2>
@@ -56,6 +64,7 @@ const Products = () => {
                         colorFilter={colorFilter}
                         onColorChange={handleColorChange}
                         onPriceRangeChange={handlePriceChange}
+                        onClearFilters={handleClearFilters}
                     />
                 </div>
                 
