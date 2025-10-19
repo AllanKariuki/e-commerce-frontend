@@ -25,7 +25,7 @@ const Products = () => {
             dispatch(fetchProducts({ category: categoryName?.toLowerCase(), minPrice, maxPrice, sizeFilter, colorFilter, ratingsFilter }) as any);
             return;
         }
-        dispatch(fetchProducts as any);
+        dispatch(fetchProducts({ page: 0, pageSize: 12 }) as any);
     }, [dispatch, categoryName, minPrice, maxPrice, sizeFilter, colorFilter, ratingsFilter]);
 
     const handleColorChange = (color: string) => {
