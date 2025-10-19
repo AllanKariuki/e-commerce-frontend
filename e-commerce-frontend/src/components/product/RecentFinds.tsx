@@ -66,7 +66,7 @@ const recentFindsData: RecentFindsItemProps[] = [
         inStock: true,
     },
     {
-        id: 'rf4',
+        id: 'rf6',
         name: 'Classic Style',
         brand: 'Adien Selly',
         price: 50,
