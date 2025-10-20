@@ -2,6 +2,8 @@ import type { Product } from "./product";
 
 export interface CartItemType {
     item: Product;
+    size: string;
+    color: string;
     quantity: number;
     total: number;
 }
