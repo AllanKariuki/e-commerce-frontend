@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Heart, Filter, Grid3X3, List, Trash2, ShoppingBag } from 'lucide-react';
 import type { RootState } from '../redux/store';
-import { clearWishlist, inStockWishlistItems, outOfStockWishlistItems } from '../redux/store/wishlistSlice';
+import { clearWishlist, selectInStockItemsFromRoot, selectOutOfStockItemsFromRoot } from '../redux/store/wishlistSlice';
 import WishlistCard from '../components/wishlist/WishlistCard';
 import WishlistEmptyState from '../components/wishlist/WishlistEmptyState';
 import WishlistDemo from '../components/wishlist/WishlistDemo';
@@ -10,8 +10,8 @@ import WishlistDemo from '../components/wishlist/WishlistDemo';
 const WishlistPage: React.FC = () => {
     const dispatch = useDispatch();
     const { items, loading, error } = useSelector((state: RootState) => state.wishlist);
-    const inStockItems = useSelector(inStockWishlistItems);
-    const outOfStock = useSelector(outOfStockWishlistItems);
+    const inStockItems = useSelector(selectInStockItemsFromRoot);
+    const outOfStock = useSelector(selectOutOfStockItemsFromRoot);
     const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
     const [sortBy, setSortBy] = useState<'newest' | 'oldest' | 'price-low' | 'price-high' | 'name'>('newest');
     const [filterBy, setFilterBy] = useState<'all' | 'in-stock' | 'on-sale'>('all');
@@ -68,7 +68,7 @@ const WishlistPage: React.FC = () => {
         });
 
         return filtered;
-    }, [items, filterBy, sortBy]);
+    }, [items, filterBy, sortBy, inStockItems, outOfStock]);
 
     if (loading) {
         return (
