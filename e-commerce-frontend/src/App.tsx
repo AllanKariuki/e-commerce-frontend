@@ -7,6 +7,7 @@ import CartPage from './pages/CartPage';
 import Checkout from './pages/Checkout';
 import Products from './pages/Products';
 import WishlistPage from './pages/WishlistPage';
+import RecentFindsPage from './pages/RecentFindsPage';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Route path="/checkout" element={<MainLayout><Checkout /></MainLayout>} />
         <Route path="/products" element={<MainLayout><Products /></MainLayout>} />
         <Route path="/wishlist" element={<MainLayout><WishlistPage /></MainLayout>} />
+        <Route path='/recent-views' element={<MainLayout><RecentFindsPage /></MainLayout>} />
       </Routes>
       
     </Router>
