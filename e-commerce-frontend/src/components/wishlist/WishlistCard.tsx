@@ -47,7 +47,7 @@ const WishlistCard: React.FC<WishlistCardProps> = ({ item }) => {
             {/* Heart Icon - Always visible, filled when in wishlist */}
             <button
                 onClick={handleRemoveFromWishlist}
-                className="absolute top-3 right-3 z-10 p-2 rounded-full bg-white shadow-sm hover:bg-red-50 transition-colors duration-200"
+                className="absolute top-3 right-3 z-10 p-2 rounded-full bg-white shadow-sm cursor-pointer hover:bg-red-50 transition-colors duration-200"
             >
                 <Heart 
                     size={18} 
@@ -58,7 +58,7 @@ const WishlistCard: React.FC<WishlistCardProps> = ({ item }) => {
             {/* Quick View Button */}
             <button
                 onClick={handleViewProduct}
-                className="absolute top-3 left-3 z-10 p-2 rounded-full bg-white shadow-sm opacity-0 group-hover:opacity-100 hover:bg-blue-50 transition-all duration-200"
+                className="absolute top-3 left-3 z-10 p-2 cursor-pointer rounded-full bg-white shadow-sm opacity-0 group-hover:opacity-100 hover:bg-blue-50 transition-all duration-200"
             >
                 <Eye size={16} className="text-gray-600" />
             </button>
@@ -127,7 +127,7 @@ const WishlistCard: React.FC<WishlistCardProps> = ({ item }) => {
                     <button
                         onClick={handleAddToCart}
                         disabled={item.units_in_stock === 0}
-                        className={`flex-1 flex items-center justify-center gap-2 py-2 px-3 rounded-lg text-sm font-medium transition-colors duration-200 ${
+                        className={`flex-1 flex items-center justify-center gap-2 py-2 px-3 rounded-lg text-sm font-medium transition-colors duration-200 cursor-pointer ${
                             item.units_in_stock > 0
                                 ? 'bg-black text-white hover:bg-gray-800'
                                 : 'bg-gray-200 text-gray-400 cursor-not-allowed'
