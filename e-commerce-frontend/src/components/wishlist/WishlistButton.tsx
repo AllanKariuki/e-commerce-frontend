@@ -1,7 +1,7 @@
 import React from 'react';
 import { Heart } from 'lucide-react';
 import { useDispatch, useSelector } from 'react-redux';
-import { addToWishlist, removeFromWishlist } from '../../redux/store/wishlistSlice';
+import { addToWishlist, removeFromWishlist, selectWishlistItemsFromRoot } from '../../redux/store/wishlistSlice';
 import type { AppDispatch, RootState } from '../../redux/store';
 import type { WishlistItem } from '../../types/wishlist';
 
@@ -19,7 +19,7 @@ const WishlistButton: React.FC<WishlistButtonProps> = ({
     showTooltip = true 
 }) => {
     const dispatch = useDispatch<AppDispatch>();
-    const wishlistItems = useSelector((state: RootState) => state.wishlist.items);
+    const wishlistItems = useSelector(selectWishlistItemsFromRoot);
 
     const isInWishlist = wishlistItems.some(wishlistItem => wishlistItem?.id === item.id);
 
