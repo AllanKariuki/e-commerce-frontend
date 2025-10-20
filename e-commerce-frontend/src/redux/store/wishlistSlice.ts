@@ -21,7 +21,7 @@ const wishlistSlice = createSlice({
                 });
             }
         },
-        removeFromWishlist: (state, action: PayloadAction<string>) => {
+        removeFromWishlist: (state, action: PayloadAction<number>) => {
             state.items = state.items.filter(item => item.id !== action.payload);
         },
         clearWishlist: (state) => {
