@@ -11,7 +11,7 @@ interface RecentFindsItemProps {
     product: Product;
 }
 
-const RecentFindsCard: React.FC<RecentFindsItemProps> = ({
+export const RecentFindsCard: React.FC<RecentFindsItemProps> = ({
     product
 }) => {
     const renderStars = (rating: number) => {
