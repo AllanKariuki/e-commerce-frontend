@@ -1,17 +1,5 @@
-export interface WishlistItem {
-    id: string;
-    name: string;
-    price: number;
-    originalPrice?: number;
-    discount?: number;
-    image: string;
-    brand?: string;
-    rating: number;
-    reviewCount: number;
-    sizes?: string[];
-    colors?: string[];
-    category: string;
-    inStock: boolean;
+import type { Product } from './product';
+export interface WishlistItem extends Product {
     dateAdded: string;
 }
 
