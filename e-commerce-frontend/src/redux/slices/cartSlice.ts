@@ -58,6 +58,18 @@ export const cartSlice = createSlice({
                 const totalDifference = currentItem.total - oldTotal;
                 state.cart.subtotal += totalDifference;
                 state.cart.totalAmount += totalDifference;
+
+                // Update dicsounts and percentage discount if applicable
+                if (currentItem.item.discount || currentItem.item.discount_percentage) {
+                    const oldDiscount = (currentItem.item.discount || 0) * (oldTotal / (currentItem.item.price * (oldTotal / currentItem.quantity)));
+                    const newDiscount = (currentItem.item.discount || 0) * (currentItem.total / (currentItem.item.price * currentItem.quantity));
+                    state.cart.discount += (newDiscount - oldDiscount);
+                }
+                if (currentItem.item.discount_percentage) {
+                    const oldPercentageDiscount = currentItem.item.discount_percentage * (oldTotal / (currentItem.item.price * (oldTotal / currentItem.quantity)));
+                    const newPercentageDiscount = currentItem.item.discount_percentage * (currentItem.total / (currentItem.item.price * currentItem.quantity));
+                    state.cart.percentageDiscount += (newPercentageDiscount - oldPercentageDiscount);
+                }
             }
         }
     }
