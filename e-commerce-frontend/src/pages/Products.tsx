@@ -19,14 +19,20 @@ const Products = () => {
     const [sizeFilter, setSizeFilter] = useState<string | undefined>();
     const [ratingsFilter, setRatingsFilter] = useState<number | undefined>();
     const [colorFilter, setColorFilter] = useState<string | undefined>();
+    const [categoryFilter, setCategoryFilter] = useState<string | undefined>();
+    const [brandFilter, setBrandFilter] = useState<string | undefined>();
 
     useEffect(() => {
-        if (categoryName || minPrice || maxPrice || sizeFilter || colorFilter || ratingsFilter) {
-            dispatch(fetchProducts({ category: categoryName?.toLowerCase(), minPrice, maxPrice, sizeFilter, colorFilter, ratingsFilter }) as any);
+        if (categoryName || minPrice || maxPrice || sizeFilter || colorFilter || ratingsFilter || categoryFilter || brandFilter) {
+            dispatch(fetchProducts({ 
+                category: categoryName?.toLowerCase(), 
+                minPrice, maxPrice, sizeFilter, colorFilter, 
+                ratingsFilter, categoryFilter, brandFilter 
+            }) as any);
             return;
         }
         dispatch(fetchProducts({ page: 0, pageSize: 12 }) as any);
-    }, [dispatch, categoryName, minPrice, maxPrice, sizeFilter, colorFilter, ratingsFilter]);
+    }, [dispatch, categoryName, minPrice, maxPrice, sizeFilter, colorFilter, ratingsFilter, categoryFilter, brandFilter]);
 
     const handleColorChange = (color: string) => {
         setColorFilter(color);
@@ -41,12 +47,22 @@ const Products = () => {
         setMaxPrice(priceRange.max);
     }
 
+    const handleCategoryChange = (category: string) => {
+        setCategoryFilter(category);
+    }
+
+    const handleBrandChange = (brand: string) => {
+        setBrandFilter(brand);
+    }
+
     const handleClearFilters = () => {
         setMinPrice(undefined);
         setMaxPrice(undefined);
         setSizeFilter(undefined);
         setColorFilter(undefined);
         setRatingsFilter(undefined);
+        setCategoryFilter(undefined);
+        setBrandFilter(undefined);
     }
 
     return (
@@ -62,9 +78,13 @@ const Products = () => {
                         ratingsFilter={ratingsFilter}
                         setRatingsFilter={setRatingsFilter}
                         colorFilter={colorFilter}
+                        categoryFilter={categoryFilter}
+                        brandFilter={brandFilter}
                         onColorChange={handleColorChange}
                         onPriceRangeChange={handlePriceChange}
                         onClearFilters={handleClearFilters}
+                        onCategoryChange={handleCategoryChange}
+                        onBrandChange={handleBrandChange}
                     />
                 </div>
                 

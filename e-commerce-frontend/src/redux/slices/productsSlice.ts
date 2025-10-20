@@ -14,7 +14,12 @@ const ProductState: ProductState = {
 
 export const fetchProducts = createAsyncThunk(
     'products/fetchProducts',
-    async (params: { page?: number; pageSize?: number; limit?: number; category?: string; search?: string; minPrice?: number; maxPrice?: number; sizeFilter?: string; colorFilter?: string; ratingsFilter?: number; } = {}, { rejectWithValue }) => {
+    async (params: { 
+        page?: number; pageSize?: number; limit?: number; 
+        category?: string; search?: string; minPrice?: number; 
+        maxPrice?: number; sizeFilter?: string; colorFilter?: string; 
+        ratingsFilter?: number; categoryFilter?: string; brandFilter?: string;
+    } = {}, { rejectWithValue }) => {
         try {
             console.log('Fetching products');
             
@@ -29,6 +34,8 @@ export const fetchProducts = createAsyncThunk(
             if (params.sizeFilter) query.append('size', params.sizeFilter.toString());
             if (params.colorFilter) query.append('color', params.colorFilter.toString());
             if (params.ratingsFilter) query.append('rating', params.ratingsFilter.toString());
+            if (params.categoryFilter) query.append('category_name', params.categoryFilter.toString());
+            if (params.brandFilter) query.append('brand', params.brandFilter.toString());
 
             const queryString = query.toString();
             const url = queryString ? `/products?${queryString}` : '/products';
