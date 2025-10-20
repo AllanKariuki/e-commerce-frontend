@@ -86,6 +86,7 @@ export const RecentFindsCard: React.FC<RecentFindsItemProps> = ({
 
 const RecentFinds: React.FC = () => {
     const scrollContainerRef = useRef<HTMLDivElement>(null);
+    const navigate = useNavigate();
     const dispatch = useDispatch<AppDispatch>();
     const isLoading = useSelector(selectLoading);
     const error = useSelector(selectFetchError);
@@ -140,7 +141,10 @@ const RecentFinds: React.FC = () => {
                         </button>
                     </div>
                     
-                    <button className="text-sm text-gray-600 hover:text-gray-900 transition-colors">
+                    <button 
+                        className="text-sm text-gray-600 hover:text-gray-900 cursor-pointer transition-colors"
+                        onClick={() => navigate('/recent-views')}
+                    >
                         View All
                     </button>
                 </div>
