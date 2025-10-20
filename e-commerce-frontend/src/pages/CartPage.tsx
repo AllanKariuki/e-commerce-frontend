@@ -4,59 +4,39 @@ import CartItem from '../components/cart/CartItem';
 import CheckoutSteps from '../components/cart/CheckoutSteps';
 import OrderSummary from '../components/cart/OrderSummary';
 import type { CartItemType } from '../types/cart';
+import { useDispatch, useSelector } from 'react-redux';
+import type { AppDispatch } from '../redux/store';
+import { cartDeliveryFee, cartDiscount, cartError, cartIsLoading, cartItems, cartSubtotal, cartTotalAmount, removeItemFromCart } from '../redux/slices/cartSlice';
 
 const CartPage = () => {
-    const [cartItems, setCartItems] = useState<CartItemType[]>([
-        {
-          id: "1",
-          name: 'N20 Gas',
-          size: 'Small',
-          color: 'White',
-          price: 145,
-          quantity: 2,
-          image: '/api/placeholder/50/50'
-        },
-        {
-          id: "2",
-          name: 'Laughing Gas',
-          size: 'Medium',
-          color: 'Red',
-          price: 180,
-          quantity: 4,
-          image: '/api/placeholder/50/50'
-        },
-        {
-          id: "3",
-          name: 'Ammonium Gas',
-          size: 'Large',
-          color: 'Blue',
-          price: 240,
-          quantity: 6,
-          image: '/api/placeholder/50/50'
-        }
-      ]);
+       const dispatch = useDispatch<AppDispatch>();
+       const isLoading = useSelector(cartIsLoading);
+       const error = useSelector(cartError);
+       const cartList = useSelector(cartItems);
+       const subtotal = useSelector(cartSubtotal);
+       const totalAmount = useSelector(cartTotalAmount);
+       const discount = useSelector(cartDiscount);
+       const deliveryFee = useSelector(cartDeliveryFee);
     
       const [selectAll, setSelectAll] = useState<boolean>(false);
       const [couponCode, setCouponCode] = useState<string>('');
-      const discountPercentage = 20;
+      // const discountPercentage = 20;
     
-      // Calculate totals
-      const subtotal = cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-      const discount = subtotal * (discountPercentage / 100);
-      const deliveryFee = 15;
-      const total = subtotal - discount + deliveryFee;
+      // // Calculate totals
+      // const subtotal = cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+      // const discount = subtotal * (discountPercentage / 100);
+      // const deliveryFee = 15;
+      // const total = subtotal - discount + deliveryFee;
     
       // Handle quantity changes
       const updateQuantity = (id: string, newQuantity: number) => {
         if (newQuantity >= 1) {
-          setCartItems(cartItems.map(item => 
-            item.id === id ? { ...item, quantity: newQuantity } : item
-          ));
+          dispatch(updateQuantity( id, {quantity: newQuantity} ) as any);
         }
       };
 
-      const handleRemoveItem = (id: string) => {
-        setCartItems(cartItems.filter(item => item.id !== id));
+      const handleRemoveItem = (id: number) => {
+        dispatch(removeItemFromCart(id) as any);
       }
     
       // Handle item deletion
