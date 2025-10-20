@@ -1,10 +1,11 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Star, ChevronRight, ChevronLeft } from 'lucide-react';
 import WishlistButton from '../wishlist/WishlistButton';
 import { useNavigate } from 'react-router-dom';
 import type { Product } from '../../types/product';
-import { useSelector } from 'react-redux';
-import { selectFetchError, selectLoading, selectRecentProducts } from '../../redux/slices/recentViewsSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchRecentViews, selectFetchError, selectLoading, selectRecentProducts } from '../../redux/slices/recentViewsSlice';
+import type { AppDispatch } from '../../redux/store';
 
 interface RecentFindsItemProps {
     product: Product;
@@ -85,9 +86,14 @@ const RecentFindsCard: React.FC<RecentFindsItemProps> = ({
 
 const RecentFinds: React.FC = () => {
     const scrollContainerRef = useRef<HTMLDivElement>(null);
+    const dispatch = useDispatch<AppDispatch>();
     const isLoading = useSelector(selectLoading);
     const error = useSelector(selectFetchError);
     const recentFindsData = useSelector(selectRecentProducts);
+
+    useEffect(() => {
+        dispatch(fetchRecentViews() as any);
+    }, [dispatch]);
 
     const scrollLeft = () => {
         if (scrollContainerRef.current) {
