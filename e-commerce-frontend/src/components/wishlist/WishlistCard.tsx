@@ -36,8 +36,10 @@ const WishlistCard: React.FC<WishlistCardProps> = ({ item }) => {
         ));
     };
 
-    const discountPercentage = item.originalPrice 
-        ? Math.round(((item.originalPrice - item.price) / item.originalPrice) * 100)
+    const origPrice = Number(item.original_price);
+    const currentPrice = Number(item.price);
+    const discountPercentage = isFinite(origPrice) && origPrice > 0
+        ? Math.round(((origPrice - currentPrice) / origPrice) * 100)
         : 0;
 
     return (
@@ -69,8 +71,8 @@ const WishlistCard: React.FC<WishlistCardProps> = ({ item }) => {
             )}
 
             {/* Stock Status */}
-            {!item.inStock && (
-                <div className="absolute inset-0 bg-black bg-opacity-50 z-10 flex items-center justify-center">
+            {!(item.units_in_stock > 0) && (
+                <div className="absolute inset-0 bg-black/10 bg-opacity-90 z-10 flex items-center justify-center">
                     <span className="text-white font-medium">Out of Stock</span>
                 </div>
             )}
@@ -78,7 +80,7 @@ const WishlistCard: React.FC<WishlistCardProps> = ({ item }) => {
             {/* Product Image */}
             <div className="h-72 overflow-hidden">
                 <img 
-                    src={item.image} 
+                    src={item.main_image?.image || '/assets/images/cargo-pants.jpg'} 
                     alt={item.name}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" 
                 />
@@ -87,9 +89,9 @@ const WishlistCard: React.FC<WishlistCardProps> = ({ item }) => {
             {/* Product Info */}
             <div className="p-4">
                 {/* Brand */}
-                {item.brand && (
+                {item.category_name && (
                     <span className="text-xs text-gray-500 font-medium uppercase tracking-wide">
-                        {item.brand}
+                        {item.category_name}
                     </span>
                 )}
                 
@@ -101,21 +103,21 @@ const WishlistCard: React.FC<WishlistCardProps> = ({ item }) => {
                 {/* Rating */}
                 <div className="flex items-center gap-1 mt-2">
                     <div className="flex">
-                        {renderStars(item.rating)}
+                        {renderStars(item.rating || 0)}
                     </div>
                     <span className="text-xs text-gray-500">
-                        {item.rating} ({item.reviewCount})
+                        {item.rating || 0} ({item.reviews.length})
                     </span>
                 </div>
 
                 {/* Price */}
                 <div className="flex items-center gap-2 mt-2">
                     <span className="font-semibold text-gray-900">
-                        ${item.price}
+                        Ksh.{item.price}
                     </span>
-                    {item.originalPrice && item.originalPrice > item.price && (
+                    {item.original_price && item.original_price > item.price && (
                         <span className="text-sm text-gray-500 line-through">
-                            ${item.originalPrice}
+                            Ksh.{item.original_price}
                         </span>
                     )}
                 </div>
@@ -124,9 +126,9 @@ const WishlistCard: React.FC<WishlistCardProps> = ({ item }) => {
                 <div className="flex gap-2 mt-4">
                     <button
                         onClick={handleAddToCart}
-                        disabled={!item.inStock}
+                        disabled={item.units_in_stock === 0}
                         className={`flex-1 flex items-center justify-center gap-2 py-2 px-3 rounded-lg text-sm font-medium transition-colors duration-200 ${
-                            item.inStock
+                            item.units_in_stock > 0
                                 ? 'bg-black text-white hover:bg-gray-800'
                                 : 'bg-gray-200 text-gray-400 cursor-not-allowed'
                         }`}
