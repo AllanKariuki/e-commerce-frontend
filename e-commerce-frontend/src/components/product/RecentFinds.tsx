@@ -2,90 +2,16 @@ import React, { useRef } from 'react';
 import { Star, ChevronRight, ChevronLeft } from 'lucide-react';
 import WishlistButton from '../wishlist/WishlistButton';
 import { useNavigate } from 'react-router-dom';
+import type { Product } from '../../types/product';
+import { useSelector } from 'react-redux';
+import { selectProducts } from '../../redux/slices/productsSlice';
 
 interface RecentFindsItemProps {
-    id: string;
-    name: string;
-    brand: string;
-    price: number;
-    rating: number;
-    reviewCount: number;
-    image: string;
-    inStock?: boolean;
+    product: Product;
 }
 
-const recentFindsData: RecentFindsItemProps[] = [
-    {
-        id: 'rf1',
-        name: 'Premium Hoodie',
-        brand: 'Nike',
-        price: 50,
-        rating: 4.2,
-        reviewCount: 12,
-        image: '/assets/images/hoodie.jpg',
-        inStock: true,
-    },
-    {
-        id: 'rf2',
-        name: 'Classic Denim',
-        brand: 'Lacoste',
-        price: 60,
-        rating: 4.2,
-        reviewCount: 12,
-        image: '/assets/images/cool-denim.jpg',
-        inStock: true,
-    },
-    {
-        id: 'rf3',
-        name: 'Comfort Hoodie',
-        brand: 'GAP',
-        price: 50,
-        rating: 4.2,
-        reviewCount: 12,
-        image: '/assets/images/sweat-shirt.jpg',
-        inStock: true,
-    },
-    {
-        id: 'rf4',
-        name: 'Urban Style',
-        brand: 'Adien Selly',
-        price: 50,
-        rating: 4.2,
-        reviewCount: 12,
-        image: '/assets/images/woolen-denim.jpg',
-        inStock: true,
-    },
-    {
-        id: 'rf5',
-        name: 'Some wear',
-        brand: 'Adien Selly',
-        price: 50,
-        rating: 4.2,
-        reviewCount: 12,
-        image: '/assets/images/woolen-denim.jpg',
-        inStock: true,
-    },
-    {
-        id: 'rf6',
-        name: 'Classic Style',
-        brand: 'Adien Selly',
-        price: 50,
-        rating: 4.2,
-        reviewCount: 12,
-        image: '/assets/images/woolen-denim.jpg',
-        inStock: true,
-    },
-];
-
 const RecentFindsCard: React.FC<RecentFindsItemProps> = ({
-    id,
-    name,
-    brand,
-    price,
-    rating,
-    reviewCount,
-    image,
-    inStock = true
+    product
 }) => {
     const renderStars = (rating: number) => {
         return Array.from({ length: 5 }, (_, i) => (
@@ -97,18 +23,6 @@ const RecentFindsCard: React.FC<RecentFindsItemProps> = ({
         ));
     };
 
-    const wishlistItem = {
-        id,
-        name,
-        price,
-        image,
-        brand,
-        rating,
-        reviewCount,
-        category: 'Recent Finds',
-        inStock,
-    };
-
     const navigate = useNavigate();
 
     return (
@@ -116,8 +30,8 @@ const RecentFindsCard: React.FC<RecentFindsItemProps> = ({
             {/* Product Image */}
             <div className="aspect-square relative overflow-hidden rounded-b-2xl">
                 <img 
-                    src={image} 
-                    alt={name}
+                    src={ product.main_image?.image || '/assets/images/cargo-pants.jpg'}
+                    alt={product.name}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" 
                 />
                 
@@ -126,7 +40,7 @@ const RecentFindsCard: React.FC<RecentFindsItemProps> = ({
                     className="absolute bottom-3 left-3 bg-gray-50 rounded-full px-4 py-2 
                     text-sm font-medium shadow-sm opacity-0 group-hover:opacity-100 
                     transition-opacity duration-200 hover:bg-gray-50 cursor-pointer"
-                    onClick={() => navigate(`/product/${id}`)}
+                    onClick={() => navigate(`/product/${product.id}`)}
                 >
                     Quick View
                 </button>
@@ -134,7 +48,7 @@ const RecentFindsCard: React.FC<RecentFindsItemProps> = ({
                 {/* Wishlist Button */}
                 <div className="absolute bottom-3 right-3">
                     <WishlistButton 
-                        item={wishlistItem}
+                        item={product}
                         className="bg-white text-gray-900 hover:bg-gray-100 cursor-pointer"
                         size={16}
                     />
@@ -144,25 +58,25 @@ const RecentFindsCard: React.FC<RecentFindsItemProps> = ({
             {/* Product Details */}
             <div className="p-4 bg-white">
                 <div className="text-xs text-gray-500 uppercase tracking-wide mb-1">
-                    {brand}
+                    {product.category_name}
                 </div>
                 <h3 className="font-medium text-gray-900 text-sm mb-2">
-                    {name}
+                    {product.name}
                 </h3>
                 
                 {/* Rating */}
                 <div className="flex items-center gap-1 mb-2">
                     <div className="flex">
-                        {renderStars(rating)}
+                        {renderStars(product.rating || 0)}
                     </div>
                     <span className="text-xs text-gray-500">
-                        {rating} ({reviewCount})
+                        {product.rating || 0} ({product.reviews.length})
                     </span>
                 </div>
 
                 {/* Price */}
                 <div className="font-semibold text-gray-900">
-                    ${price}
+                    Ksh.{product.price}
                 </div>
             </div>
         </div>
@@ -171,6 +85,7 @@ const RecentFindsCard: React.FC<RecentFindsItemProps> = ({
 
 const RecentFinds: React.FC = () => {
     const scrollContainerRef = useRef<HTMLDivElement>(null);
+    const recentFindsData = useSelector(selectProducts);
 
     const scrollLeft = () => {
         if (scrollContainerRef.current) {
@@ -236,7 +151,7 @@ const RecentFinds: React.FC = () => {
             >
                 {recentFindsData.map((item) => (
                     <div key={item.id} className="flex-shrink-0 w-64">
-                        <RecentFindsCard {...item} />
+                        <RecentFindsCard product={item} />
                     </div>
                 ))}
             </div>
