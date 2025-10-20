@@ -7,6 +7,7 @@ const initialState: CartState = {
         items: [],
         subtotal: 0,
         discount: 0,
+        percentageDiscount: 0,
         deliveryFee: 0,
         totalAmount: 0,
     },
@@ -22,6 +23,10 @@ export const cartSlice = createSlice({
             state.cart.items.push(action.payload);
             state.cart.subtotal += action.payload.total;
             state.cart.totalAmount += action.payload.total;
+            if (action.payload.item.discount || action.payload.item.discount_percentage) {
+                state.cart.discount += action.payload.item.discount || 0;
+                state.cart.percentageDiscount += action.payload.item.discount_percentage || 0;
+            }
         },
         removeItemFromCart: (state, action: PayloadAction<number>) => {
             const itemIndex = state.cart.items.findIndex(item => item.item.id === action.payload);
@@ -92,5 +97,9 @@ export const cartIsLoading = (state: { cart: CartState }): boolean => {
 export const cartError = (state: { cart: CartState }): string | null => {
     return state.cart.error;
 }
+export const cartPercentageDiscount = (state: { cart: CartState }): number => {
+    return state.cart.cart.percentageDiscount;
+}
+
 
 export default cartSlice.reducer;
