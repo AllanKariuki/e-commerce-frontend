@@ -1,10 +1,16 @@
 import React, { useState } from 'react';
 import ReviewsContent from './ReviewsContent';
+import type { Product } from '../../types/product';
 
+interface ProductTabsProps {
+  product: Product;
+}
 
-const ProductTabs = () => {
-    const [activeTab, setActiveTab] = useState('Details');
+const ProductTabs: React.FC<ProductTabsProps> = ({ product }) => {
+  const [activeTab, setActiveTab] = useState('Details');
   const tabs = ['Details', 'Reviews', 'Discussion'];
+  const reviews = product?.reviews || [];
+  const details = product?.description || '';
   
   return (
     <div className="mt-12">
@@ -26,7 +32,7 @@ const ProductTabs = () => {
         </div>
       </div>
       
-      {activeTab === 'Reviews' && <ReviewsContent />}
+      {activeTab === 'Reviews' && <ReviewsContent reviews={reviews} />}
     </div>
   );
 }

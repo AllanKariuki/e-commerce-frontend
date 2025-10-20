@@ -1,9 +1,9 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Package, Trash2, Plus } from 'lucide-react';
-import { addToWishlist, clearWishlist } from '../../store/wishlistSlice';
+import { addToWishlist, clearWishlist } from '../../redux/store/wishlistSlice';
 import { sampleWishlistItems } from '../../utils/sampleWishlistData';
-import type { RootState } from '../../store';
+import type { RootState } from '../../redux/store';
 
 const WishlistDemo: React.FC = () => {
     const dispatch = useDispatch();

@@ -1,7 +1,13 @@
 import { Heart, ShoppingCart, ChevronDown, Dot, ShoppingBag, Truck, Star, ChevronDownCircle, ChevronRightCircle, ChevronLeftCircle,  } from 'lucide-react';
+import type { Review } from '../../types/product';
+import type React from 'react';
 
-const Reviewscontent = () => {
-    const reviews = [
+interface ReviewContentProps {
+  reviews: Review[];
+}
+
+const ReviewsContent: React.FC<ReviewContentProps> = ({ reviews }) => {
+    const testReviews = [
         {
           author: 'Helen M.',
           date: 'Yesterday',
@@ -58,7 +64,7 @@ const Reviewscontent = () => {
           
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             <div>
-              {reviews.map((review, index) => (
+              {testReviews.map((review, index) => (
                 <div key={index} className="py-4 border-t border-gray-200">
                   <div className="flex items-center mb-2">
                     <div className="w-8 h-8 bg-gray-200 rounded-full overflow-hidden">
@@ -123,4 +129,4 @@ const Reviewscontent = () => {
       );
 }
 
-export default Reviewscontent;
+export default ReviewsContent;

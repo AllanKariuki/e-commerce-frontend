@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Search, Menu, Info, ShoppingBag, ChevronDown, ChevronLeft, ChevronRight, Plus, ArrowUpRight, Heart, User } from 'lucide-react';
 import ProductDetailCard from "../components/ProductDetailCard";
 import StayInTouch from "../components/StayInTouch";
@@ -9,10 +9,22 @@ import BrandStory from "../components/index/BrandStory";
 import Testimonials from "../components/index/Testimonials";
 import Categories from "../components/index/Categories";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import type { AppDispatch } from "../redux/store";
+import { fetchProducts, selectProducts, selectTotalProducts } from "../redux/slices/productsSlice";
 
 const Index = () => {
 
     const [currentSlide, setCurrentSlide] = useState(0);
+    const dispatch =  useDispatch<AppDispatch>();
+    const products = useSelector(selectProducts);
+    const totalProducts = useSelector(selectTotalProducts);
+
+    useEffect(() => {
+        console.log('Triggering products fetch');
+        dispatch(fetchProducts() as any);
+    }, []);
+
     const navigate = useNavigate();
   
     const nextSlide = () => {
@@ -132,11 +144,12 @@ const Index = () => {
             </h4> 
             
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-5 overflow-x-auto">
-
-              <ProductDetailCard/>
-              <ProductDetailCard />
-              <ProductDetailCard />
-              <ProductDetailCard />
+              {
+                products.map(product => (
+                  <ProductDetailCard key={product.id} product={product} />
+                ))
+              }
+              
               
             </div>
           </div>

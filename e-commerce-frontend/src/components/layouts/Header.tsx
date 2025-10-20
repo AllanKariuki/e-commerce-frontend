@@ -1,14 +1,22 @@
 import { Search, Menu, Info, ShoppingBag, ChevronDown, ChevronLeft, ChevronRight, Plus, ArrowUpRight, Heart, User } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import type { RootState } from '../../store';
+import { useDispatch, useSelector } from 'react-redux';
+import { type AppDispatch, type RootState } from '../../redux/store';
+import { fetchCategories, selectedCategories } from '../../redux/slices/categorySlice';
+import { useEffect } from 'react';
 
 
 const Header = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch<AppDispatch>();
   const wishlistCount = useSelector((state: RootState) => state.wishlist.items.length);
   const params = new URLSearchParams(window.location.search);
-  const type = params.get('type');
+  const type = params.get('category-name');
+  const categories = useSelector(selectedCategories);
+
+  useEffect(() => {
+    dispatch(fetchCategories() as any);
+  }, [dispatch]);
 
     return (
         <header className="border-b border-gray-200">
@@ -87,49 +95,19 @@ const Header = () => {
                   </div>
                 </div>
                 
-                <div className="flex items-center space-x-2">
-                  <button 
-                    onClick={() => navigate('/products?type=men')} 
-                    className={`text-xs px-4 py-2 rounded-full border border-gray-200 cursor-pointer hover:bg-gray-50 hover:border-gray-300 
-                    ${type === 'men' ? 'bg-black text-white': 'bg-white text-black'}`}>
-                    Men
-                  </button>
-                  <button 
-                    onClick={() => navigate('/products?type=women')} 
-                    className={`text-xs px-4 py-2 rounded-full border border-gray-200 cursor-pointer hover:bg-gray-50 hover:border-gray-300 
-                    ${type === 'women' ? 'bg-black text-white': 'bg-white text-black'}`}>
-                    Women
-                  </button>
-                  <button 
-                    onClick={() => navigate('/products?type=children')} 
-                    className={`text-xs px-4 py-2 rounded-full border border-gray-200 cursor-pointer hover:bg-gray-50 hover:border-gray-300 
-                    ${type === 'children' ? 'bg-black text-white': 'bg-white text-black'}`}>
-                    Children
-                  </button>
-                  <button 
-                    onClick={() => navigate('/products?type=sports')} 
-                    className={`text-xs px-4 py-2 rounded-full border border-gray-200 cursor-pointer hover:bg-gray-50 hover:border-gray-300 
-                    ${type === 'sports' ? 'bg-black text-white': 'bg-white text-black'}`}>
-                    Sports
-                  </button>
-                  <button 
-                    onClick={() => navigate('/products?type=brands')} 
-                    className={`text-xs px-4 py-2 rounded-full border border-gray-200 cursor-pointer hover:bg-gray-50 hover:border-gray-300 
-                    ${type === 'brands' ? 'bg-black text-white': 'bg-white text-black'}`}>
-                    Brands
-                  </button>
-                  <button 
-                    onClick={() => navigate('/products?type=new')} 
-                    className={`text-xs px-4 py-2 rounded-full border border-gray-200 cursor-pointer hover:bg-gray-50 hover:border-gray-300 
-                    ${type === 'new' ? 'bg-black text-white': 'bg-white text-black'}`}>
-                    New 
-                  </button>
-                  <button 
-                    onClick={() => navigate('/products?type=sale')} 
-                    className={`text-xs px-4 py-2 rounded-full border border-gray-200 cursor-pointer hover:bg-gray-50 hover:border-gray-300 
-                    ${type === 'sale' ? 'bg-black text-white': 'bg-white text-black'}`}>
-                    Sale
-                  </button>
+                <div className="flex items-center space-x-2 overflow-x-auto">
+                  {categories.map((category, index) => {
+                    return (
+                      <button 
+                        key={index}
+                        onClick={() => navigate(`/products?category-name=${category.name}`)} 
+                        className={`text-xs px-4 py-2 rounded-full border border-gray-200 cursor-pointer hover:border-gray-300 
+                        ${type === category.name ? 'bg-black text-white hover:bg-black/80': 'bg-white text-black hover:bg-gray-50'}`}>
+                        {category.name}
+                      </button>
+                    );
+                  })}
+                  
                 </div>
               </div>
           </div>

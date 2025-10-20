@@ -1,21 +1,28 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { ShoppingBag, Plus, Heart } from 'lucide-react';
-import CargoPants from '../assets/images/cargo-pants.jpg';
+import type { Product } from '../types/product';
+import { useNavigate } from 'react-router-dom';
 
-const ProductDetailCard = () => {
+interface ProductDetailCardProps {
+  product: Product;
+}
+
+const ProductDetailCard: React.FC<ProductDetailCardProps> = ({ product }) => {
   const [isHovering, setIsHovering] = useState(false);
   const [isFavorited, setIsFavorited] = useState<boolean>(false);
+  const navigate = useNavigate();
   
   return (
     <div 
-      className="bg-white rounded-3xl overflow-hidden max-w-sm shadow-md mb-2 h-120 relative"
+      className="bg-white rounded-3xl overflow-hidden max-w-sm shadow-md mb-2 h-120 relative cursor-pointer"
       onMouseEnter={() => setIsHovering(true)}
       onMouseLeave={() => setIsHovering(false)}
+      onClick={() => navigate(`/product/${product.id}`)}
     >
       {/* Product Image Section */}
       <div className="relative h-full w-full">
         <img 
-          src={CargoPants || "/assets/images/cargo-pants.jpg"}
+          src={ product.main_image?.image || '/assets/images/cargo-pants.jpg'}
           alt="Brown linen shirt" 
           className="w-full h-full object-cover"
         />
@@ -48,7 +55,7 @@ const ProductDetailCard = () => {
         {/* Category Tag */}
         <div className="flex">
           <span className="px-4 py-2 rounded-full border border-gray-200 text-sm">
-            Men
+            {product.category_name}
           </span>
         </div>
 
@@ -63,13 +70,18 @@ const ProductDetailCard = () => {
                 className="w-full h-full object-cover" 
               />
             </div>
-            <h2 className="text-xl font-medium">100% linen Mao collar shirt</h2>
+            <div className="space-y-2">
+              <h2 className="text-xl font-medium">{product.name}</h2>
+              <h2 className="text-md font-small">{product.description}</h2>
+            </div>
+            
           </div>
 
           {/* Price Information */}
           <div className="flex items-center gap-2">
-            <span className="font-medium text-lg">$49.50</span>
-            <span className="text-gray-500 line-through text-sm">$55.99</span>
+            <span className="font-medium text-lg">Ksh. {product.price}</span>
+            {/* Show this if the image has discount */}
+            {/* <span className="text-gray-500 line-through text-sm">Ksh. 55.99</span> */}
           </div>
 
           {/* Product Reference */}
