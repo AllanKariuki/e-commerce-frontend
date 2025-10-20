@@ -27,6 +27,7 @@ export interface Product {
     colors: string[] | [],
     material?: string | null,
     reviews: Review[] | [],
+    rating?: number,
 }
 
 export interface Category {
