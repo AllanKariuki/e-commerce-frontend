@@ -100,7 +100,7 @@ const RecentFindsPage = () => {
                     <div>
                         <h1 className="text-3xl font-bold text-gray-900">Recently viewed</h1>
                         <p className="text-gray-600">
-                            {recentFindsData.length} {recentFindsData.length === 1 ? 'item' : 'items'} saved
+                            {recentFindsData.length} {recentFindsData.length === 1 ? 'item' : 'items'} viewed
                         </p>
                     </div>
                 </div>
