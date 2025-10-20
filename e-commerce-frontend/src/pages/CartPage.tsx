@@ -6,7 +6,7 @@ import OrderSummary from '../components/cart/OrderSummary';
 import type { CartItemType } from '../types/cart';
 import { useDispatch, useSelector } from 'react-redux';
 import type { AppDispatch } from '../redux/store';
-import { cartDeliveryFee, cartDiscount, cartError, cartIsLoading, cartItems, cartSubtotal, cartTotalAmount, removeItemFromCart } from '../redux/slices/cartSlice';
+import { cartDeliveryFee, cartDiscount, cartError, cartIsLoading, cartItems, cartSubtotal, cartTotalAmount, removeItemFromCart, updateItemQuantity } from '../redux/slices/cartSlice';
 
 const CartPage = () => {
        const dispatch = useDispatch<AppDispatch>();
@@ -29,9 +29,12 @@ const CartPage = () => {
       // const total = subtotal - discount + deliveryFee;
     
       // Handle quantity changes
-      const updateQuantity = (id: string, newQuantity: number) => {
+      const updateQuantity = (id: number, newQuantity: number) => {
         if (newQuantity >= 1) {
-          dispatch(updateQuantity( id, {quantity: newQuantity} ) as any);
+          dispatch(updateItemQuantity({
+            id,
+            quantity: newQuantity
+          }) as any);
         }
       };
 
@@ -92,9 +95,9 @@ const CartPage = () => {
                 
                 {/* Cart Items */}
                 <div className="space-y-4">
-                  {cartItems.map(item => (
+                  {cartList.map(item => (
                     <CartItem 
-                      key={item.id} 
+                      key={item.item.id} 
                       item={item} 
                       updateQuantity={updateQuantity}
                       removeItem={handleRemoveItem}
@@ -111,7 +114,7 @@ const CartPage = () => {
                 discount={discount}
                 discountPercentage={discountPercentage}
                 deliveryFee={deliveryFee}
-                total={total}
+                total={totalAmount}
                 couponCode={couponCode}
                 setCouponCode={setCouponCode}
               />
