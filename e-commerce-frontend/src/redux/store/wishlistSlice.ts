@@ -44,13 +44,50 @@ export const {
     setError,
 } = wishlistSlice.actions;
 
-export const inStockWishlistItems = (state: WishlistState) => {
-    return state.items.filter(item => item.units_in_stock > 0) || [];
-}
+// Selector for wishlist items (works with WishlistState directly)
+export const selectWishlistItems = (state: WishlistState): WishlistItem[] => state.items;
 
-export const outOfStockWishlistItems = (state: WishlistState) => {
-    return state.items.filter(item => item.units_in_stock === 0) || [];
-}
+// Selector for wishlist items (works with RootState)
+export const selectWishlistItemsFromRoot = (state: { wishlist: WishlistState }): WishlistItem[] => {
+    return state.wishlist?.items || [];
+};
+
+// Selector for in-stock items (works with WishlistState directly)
+export const selectInStockItems = (state: WishlistState): WishlistItem[] => {
+    if (!state.items || !Array.isArray(state.items)) {
+        return [];
+    }
+    return state.items.filter(item => item.units_in_stock > 0);
+};
+
+// Selector for in-stock items (works with RootState)
+export const selectInStockItemsFromRoot = (state: { wishlist: WishlistState }): WishlistItem[] => {
+    if (!state.wishlist?.items || !Array.isArray(state.wishlist.items)) {
+        return [];
+    }
+    return state.wishlist.items.filter(item => item.units_in_stock > 0);
+};
+
+// Selector for out-of-stock items (works with WishlistState directly)
+export const selectOutOfStockItems = (state: WishlistState): WishlistItem[] => {
+    if (!state.items || !Array.isArray(state.items)) {
+        return [];
+    }
+    return state.items.filter(item => item.units_in_stock === 0);
+};
+
+// Selector for out-of-stock items (works with RootState)
+export const selectOutOfStockItemsFromRoot = (state: { wishlist: WishlistState }): WishlistItem[] => {
+    if (!state.wishlist?.items || !Array.isArray(state.wishlist.items)) {
+        return [];
+    }
+    return state.wishlist.items.filter(item => item.units_in_stock === 0);
+};
+
+// Legacy selectors (kept for backward compatibility)
+export const selectedWishlistItems = selectWishlistItems;
+export const inStockWishlistItems = selectInStockItems;
+export const outOfStockWishlistItems = selectOutOfStockItems;
 
 
 export default wishlistSlice.reducer;
