@@ -11,11 +11,15 @@ interface ProductFilterProps {
     sizeFilter?: string;
     colorFilter?: string;
     ratingsFilter?: number;
+    categoryFilter?: string;
+    brandFilter?: string;
     setRatingsFilter: (rating: number | undefined) => void;
     onPriceRangeChange: (priceRange: { min?: number; max?: number }) => void;
     onSizeChange: (size: string) => void;
     onColorChange: (color: string) => void;
     onClearFilters?: () => void;
+    onCategoryChange: (category: string) => void;
+    onBrandChange: (brand: string) => void;
 }
 const ProductsFilter: React.FC<ProductFilterProps> = ({
     minPrice = 0,
@@ -27,7 +31,11 @@ const ProductsFilter: React.FC<ProductFilterProps> = ({
     onColorChange,
     ratingsFilter,
     setRatingsFilter,
-    onClearFilters
+    onClearFilters,
+    categoryFilter,
+    onCategoryChange,
+    brandFilter,
+    onBrandChange
 }) => {
   // Count active filters
   const activeFiltersCount = [minPrice && minPrice > 0, maxPrice && maxPrice < 500, sizeFilter, colorFilter, ratingsFilter].filter(Boolean).length;
@@ -74,6 +82,7 @@ const ProductsFilter: React.FC<ProductFilterProps> = ({
                             <input 
                                 type="checkbox" 
                                 className="rounded border-gray-300 text-blue-600 focus:ring-blue-500 focus:ring-2" 
+                                onChange={() => onCategoryChange(category.name)}
                             />
                             <span className="ml-2 text-sm text-gray-700 group-hover:text-gray-900 transition-colors">
                                 {category.name}
@@ -92,6 +101,7 @@ const ProductsFilter: React.FC<ProductFilterProps> = ({
                             <input 
                                 type="checkbox" 
                                 className="rounded border-gray-300 text-blue-600 focus:ring-blue-500 focus:ring-2" 
+                                onChange={() => onBrandChange(brand)}
                             />
                             <span className="ml-2 text-sm text-gray-700 group-hover:text-gray-900 transition-colors">
                                 {brand}
