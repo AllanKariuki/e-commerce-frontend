@@ -38,7 +38,7 @@ export const cartSlice = createSlice({
             state.cart.totalAmount = 0;
             state.cart.discount = 0;
         },
-        updateQuantity: (state, action: PayloadAction<{ id: number, quantity: number}>) => {
+        updateItemQuantity: (state, action: PayloadAction<{ id: number, quantity: number}>) => {
             const itemIndex = state.cart.items.findIndex(item => item.item.id === action.payload.id);
             if (itemIndex !== -1) {
                 const currentItem = state.cart.items[itemIndex];
@@ -61,7 +61,8 @@ export const cartSlice = createSlice({
 export const {
     addItemToCart,
     removeItemFromCart,
-    clearCart
+    clearCart,
+    updateItemQuantity
 } = cartSlice.actions;
 
 export const cartItems = (state: { cart: CartState }): CartItemType[] => {
