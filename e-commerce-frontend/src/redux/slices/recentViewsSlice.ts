@@ -60,4 +60,12 @@ export const selectFetchError = (state: { recentViews: RecentViewState }):  stri
     return state.recentViews.error;
 }
 
+export const selectRecentsInStock = (state: { recentViews: RecentViewState }): Product[] => {
+    return state.recentViews.items.filter(item => item.units_in_stock > 0);
+}
+
+export const selectRecentsOutOfStock = (state: { recentViews: RecentViewState }): Product[] => {
+    return state.recentViews.items.filter(item => item.units_in_stock === 0);
+};
+
 export default recentViewsSlice.reducer;
