@@ -28,6 +28,8 @@ export interface Product {
     material?: string | null,
     reviews: Review[] | [],
     rating?: number,
+    original_price?: string | null,
+    brand?: string | null,
 }
 
 export interface Category {
