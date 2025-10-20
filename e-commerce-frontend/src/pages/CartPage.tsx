@@ -6,7 +6,7 @@ import OrderSummary from '../components/cart/OrderSummary';
 import type { CartItemType } from '../types/cart';
 import { useDispatch, useSelector } from 'react-redux';
 import type { AppDispatch } from '../redux/store';
-import { cartDeliveryFee, cartDiscount, cartError, cartIsLoading, cartItems, cartSubtotal, cartTotalAmount, removeItemFromCart, updateItemQuantity } from '../redux/slices/cartSlice';
+import { cartDeliveryFee, cartDiscount, cartError, cartIsLoading, cartItems, cartPercentageDiscount, cartSubtotal, cartTotalAmount, removeItemFromCart, updateItemQuantity } from '../redux/slices/cartSlice';
 
 const CartPage = () => {
        const dispatch = useDispatch<AppDispatch>();
@@ -16,6 +16,7 @@ const CartPage = () => {
        const subtotal = useSelector(cartSubtotal);
        const totalAmount = useSelector(cartTotalAmount);
        const discount = useSelector(cartDiscount);
+       const discountPercentage = useSelector(cartPercentageDiscount);
        const deliveryFee = useSelector(cartDeliveryFee);
     
       const [selectAll, setSelectAll] = useState<boolean>(false);
