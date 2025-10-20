@@ -44,4 +44,13 @@ export const {
     setError,
 } = wishlistSlice.actions;
 
+export const inStockWishlistItems = (state: WishlistState) => {
+    return state.items.filter(item => item.units_in_stock > 0) || [];
+}
+
+export const outOfStockWishlistItems = (state: WishlistState) => {
+    return state.items.filter(item => item.units_in_stock === 0) || [];
+}
+
+
 export default wishlistSlice.reducer;
