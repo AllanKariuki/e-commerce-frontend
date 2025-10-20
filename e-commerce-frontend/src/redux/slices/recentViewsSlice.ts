@@ -14,7 +14,7 @@ export const fetchRecentViews = createAsyncThunk(
     'recentViews/fetchRecentViews',
     async (_, { rejectWithValue }) => {
         try {
-            const response = await get<ProductsResponse>('/products/recent/');
+            const response = await get<Product[]>('/products/recent/');
             return response;
         } catch (error: any) {
             return rejectWithValue(error.message);
@@ -35,9 +35,9 @@ const recentViewsSlice = createSlice({
             .addCase(fetchRecentViews.pending, (state) => {
                 state.loading = true;
             })
-            .addCase(fetchRecentViews.fulfilled, (state, action: PayloadAction<ProductsResponse>) => {
+            .addCase(fetchRecentViews.fulfilled, (state, action: PayloadAction<Product[]>) => {
                 state.loading = false;
-                state.items = action.payload.products;
+                state.items = action.payload;
             })
             .addCase(fetchRecentViews.rejected, (state, action: PayloadAction<any>) => {
                 state.loading = false,
