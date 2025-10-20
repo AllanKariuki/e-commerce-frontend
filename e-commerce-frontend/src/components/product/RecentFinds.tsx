@@ -4,7 +4,7 @@ import WishlistButton from '../wishlist/WishlistButton';
 import { useNavigate } from 'react-router-dom';
 import type { Product } from '../../types/product';
 import { useSelector } from 'react-redux';
-import { selectProducts } from '../../redux/slices/productsSlice';
+import { selectFetchError, selectLoading, selectRecentProducts } from '../../redux/slices/recentViewsSlice';
 
 interface RecentFindsItemProps {
     product: Product;
@@ -85,7 +85,9 @@ const RecentFindsCard: React.FC<RecentFindsItemProps> = ({
 
 const RecentFinds: React.FC = () => {
     const scrollContainerRef = useRef<HTMLDivElement>(null);
-    const recentFindsData = useSelector(selectProducts);
+    const isLoading = useSelector(selectLoading);
+    const error = useSelector(selectFetchError);
+    const recentFindsData = useSelector(selectRecentProducts);
 
     const scrollLeft = () => {
         if (scrollContainerRef.current) {
@@ -139,22 +141,29 @@ const RecentFinds: React.FC = () => {
             </div>
             
             {/* Horizontal Scrollable Container - Show exactly 4 items */}
-            <div 
-                ref={scrollContainerRef}
-                className="flex gap-4 overflow-x-auto pb-4 scrollbar-hide"
-                style={{
-                    scrollbarWidth: 'none',
-                    msOverflowStyle: 'none',
-                    width: '100%',
-                    maxWidth: '1104px', // 4 cards * 256px + 3 gaps * 16px = 1104px
-                }}
-            >
-                {recentFindsData.map((item) => (
-                    <div key={item.id} className="flex-shrink-0 w-64">
-                        <RecentFindsCard product={item} />
-                    </div>
-                ))}
-            </div>
+            { isLoading ? (
+                <p className="text-center text-gray-500 mt-20">Loading recent finds...</p>
+            ): error ? (
+                <p className="text-center text-red-500 mt-20">Error loading recent finds: {error}</p>
+            ): (
+                <div 
+                    ref={scrollContainerRef}
+                    className="flex gap-4 overflow-x-auto pb-4 scrollbar-hide"
+                    style={{
+                        scrollbarWidth: 'none',
+                        msOverflowStyle: 'none',
+                        width: '100%',
+                        maxWidth: '1104px', // 4 cards * 256px + 3 gaps * 16px = 1104px
+                    }}
+                >
+                    {recentFindsData.map((item) => (
+                        <div key={item.id} className="flex-shrink-0 w-64">
+                            <RecentFindsCard product={item} />
+                        </div>
+                    ))}
+                </div>
+            )}
+            
             
             <style dangerouslySetInnerHTML={{
                 __html: `
