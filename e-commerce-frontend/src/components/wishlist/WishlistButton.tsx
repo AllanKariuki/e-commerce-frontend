@@ -1,8 +1,8 @@
 import React from 'react';
 import { Heart } from 'lucide-react';
 import { useDispatch, useSelector } from 'react-redux';
-import { addToWishlist, removeFromWishlist } from '../../redux/store/wishlistSlice';
-import type { RootState } from '../../redux/store';
+import { addToWishlist, removeFromWishlist, selectWishlistItemsFromRoot } from '../../redux/store/wishlistSlice';
+import type { AppDispatch, RootState } from '../../redux/store';
 import type { WishlistItem } from '../../types/wishlist';
 
 interface WishlistButtonProps {
@@ -18,10 +18,10 @@ const WishlistButton: React.FC<WishlistButtonProps> = ({
     size = 18, 
     showTooltip = true 
 }) => {
-    const dispatch = useDispatch();
-    const wishlistItems = useSelector((state: RootState) => state.wishlist.items);
-    
-    const isInWishlist = wishlistItems.some(wishlistItem => wishlistItem.id === item.id);
+    const dispatch = useDispatch<AppDispatch>();
+    const wishlistItems = useSelector(selectWishlistItemsFromRoot);
+
+    const isInWishlist = wishlistItems.some(wishlistItem => wishlistItem?.id === item.id);
 
     const handleToggleWishlist = (e: React.MouseEvent) => {
         e.preventDefault();

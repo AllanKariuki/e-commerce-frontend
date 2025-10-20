@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Heart, Filter, Grid3X3, List, Trash2, ShoppingBag } from 'lucide-react';
 import type { RootState } from '../redux/store';
-import { clearWishlist } from '../redux/store/wishlistSlice';
+import { clearWishlist, selectInStockItemsFromRoot, selectOutOfStockItemsFromRoot } from '../redux/store/wishlistSlice';
 import WishlistCard from '../components/wishlist/WishlistCard';
 import WishlistEmptyState from '../components/wishlist/WishlistEmptyState';
 import WishlistDemo from '../components/wishlist/WishlistDemo';
@@ -10,6 +10,8 @@ import WishlistDemo from '../components/wishlist/WishlistDemo';
 const WishlistPage: React.FC = () => {
     const dispatch = useDispatch();
     const { items, loading, error } = useSelector((state: RootState) => state.wishlist);
+    const inStockItems = useSelector(selectInStockItemsFromRoot);
+    const outOfStock = useSelector(selectOutOfStockItemsFromRoot);
     const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
     const [sortBy, setSortBy] = useState<'newest' | 'oldest' | 'price-low' | 'price-high' | 'name'>('newest');
     const [filterBy, setFilterBy] = useState<'all' | 'in-stock' | 'on-sale'>('all');
@@ -21,7 +23,6 @@ const WishlistPage: React.FC = () => {
     };
 
     const handleAddAllToCart = () => {
-        const inStockItems = filteredAndSortedItems.filter(item => item.inStock);
         if (inStockItems.length === 0) {
             alert('No items in stock to add to cart');
             return;
@@ -39,10 +40,10 @@ const WishlistPage: React.FC = () => {
         // Apply filters
         switch (filterBy) {
             case 'in-stock':
-                filtered = filtered.filter(item => item.inStock);
+                filtered = inStockItems;
                 break;
             case 'on-sale':
-                filtered = filtered.filter(item => item.originalPrice && item.originalPrice > item.price);
+                filtered = outOfStock;
                 break;
             default:
                 break;
@@ -56,9 +57,9 @@ const WishlistPage: React.FC = () => {
                 case 'oldest':
                     return new Date(a.dateAdded).getTime() - new Date(b.dateAdded).getTime();
                 case 'price-low':
-                    return a.price - b.price;
+                    return (Number(a.price) || 0) - (Number(b.price) || 0);
                 case 'price-high':
-                    return b.price - a.price;
+                    return (Number(b.price) || 0) - (Number(a.price) || 0);
                 case 'name':
                     return a.name.localeCompare(b.name);
                 default:
@@ -67,7 +68,7 @@ const WishlistPage: React.FC = () => {
         });
 
         return filtered;
-    }, [items, filterBy, sortBy]);
+    }, [items, filterBy, sortBy, inStockItems, outOfStock]);
 
     if (loading) {
         return (

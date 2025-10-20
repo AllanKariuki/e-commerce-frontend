@@ -25,8 +25,11 @@ export interface Product {
     product_images: Image[] | [],
     sizes: string[] | [],
     colors: string[] | [],
-    material: string | null,
+    material?: string | null,
     reviews: Review[] | [],
+    rating?: number,
+    original_price?: string | null,
+    brand?: string | null,
 }
 
 export interface Category {
