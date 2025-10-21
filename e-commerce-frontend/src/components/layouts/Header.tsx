@@ -45,9 +45,11 @@ const Header = () => {
             <div className="flex items-center space-x-6">
               <div className="relative cursor-pointer hover:shadow-md">
                 <ShoppingBag size={20} onClick={() => navigate('/cart')} />
-                <span className="absolute -top-2 -right-2 bg-yellow-400 text-xs w-4 h-4 rounded-full flex items-center justify-center">
-                  {cartItems}
-                </span>
+                  {cartItems > 0 && (
+                    <span className="absolute -top-2 -right-2 bg-yellow-400 text-xs w-4 h-4 rounded-full flex items-center justify-center">
+                      {cartItems}
+                    </span>
+                  )}
               </div>
               <div className="relative cursor-pointer hover:shadow-md">
                 <Heart 
