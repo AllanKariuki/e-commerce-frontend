@@ -20,13 +20,53 @@ export const cartSlice = createSlice({
     initialState,
     reducers: {
         addItemToCart: (state, action: PayloadAction<CartItemType>) => {
-            state.cart.items.push(action.payload);
-            state.cart.subtotal += action.payload.total;
-            state.cart.totalAmount += action.payload.total;
-            if (action.payload.item.discount || action.payload.item.discount_percentage) {
-                state.cart.discount += action.payload.item.discount || 0;
-                state.cart.percentageDiscount += action.payload.item.discount_percentage || 0;
+            console.log('Current cart state before adding item:', state.cart);
+            console.log('Adding item to cart:', action.payload);
+
+            const existingItemIndex = state.cart.items.findIndex(
+                item => 
+                    item.item.id === action.payload.item.id &&
+                    item.size === action.payload.size &&
+                    item.color === action.payload.color
+            )
+
+            if (existingItemIndex !== -1) {
+                // If item exists, update quantity and total
+                const existingItem = state.cart.items[existingItemIndex];
+                const newQuantity = existingItem.quantity + action.payload.quantity;
+                
+                // lets get the new total value
+                const newTotal = existingItem.item.price * newQuantity;
+                const oldTotal = existingItem.total;
+
+                existingItem.quantity = newQuantity;
+                existingItem.total = newTotal;
+
+                // update subtotal and totalAmount
+                const totalDifference = newTotal - oldTotal;
+                state.cart.subtotal += totalDifference;
+                state.cart.totalAmount += totalDifference;
+
+                // Update discounts if applicable
+                if (action.payload.item.discount || action.payload.item.discount_percentage) {
+                    const discountDifference = (action.payload.item.discount || 0) * action.payload.quantity;
+                    const percentageDiscountDifference = (action.payload.item.discount_percentage || 0) * action.payload.quantity;
+
+                    state.cart.discount += discountDifference;
+                    state.cart.percentageDiscount += percentageDiscountDifference;
+                }
+                
+            } else {
+                state.cart.items.push(action.payload);
+                state.cart.subtotal += action.payload.total;
+                state.cart.totalAmount += action.payload.total;
+                if (action.payload.item.discount || action.payload.item.discount_percentage) {
+                    state.cart.discount += action.payload.item.discount || 0;
+                    state.cart.percentageDiscount += action.payload.item.discount_percentage || 0;
+                }
             }
+
+            console.log('Updated cart state after adding item:', state.cart);
         },
         removeItemFromCart: (state, action: PayloadAction<number>) => {
             const itemIndex = state.cart.items.findIndex(item => item.item.id === action.payload);
