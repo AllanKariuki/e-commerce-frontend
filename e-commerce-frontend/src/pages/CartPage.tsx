@@ -6,7 +6,7 @@ import OrderSummary from '../components/cart/OrderSummary';
 import type { CartItemType } from '../types/cart';
 import { useDispatch, useSelector } from 'react-redux';
 import type { AppDispatch } from '../redux/store';
-import { cartDeliveryFee, cartDiscount, cartError, cartIsLoading, cartItems, cartPercentageDiscount, cartSubtotal, cartTotalAmount, removeItemFromCart, updateItemQuantity } from '../redux/slices/cartSlice';
+import { cartDeliveryFee, cartDiscount, cartError, cartIsLoading, cartItems, cartPercentageDiscount, cartSubtotal, cartTotalAmount, clearCart, removeItemFromCart, updateItemQuantity } from '../redux/slices/cartSlice';
 import { useNavigate } from 'react-router-dom';
 
 const CartPage = () => {
@@ -49,6 +49,7 @@ const CartPage = () => {
       const deleteSelectedItems = () => {
         // In a real app, you would delete selected items
         alert('Delete functionality would remove selected items');
+        dispatch(clearCart() as any);
       };
     
       return (
