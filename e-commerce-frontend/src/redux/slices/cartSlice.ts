@@ -34,9 +34,8 @@ export const cartSlice = createSlice({
                 // If item exists, update quantity and total
                 const existingItem = state.cart.items[existingItemIndex];
                 const newQuantity = existingItem.quantity + action.payload.quantity;
-                
                 // lets get the new total value
-                const newTotal = existingItem.item.price * newQuantity;
+                const newTotal = parseFloat(existingItem.item.price) * newQuantity;
                 const oldTotal = existingItem.total;
 
                 existingItem.quantity = newQuantity;
@@ -92,7 +91,7 @@ export const cartSlice = createSlice({
 
                 // Update item quantity
                 currentItem.quantity = action.payload.quantity;
-                currentItem.total = currentItem.item.price * action.payload.quantity;
+                currentItem.total = parseFloat(currentItem.item.price) * action.payload.quantity;
 
                 // Update totals
                 const totalDifference = currentItem.total - oldTotal;
@@ -101,13 +100,13 @@ export const cartSlice = createSlice({
 
                 // Update dicsounts and percentage discount if applicable
                 if (currentItem.item.discount || currentItem.item.discount_percentage) {
-                    const oldDiscount = (currentItem.item.discount || 0) * (oldTotal / (currentItem.item.price * (oldTotal / currentItem.quantity)));
-                    const newDiscount = (currentItem.item.discount || 0) * (currentItem.total / (currentItem.item.price * currentItem.quantity));
+                    const oldDiscount = (currentItem.item.discount || 0) * (oldTotal / (parseFloat(currentItem.item.price) * (oldTotal / currentItem.quantity)));
+                    const newDiscount = (currentItem.item.discount || 0) * (currentItem.total / (parseFloat(currentItem.item.price) * currentItem.quantity));
                     state.cart.discount += (newDiscount - oldDiscount);
                 }
                 if (currentItem.item.discount_percentage) {
-                    const oldPercentageDiscount = currentItem.item.discount_percentage * (oldTotal / (currentItem.item.price * (oldTotal / currentItem.quantity)));
-                    const newPercentageDiscount = currentItem.item.discount_percentage * (currentItem.total / (currentItem.item.price * currentItem.quantity));
+                    const oldPercentageDiscount = currentItem.item.discount_percentage * (oldTotal / (parseFloat(currentItem.item.price) * (oldTotal / currentItem.quantity)));
+                    const newPercentageDiscount = currentItem.item.discount_percentage * (currentItem.total / (parseFloat(currentItem.item.price) * currentItem.quantity));
                     state.cart.percentageDiscount += (newPercentageDiscount - oldPercentageDiscount);
                 }
             }
