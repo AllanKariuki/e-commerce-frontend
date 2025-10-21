@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { Heart, ShoppingCart, ChevronDown, Dot, ShoppingBag, Truck, Star, ChevronDownCircle, ChevronRightCircle, ChevronLeftCircle,  } from 'lucide-react';
 import type { Product } from "../../types/product";
+import { useDispatch } from "react-redux";
+import { addItemToCart } from "../../redux/slices/cartSlice";
 
 interface ProductDetailSectionProps {
     product: Product;
@@ -8,6 +10,7 @@ interface ProductDetailSectionProps {
 
 const ProductDetails: React.FC<ProductDetailSectionProps> = ({ product }) => {
     const [ selectedSize, setSelectedSize ] = useState(product?.sizes ? product.sizes[0] : '');
+    const dispatch = useDispatch();
 
     const sizes = product?.sizes || [];
     
@@ -16,6 +19,23 @@ const ProductDetails: React.FC<ProductDetailSectionProps> = ({ product }) => {
     }) : [];
 
     const [ selectedColor, setSelectedColor ] = useState(colors.length > 0 ? colors[0].name : '');
+    
+
+    const handleAddToCart = (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.stopPropagation();
+        // Dispatch add to cart action here
+        dispatch(addItemToCart(
+          {
+            item: product,
+            size: selectedSize || (product.sizes ? product.sizes[0] : 'M'),
+            color: selectedColor || (product.colors ? product.colors[0] : 'Default'),
+            quantity: 1,
+            totalDiscount: product.discount ? product.discount : 0,
+            percentageDiscount: product.discount_percentage ? product.discount_percentage : 0,
+            total: product.price
+          }
+        ))
+    }
 
     return (
         <div>
@@ -89,7 +109,10 @@ const ProductDetails: React.FC<ProductDetailSectionProps> = ({ product }) => {
             </div>
       
             <div className="flex mb-2">
-              <button className="flex-1 bg-black text-white py-3 px-6 flex items-center justify-center rounded-md hover:shadow-md">
+              <button 
+                className="flex-1 bg-black text-white py-3 px-6 flex items-center justify-center rounded-md hover:shadow-md"
+                onClick={handleAddToCart}
+                >
                 <ShoppingBag size={20} className="mr-2" />
                 Add to cart
               </button>
