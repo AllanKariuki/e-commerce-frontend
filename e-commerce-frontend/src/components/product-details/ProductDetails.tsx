@@ -32,7 +32,7 @@ const ProductDetails: React.FC<ProductDetailSectionProps> = ({ product }) => {
             quantity: 1,
             totalDiscount: product.discount ? product.discount : 0,
             percentageDiscount: product.discount_percentage ? product.discount_percentage : 0,
-            total: product.price
+            total: parseFloat(product.price)
           }
         ))
     }
