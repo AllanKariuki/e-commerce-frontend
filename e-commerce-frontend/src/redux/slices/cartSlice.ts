@@ -153,5 +153,9 @@ export const cartPercentageDiscount = (state: { cart: CartState }): number => {
     return state.cart.cart.percentageDiscount;
 }
 
+export const cartItemsCount = (state: { cart: CartState }): number => {
+    return state.cart.cart.items.length;
+}
+
 
 export default cartSlice.reducer;
