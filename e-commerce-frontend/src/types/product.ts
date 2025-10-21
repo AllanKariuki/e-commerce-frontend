@@ -17,7 +17,7 @@ export interface Product {
     id: number,
     name: string,
     description: string,
-    price: number,
+    price: string,
     units_in_stock: number,
     image: string | null,
     category_name: number,
