@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { type AppDispatch, type RootState } from '../../redux/store';
 import { fetchCategories, selectedCategories } from '../../redux/slices/categorySlice';
 import { useEffect } from 'react';
+import { cartItemsCount } from '../../redux/slices/cartSlice';
 
 
 const Header = () => {
@@ -13,6 +14,7 @@ const Header = () => {
   const params = new URLSearchParams(window.location.search);
   const type = params.get('category-name');
   const categories = useSelector(selectedCategories);
+  const cartItems = useSelector(cartItemsCount);
 
   useEffect(() => {
     dispatch(fetchCategories() as any);
@@ -43,7 +45,9 @@ const Header = () => {
             <div className="flex items-center space-x-6">
               <div className="relative cursor-pointer hover:shadow-md">
                 <ShoppingBag size={20} onClick={() => navigate('/cart')} />
-                <span className="absolute -top-2 -right-2 bg-yellow-400 text-xs w-4 h-4 rounded-full flex items-center justify-center">4</span>
+                <span className="absolute -top-2 -right-2 bg-yellow-400 text-xs w-4 h-4 rounded-full flex items-center justify-center">
+                  {cartItems}
+                </span>
               </div>
               <div className="relative cursor-pointer hover:shadow-md">
                 <Heart 
