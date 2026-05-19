@@ -30,6 +30,8 @@ export interface Product {
     rating?: number,
     original_price?: string | null,
     brand?: string | null,
+    discount_percentage?: number | null,
+    discount?: number | null,
 }
 
 export interface Category {

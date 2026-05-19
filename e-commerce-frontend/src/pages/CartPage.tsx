@@ -1,68 +1,55 @@
 import { useState } from 'react';
-import { Trash2, ShoppingCart, Check, ChevronRight, Plus, Minus } from 'lucide-react';
+import { Trash2, ShoppingCart, Check, ChevronRight, Plus, Minus, ShoppingBag } from 'lucide-react';
 import CartItem from '../components/cart/CartItem';
 import CheckoutSteps from '../components/cart/CheckoutSteps';
 import OrderSummary from '../components/cart/OrderSummary';
 import type { CartItemType } from '../types/cart';
+import { useDispatch, useSelector } from 'react-redux';
+import type { AppDispatch } from '../redux/store';
+import { cartDeliveryFee, cartDiscount, cartError, cartIsLoading, cartItems, cartPercentageDiscount, cartSubtotal, cartTotalAmount, clearCart, removeItemFromCart, updateItemQuantity } from '../redux/slices/cartSlice';
+import { useNavigate } from 'react-router-dom';
 
 const CartPage = () => {
-    const [cartItems, setCartItems] = useState<CartItemType[]>([
-        {
-          id: "1",
-          name: 'N20 Gas',
-          size: 'Small',
-          color: 'White',
-          price: 145,
-          quantity: 2,
-          image: '/api/placeholder/50/50'
-        },
-        {
-          id: "2",
-          name: 'Laughing Gas',
-          size: 'Medium',
-          color: 'Red',
-          price: 180,
-          quantity: 4,
-          image: '/api/placeholder/50/50'
-        },
-        {
-          id: "3",
-          name: 'Ammonium Gas',
-          size: 'Large',
-          color: 'Blue',
-          price: 240,
-          quantity: 6,
-          image: '/api/placeholder/50/50'
-        }
-      ]);
+       const dispatch = useDispatch<AppDispatch>();
+       const navigate = useNavigate();
+       const isLoading = useSelector(cartIsLoading);
+       const error = useSelector(cartError);
+       const cartList = useSelector(cartItems);
+       const subtotal = useSelector(cartSubtotal);
+       const totalAmount = useSelector(cartTotalAmount);
+       const discount = useSelector(cartDiscount);
+       const discountPercentage = useSelector(cartPercentageDiscount);
+       const deliveryFee = useSelector(cartDeliveryFee);
     
       const [selectAll, setSelectAll] = useState<boolean>(false);
       const [couponCode, setCouponCode] = useState<string>('');
-      const discountPercentage = 20;
+      // const discountPercentage = 20;
     
-      // Calculate totals
-      const subtotal = cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-      const discount = subtotal * (discountPercentage / 100);
-      const deliveryFee = 15;
-      const total = subtotal - discount + deliveryFee;
+      // // Calculate totals
+      // const subtotal = cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+      // const discount = subtotal * (discountPercentage / 100);
+      // const deliveryFee = 15;
+      // const total = subtotal - discount + deliveryFee;
     
       // Handle quantity changes
-      const updateQuantity = (id: string, newQuantity: number) => {
+      const updateQuantity = (id: number, newQuantity: number) => {
         if (newQuantity >= 1) {
-          setCartItems(cartItems.map(item => 
-            item.id === id ? { ...item, quantity: newQuantity } : item
-          ));
+          dispatch(updateItemQuantity({
+            id,
+            quantity: newQuantity
+          }) as any);
         }
       };
 
-      const handleRemoveItem = (id: string) => {
-        setCartItems(cartItems.filter(item => item.id !== id));
+      const handleRemoveItem = (id: number) => {
+        dispatch(removeItemFromCart(id) as any);
       }
     
       // Handle item deletion
       const deleteSelectedItems = () => {
         // In a real app, you would delete selected items
         alert('Delete functionality would remove selected items');
+        dispatch(clearCart() as any);
       };
     
       return (
@@ -76,52 +63,70 @@ const CartPage = () => {
             {/* Cart Items Section */}
             <div className="grid col-span-2">
               <h2 className="text-xl font-medium mb-4">Your cart</h2>
-              
-              <div 
-                className="flex 
-                    justify-between 
-                    items-center 
-                    mb-4 pb-2 p-3
-                    border-1 
-                    border-gray-200 
-                    rounded-full"
-                >
-                  <label className="flex items-center">
-                    <input 
-                        type="checkbox" 
-                        checked={selectAll} 
-                        onChange={() => setSelectAll(!selectAll)}
-                        className="mr-2"
-                    />
-                    <span>Select All</span>
-                  </label>
-                  <button 
-                    onClick={deleteSelectedItems}
-                    className="bg-black
-                    text-white 
-                    py-3 px-5 rounded-3xl text-sm flex 
-                    items-center"
+              {
+                isLoading ? (
+                  <div className="text-center py-20 text-lg">Loading cart items...</div>
+                ) : error ? (
+                  <div className="text-center py-20 text-lg text-red-500">Error loading cart items: {error}</div>
+                ) : cartList.length === 0 ? (
+                  <div className="flex flex-col items-center justify-center h-64 text-gray-500">
+                    <ShoppingCart size={48} className="mb-4" />
+                    <p className="text-lg">Your cart is currently empty.</p>
+                    <button
+                        onClick={() => navigate('/products')}
+                        className="flex items-center gap-2 bg-black text-white px-6 py-3 my-3 rounded-lg hover:bg-gray-800 transition-colors duration-200 cursor-pointer"
                     >
-                    Delete
-                  </button>
-              </div>
-
-              <div className="bg-white rounded-lg shadow-md p-4">
-                {/* Header with select all and delete */}
+                        <ShoppingBag size={20} />
+                        Start Shopping
+                    </button>
+                  </div>
+                ) : (
+                  <div className="bg-white rounded-lg shadow-md p-4">
+                    {/* Header with select all and delete */}
+                    <div
+                      className="flex 
+                          justify-between 
+                          items-center 
+                          mb-4 h-16 pb-2 p-3
+                          border-1 
+                          border-gray-200 
+                          rounded-full "
+                      >
+                        <label className="flex items-center">
+                          <input 
+                              type="checkbox" 
+                              checked={selectAll} 
+                              onChange={() => setSelectAll(!selectAll)}
+                              className="mr-2"
+                          />
+                          <span>Select All</span>
+                        </label>
+                        <button 
+                          onClick={deleteSelectedItems}
+                          className="bg-black
+                          text-white 
+                          py-3 px-5 rounded-3xl text-sm flex 
+                          items-center"
+                          >
+                          Delete
+                        </button>
+                    </div>
+                    
+                    {/* Cart Items */}
+                    <div className="space-y-4">
+                      {cartList.map(item => (
+                        <CartItem 
+                          key={item.item.id} 
+                          item={item} 
+                          updateQuantity={updateQuantity}
+                          removeItem={handleRemoveItem}
+                        />
+                      ))}
+                    </div>
+                  </div>
+                )
+              }
                 
-                
-                {/* Cart Items */}
-                <div className="space-y-4">
-                  {cartItems.map(item => (
-                    <CartItem 
-                      key={item.id} 
-                      item={item} 
-                      updateQuantity={updateQuantity}
-                      removeItem={handleRemoveItem}
-                    />
-                  ))}
-                </div>
-              </div>
             </div>
             
             {/* Order Summary Section */}
@@ -131,7 +136,7 @@ const CartPage = () => {
                 discount={discount}
                 discountPercentage={discountPercentage}
                 deliveryFee={deliveryFee}
-                total={total}
+                total={totalAmount}
                 couponCode={couponCode}
                 setCouponCode={setCouponCode}
               />

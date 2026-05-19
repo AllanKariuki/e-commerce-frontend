@@ -1,11 +1,12 @@
 import React, { useEffect, useRef } from 'react';
-import { Star, ChevronRight, ChevronLeft } from 'lucide-react';
+import { Star, ChevronRight, ChevronLeft, ShoppingBag } from 'lucide-react';
 import WishlistButton from '../wishlist/WishlistButton';
 import { useNavigate } from 'react-router-dom';
 import type { Product } from '../../types/product';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchRecentViews, selectFetchError, selectLoading, selectRecentProducts } from '../../redux/slices/recentViewsSlice';
 import type { AppDispatch } from '../../redux/store';
+import { addItemToCart } from '../../redux/slices/cartSlice';
 
 interface RecentFindsItemProps {
     product: Product;
@@ -25,6 +26,22 @@ export const RecentFindsCard: React.FC<RecentFindsItemProps> = ({
     };
 
     const navigate = useNavigate();
+    const dispatch = useDispatch<AppDispatch>();
+    
+    const handleAddToCart = (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.stopPropagation();
+        dispatch(addItemToCart(
+            {
+            item: product,
+            size: product.sizes ? product.sizes[0] : 'M',
+            color: product.colors ? product.colors[0] : 'Default',
+            quantity: 1,
+            totalDiscount: product.discount ? product.discount : 0,
+            percentageDiscount: product.discount_percentage ? product.discount_percentage : 0,
+            total: parseFloat(product.price)
+            }
+        ))
+    }
 
     return (
         <div className="rounded-2xl overflow-hidden relative group hover:shadow-lg transition-shadow duration-300">
@@ -47,7 +64,15 @@ export const RecentFindsCard: React.FC<RecentFindsItemProps> = ({
                 </button>
 
                 {/* Wishlist Button */}
-                <div className="absolute bottom-3 right-3">
+                <button 
+                    className="absolute bottom-12 right-3 rounded-full bg-black/20 border border-gray-600 
+                    cursor-pointer p-2 opacity-0 group-hover:opacity-100 
+                    transition-opacity duration-200"
+                    onClick={handleAddToCart}
+                    >
+                    <ShoppingBag size={15} className='text-gray-100' />
+                </button>
+                <div className="absolute bottom-3 right-3 flex flex-col item-center space-y-2">
                     <WishlistButton 
                         item={product}
                         className="bg-white text-gray-900 hover:bg-gray-100 cursor-pointer"
@@ -91,6 +116,7 @@ const RecentFinds: React.FC = () => {
     const isLoading = useSelector(selectLoading);
     const error = useSelector(selectFetchError);
     const recentFindsData = useSelector(selectRecentProducts);
+    
 
     useEffect(() => {
         dispatch(fetchRecentViews() as any);

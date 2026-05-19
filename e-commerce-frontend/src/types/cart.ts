@@ -1,9 +1,26 @@
+import type { Product } from "./product";
+
 export interface CartItemType {
-    id: string;
-    name: string;
+    item: Product;
     size: string;
     color: string;
-    price: number;
     quantity: number;
-    image: string;
+    totalDiscount?: number;
+    percentageDiscount?: number;
+    total: number;
+}
+
+export interface Cart {
+    items: CartItemType[];
+    subtotal: number;
+    discount: number;
+    percentageDiscount: number;
+    deliveryFee: number;
+    totalAmount: number;
+}
+
+export interface CartState {
+    cart: Cart;
+    isLoading: boolean;
+    error: string | null;
 }

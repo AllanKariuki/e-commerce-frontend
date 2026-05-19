@@ -4,8 +4,8 @@ import type React from 'react';
 
 interface CartItemProps {
   item: CartItemType;
-  updateQuantity: (id: string, newQuantity: number) => void;
-  removeItem: (id: string) => void;
+  updateQuantity: (id: number, newQuantity: number) => void;
+  removeItem: (id: number) => void;
 }
 
 const CartItem: React.FC<CartItemProps> = ({ 
@@ -20,8 +20,8 @@ const CartItem: React.FC<CartItemProps> = ({
           {/* Product image */}
           <div className="w-16 h-16 mr-4">
             <img 
-              src={item.image} 
-              alt={item.name} 
+              src={item.item.main_image?.image || '/assets/images/cargo-pants.jpg'} 
+              alt={item.item.name} 
               className="w-full h-full object-contain"
             />
           </div>
@@ -29,20 +29,20 @@ const CartItem: React.FC<CartItemProps> = ({
           {/* Product info */}
           <div className="flex-grow">
             <div className='flex justify-between items-center'>
-                <h3 className="font-medium">{item.name}</h3>                
+                <h3 className="font-medium">{item.item.name}</h3>                
             </div>
             
             <div className="text-sm text-gray-500">
               <p>Size: {item.size}</p>
               <p>Color: {item.color}</p>
             </div>
-            <p className="font-medium mt-1">${item.price}</p>
+            <p className="font-medium mt-1">${item.item.price}</p>
           </div>
 
             <div className='flex flex-col items-end h-full'>
                 <button 
                   className="ml-4 text-red-500 top-2 flex justify-end"
-                  onClick={() => removeItem(item.id)}
+                  onClick={() => removeItem(item.item.id)}
                   >
                   <Trash2 size={16} />
                 </button>
@@ -50,7 +50,7 @@ const CartItem: React.FC<CartItemProps> = ({
                 {/* Quantity controls */}
                 <div className="flex items-center rounded-2xl px-1 bg-gray-100">
                 <button 
-                  onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                  onClick={() => updateQuantity(item.item.id, item.quantity - 1)}
                   className="w-8 h-8 flex items-center justify-center"
                   >
                   <Minus size={16} />
@@ -59,7 +59,7 @@ const CartItem: React.FC<CartItemProps> = ({
                   {item.quantity}
                 </div>
                 <button 
-                  onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                  onClick={() => updateQuantity(item.item.id, item.quantity + 1)}
                   className="w-8 h-8 flex items-center justify-center"
                 >
                   <Plus size={16} />

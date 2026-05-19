@@ -3,6 +3,9 @@ import { ShoppingBag, Plus, Heart } from 'lucide-react';
 import type { Product } from '../types/product';
 import { useNavigate } from 'react-router-dom';
 import WishlistButton from './wishlist/WishlistButton';
+import { useDispatch } from 'react-redux';
+import type { AppDispatch } from '../redux/store';
+import { addItemToCart } from '../redux/slices/cartSlice';
 
 interface ProductDetailCardProps {
   product: Product;
@@ -10,8 +13,23 @@ interface ProductDetailCardProps {
 
 const ProductDetailCard: React.FC<ProductDetailCardProps> = ({ product }) => {
   const [isHovering, setIsHovering] = useState(false);
-  const [isFavorited, setIsFavorited] = useState<boolean>(false);
   const navigate = useNavigate();
+  const dispatch = useDispatch<AppDispatch>();
+
+  const handleAddToCart = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation();
+    dispatch(addItemToCart(
+      {
+        item: product,
+        size: product.sizes ? product.sizes[0] : 'M',
+        color: product.colors ? product.colors[0] : 'Default',
+        quantity: 1,
+        totalDiscount: product.discount ? product.discount : 0,
+        percentageDiscount: product.discount_percentage ? product.discount_percentage : 0,
+        total: parseFloat(product.price)
+      }
+    ))
+  }
   
   return (
     <div 
@@ -98,7 +116,10 @@ const ProductDetailCard: React.FC<ProductDetailCardProps> = ({ product }) => {
           <button className="bg-black text-white rounded-full py-3 px-6 flex-grow font-medium flex items-center justify-center">
             Buy now
           </button>
-          <button className="rounded-full border border-gray-200 p-3">
+          <button 
+            className="rounded-full border border-gray-200 p-3"
+            onClick={handleAddToCart}
+            >
             <ShoppingBag size={20} />
           </button>
         </div>
