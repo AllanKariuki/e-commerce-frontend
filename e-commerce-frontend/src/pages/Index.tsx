@@ -1,5 +1,10 @@
 import { useEffect, useState } from "react";
-import { Search, Menu, Info, ShoppingBag, ChevronDown, ChevronLeft, ChevronRight, Plus, ArrowUpRight, Heart, User } from 'lucide-react';
+import {
+  ArrowUpRight,
+  ChevronLeft,
+  ChevronRight,
+  Sparkles,
+} from "lucide-react";
 import ProductDetailCard from "../components/ProductDetailCard";
 import StayInTouch from "../components/StayInTouch";
 import FreshArrivals from "../components/index/FreshArrivals";
@@ -11,167 +16,199 @@ import Categories from "../components/index/Categories";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import type { AppDispatch } from "../redux/store";
-import { fetchProducts, selectProducts, selectTotalProducts } from "../redux/slices/productsSlice";
+import { fetchProducts, selectProducts } from "../redux/slices/productsSlice";
+
+const slides = [
+  {
+    eyebrow: "Summer 2026",
+    title: ["Color", "of Summer", "Outfit"],
+    sub: "Sun-friendly fabrics, breezy silhouettes and AI try-on — built for the season.",
+    image: "/assets/images/cool-denim.jpg",
+    cta: "Start shopping",
+    accent: "bg-coral-soft",
+  },
+  {
+    eyebrow: "New drop",
+    title: ["Light", "linen", "essentials"],
+    sub: "Stitched in Nairobi, made to move with you all year long.",
+    image: "/assets/images/hoodie.jpg",
+    cta: "Shop linen",
+    accent: "bg-mint",
+  },
+  {
+    eyebrow: "Limited edition",
+    title: ["Studio", "capsule", "collection"],
+    sub: "Twelve handpicked pieces, available while stocks last.",
+    image: "/assets/images/sweat-shirt.jpg",
+    cta: "Explore capsule",
+    accent: "bg-sand",
+  },
+];
 
 const Index = () => {
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const dispatch = useDispatch<AppDispatch>();
+  const products = useSelector(selectProducts);
+  const navigate = useNavigate();
 
-    const [currentSlide, setCurrentSlide] = useState(0);
-    const dispatch =  useDispatch<AppDispatch>();
-    const products = useSelector(selectProducts);
-    const totalProducts = useSelector(selectTotalProducts);
+  useEffect(() => {
+    dispatch(fetchProducts({}) as any);
+  }, [dispatch]);
 
-    useEffect(() => {
-        console.log('Triggering products fetch');
-        dispatch(fetchProducts() as any);
-    }, []);
+  const nextSlide = () => setCurrentSlide((p) => (p + 1) % slides.length);
+  const prevSlide = () =>
+    setCurrentSlide((p) => (p - 1 + slides.length) % slides.length);
 
-    const navigate = useNavigate();
-  
-    const nextSlide = () => {
-        setCurrentSlide((prev) => (prev + 1) % 3);
-    };
-    
-    const prevSlide = () => {
-        setCurrentSlide((prev) => (prev - 1 + 3) % 3);
-    };
+  const slide = slides[currentSlide];
 
-    return (
-        <>  
-      
-        {/* Hero Slider */}
-        <div className="relative overflow-hidden bg-stone-200 h-160 rounded-2xl">
-          <div 
-            className="flex transition-transform duration-500 h-full"
-            style={{ transform: `translateX(-${currentSlide * 100}%)` }}
-          >
-            {/* Slide 1 */}
-            <div className="min-w-full h-full relative flex items-center">
-              <div className="absolute inset-0 z-0">
-                <div className="w-full h-full bg-stone-200 rounded-full relative overflow-hidden">
-                  <div className="absolute right-0 w-2/3 h-full rounded-l-full bg-blue-100">
-                    {/* Background image would be placed here */}
-                  </div>
-                </div>
+  return (
+    <div className="bg-page">
+      {/* HERO ============================================================ */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6">
+        <div
+          className={`relative overflow-hidden rounded-card-lg ${slide.accent} transition-colors duration-500`}
+        >
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 p-8 md:p-12 lg:p-14 min-h-[520px] md:min-h-[600px]">
+            {/* Text */}
+            <div className="lg:col-span-6 flex flex-col justify-between relative z-10">
+              <div>
+                <span className="chip bg-white/90 text-ink-1 border-transparent">
+                  <Sparkles size={12} /> {slide.eyebrow}
+                </span>
+                <h1 className="font-display text-5xl md:text-7xl lg:text-[5.5rem] leading-[0.95] mt-6 text-ink-1">
+                  {slide.title.map((line) => (
+                    <span key={line} className="block">{line}</span>
+                  ))}
+                </h1>
+                <p className="text-ink-muted leading-relaxed max-w-md mt-6">
+                  {slide.sub}
+                </p>
               </div>
-              
-              <div className="container mx-auto px-8 z-10">
-                <div className="max-w-md">
-                  <h1 className="text-5xl font-light text-white leading-tight mb-4">
-                    We are<br />digital<br />meets fashions
-                  </h1>
-                  <p className="text-white text-sm mb-6">
-                    Show your store shine, get high-quality<br />swag directly from the vstore foundation.
-                  </p>
-                  
-                  <div className='flex align-center left-1/2 transform -translate-x-1/2 absolute mb-0 z-30 bottom-20'>
-                    
-                    <button 
-                      className="bg-white text-black px-6 py-3 
-                      rounded-full flex align-center mb-0"
-                      onClick={() => navigate('/products')}
-                    >
-                      <span className="font-medium">Start shopping</span>
-                    </button>
 
-                    <div className="bg-white text-black rounded-full flex align-center justify-center p-3">
-                      <ArrowUpRight size={26}/>
-                    </div>
+              <div className="flex items-center gap-3 mt-8">
+                <button
+                  onClick={() => navigate("/products")}
+                  className="btn-pill btn-primary px-7 py-4"
+                >
+                  {slide.cta}
+                  <ArrowUpRight size={16} />
+                </button>
+                <button
+                  onClick={() => navigate("/products")}
+                  className="btn-pill btn-light"
+                >
+                  Top collections
+                </button>
+              </div>
+            </div>
+
+            {/* Image */}
+            <div className="lg:col-span-6 relative">
+              <div className="relative h-full min-h-[300px] rounded-card-lg overflow-hidden bg-ink-1/5">
+                <img
+                  src={slide.image}
+                  alt=""
+                  className="absolute inset-0 w-full h-full object-cover"
+                />
+
+                {/* Floating product card */}
+                <div className="absolute bottom-5 left-5 right-5 lg:right-auto lg:max-w-[260px] bg-white/95 backdrop-blur rounded-card p-3 flex items-center gap-3 shadow-card">
+                  <div className="w-12 h-12 rounded-xl bg-surface-2 shrink-0 overflow-hidden">
+                    <img src={slide.image} className="w-full h-full object-cover" />
                   </div>
-
-                  <button className="text-white text-lg left-1/2 transform -translate-x-1/2 absolute bottom-8">
-                    Top collections
+                  <div className="flex-1 min-w-0">
+                    <p className="text-[13px] font-medium text-ink-1 truncate">Featured look</p>
+                    <p className="text-xs text-ink-muted">From Ksh 4,500</p>
+                  </div>
+                  <button
+                    onClick={() => navigate("/products")}
+                    className="w-9 h-9 rounded-full bg-ink-1 text-white flex items-center justify-center shrink-0"
+                  >
+                    <ArrowUpRight size={14} />
                   </button>
                 </div>
               </div>
-              
-              <div className="absolute bottom-4 right-4 text-white text-xs">
-                <p>Transforming into stylish,</p>
-                <p>functional pieces</p>
-              </div>
-            </div>
-            
-            {/* Slide 2 */}
-            <div className="min-w-full h-full bg-stone-300">
-              {/* Content for second slide */}
-            </div>
-            
-            {/* Slide 3 */}
-            <div className="min-w-full h-full bg-stone-300">
-              {/* Content for third slide */}
             </div>
           </div>
-          
+
           {/* Slide controls */}
-          <div className="absolute top-8 right-4 transform flex space-x-2">
-            <button 
+          <div className="absolute top-6 right-6 flex items-center gap-2 z-20">
+            <button
               onClick={prevSlide}
-              className="w-8 h-8 bg-white bg-opacity-70 rounded-full flex items-center justify-center"
+              className="w-10 h-10 rounded-full bg-white/95 backdrop-blur hover:bg-white text-ink-1 flex items-center justify-center transition-colors"
             >
               <ChevronLeft size={16} />
             </button>
-            <button 
+            <button
               onClick={nextSlide}
-              className="w-8 h-8 bg-white bg-opacity-70 rounded-full flex items-center justify-center"
+              className="w-10 h-10 rounded-full bg-white/95 backdrop-blur hover:bg-white text-ink-1 flex items-center justify-center transition-colors"
             >
               <ChevronRight size={16} />
             </button>
           </div>
-        </div>
 
-        <Promotions />
-      
-        {/* Second Section - Catalogs - Updated to match the image */}
-        <FreshArrivals />
-
-
-        <div className="my-8">
-          <div className="container mx-auto px-4 mb-20">
-            <div className="flex items-center justify-between mt-4 mb-2">
-              <span className="text-sm font-medium py-2 px-2 rounded-full text-gray-400 bg-gray-100">Product Catalog</span>
-              
-              <div className="flex items-center space-x-2">
-                <button className="w-8 h-8 bg-gray-100 bg-opacity-70 rounded-full flex items-center justify-center">
-                  <ChevronLeft size={16} className="text-gray-400" />
-                </button>
-                <button className="w-8 h-8 bg-gray-100 bg-opacity-70 rounded-full flex items-center justify-center">
-                  <ChevronRight size={16} />
-                </button>
-                <a href="/products" className="text-xs ml-2">View all</a>
-              </div>
-            </div>
-            <h4 className='flex mx-auto justify-center items-center text-5xl max-w-1/3 my-10 text-black'>
-              Products and catalog
-            </h4> 
-            
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-5 overflow-x-auto">
-              {
-                products.map(product => (
-                  <ProductDetailCard key={product.id} product={product} />
-                ))
-              }
-              
-              
-            </div>
+          {/* Slide indicators */}
+          <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex items-center gap-2 z-20">
+            {slides.map((_, i) => (
+              <button
+                key={i}
+                onClick={() => setCurrentSlide(i)}
+                className={`h-1.5 rounded-full transition-all ${
+                  i === currentSlide ? "w-8 bg-ink-1" : "w-1.5 bg-ink-1/30"
+                }`}
+              />
+            ))}
           </div>
         </div>
+      </section>
 
-        {/* Categories Section */}
-        <Categories />
+      {/* PROMOTIONS ====================================================== */}
+      <Promotions />
 
-        {/* Testimonials Section */}
-        <Testimonials />
+      {/* FRESH ARRIVALS ================================================== */}
+      <FreshArrivals />
 
-         {/* Brand Story Section */}
-        <BrandStory />
+      {/* PRODUCT CATALOG ================================================= */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 my-20">
+        <header className="flex items-end justify-between mb-10">
+          <div>
+            <span className="chip mb-4">Product catalog</span>
+            <h2 className="font-display text-4xl md:text-5xl text-ink-1 mt-3 leading-tight max-w-xl">
+              The full collection, ready to shop
+            </h2>
+          </div>
+          <button
+            onClick={() => navigate("/products")}
+            className="hidden md:inline-flex btn-pill btn-ghost"
+          >
+            View all
+            <ArrowUpRight size={14} />
+          </button>
+        </header>
 
-        <FAQS />
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+          {products.slice(0, 8).map((product) => (
+            <ProductDetailCard key={product.id} product={product} />
+          ))}
+        </div>
+      </section>
 
-        {/* Stay in touch section */}
+      {/* CATEGORIES ====================================================== */}
+      <Categories />
 
-        <StayInTouch />
-        </>
-    
-    )
-}
+      {/* TESTIMONIALS ==================================================== */}
+      <Testimonials />
 
-export default Index;
+      {/* BRAND STORY ===================================================== */}
+      <BrandStory />
+
+      {/* FAQ ============================================================= */}
+      <FAQS />
+
+      {/* NEWSLETTER ====================================================== */}
+      <StayInTouch />
+    </div>
+  );
+};
+
+export default Index
