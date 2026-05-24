@@ -1,10 +1,8 @@
-import { useEffect, useState } from "react";
-import {
-  ArrowUpRight,
-  ChevronLeft,
-  ChevronRight,
-  Sparkles,
-} from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { ArrowUpRight, Sparkles, ChevronLeft, ChevronRight } from "lucide-react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+
 import ProductDetailCard from "../components/ProductDetailCard";
 import StayInTouch from "../components/StayInTouch";
 import FreshArrivals from "../components/index/FreshArrivals";
@@ -13,152 +11,242 @@ import FAQS from "../components/index/FAQS";
 import BrandStory from "../components/index/BrandStory";
 import Testimonials from "../components/index/Testimonials";
 import Categories from "../components/index/Categories";
-import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import UploadDropzone from "../components/search/UploadDropzone";
 import type { AppDispatch } from "../redux/store";
 import { fetchProducts, selectProducts } from "../redux/slices/productsSlice";
+import { setSearchError } from "../redux/slices/searchSlice";
 
-const slides = [
+// Sample inspiration photos that users can click to pre-fill the visual
+// search. URLs are deterministic picsum images keyed by slug so they're
+// stable across sessions; Allan can swap them for real wig / hairstyle
+// reference shots later (the contract for this list is the only thing
+// that needs to stay stable — anywhere a real hairstyle image is added,
+// it just replaces the `url`).
+interface SampleLook {
+  id: string;
+  label: string;
+  url: string;
+}
+
+const SAMPLE_LOOKS: SampleLook[] = [
   {
-    eyebrow: "Summer 2026",
-    title: ["Color", "of Summer", "Outfit"],
-    sub: "Sun-friendly fabrics, breezy silhouettes and AI try-on — built for the season.",
-    image: "/assets/images/cool-denim.jpg",
-    cta: "Start shopping",
-    accent: "bg-coral-soft",
+    id: "braided-bob",
+    label: "Braided bob",
+    url: "https://picsum.photos/seed/braided-bob/600/750",
   },
   {
-    eyebrow: "New drop",
-    title: ["Light", "linen", "essentials"],
-    sub: "Stitched in Nairobi, made to move with you all year long.",
-    image: "/assets/images/hoodie.jpg",
-    cta: "Shop linen",
-    accent: "bg-mint",
+    id: "long-curls",
+    label: "Long curls",
+    url: "https://picsum.photos/seed/long-curls/600/750",
   },
   {
-    eyebrow: "Limited edition",
-    title: ["Studio", "capsule", "collection"],
-    sub: "Twelve handpicked pieces, available while stocks last.",
-    image: "/assets/images/sweat-shirt.jpg",
-    cta: "Explore capsule",
-    accent: "bg-sand",
+    id: "kinky-twist",
+    label: "Kinky twist",
+    url: "https://picsum.photos/seed/kinky-twist/600/750",
+  },
+  {
+    id: "sleek-straight",
+    label: "Sleek straight",
+    url: "https://picsum.photos/seed/sleek-straight/600/750",
+  },
+  {
+    id: "lace-frontal",
+    label: "Lace frontal",
+    url: "https://picsum.photos/seed/lace-frontal/600/750",
+  },
+  {
+    id: "ponytail",
+    label: "High ponytail",
+    url: "https://picsum.photos/seed/ponytail/600/750",
   },
 ];
 
 const Index = () => {
-  const [currentSlide, setCurrentSlide] = useState(0);
   const dispatch = useDispatch<AppDispatch>();
   const products = useSelector(selectProducts);
   const navigate = useNavigate();
+
+  const [presetFile, setPresetFile] = useState<File | null>(null);
+  const [loadingSampleId, setLoadingSampleId] = useState<string | null>(null);
+  const sampleScrollerRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     dispatch(fetchProducts({}) as any);
   }, [dispatch]);
 
-  const nextSlide = () => setCurrentSlide((p) => (p + 1) % slides.length);
-  const prevSlide = () =>
-    setCurrentSlide((p) => (p - 1 + slides.length) % slides.length);
+  /**
+   * Turn a sample-photo URL into a File suitable for the dropzone. We
+   * fetch the blob client-side rather than streaming the URL through to
+   * the backend so the search payload is identical whether the user
+   * uploaded their own photo or picked from the carousel.
+   */
+  const handleSampleClick = async (sample: SampleLook) => {
+    if (loadingSampleId) return;
+    setLoadingSampleId(sample.id);
+    try {
+      const res = await fetch(sample.url);
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const blob = await res.blob();
+      // Default to image/jpeg if the server didn't return a Content-Type
+      // that lands in our accepted set — picsum returns jpeg.
+      const type = blob.type || "image/jpeg";
+      const file = new File([blob], `${sample.id}.jpg`, { type });
+      setPresetFile(file);
+    } catch (err) {
+      dispatch(
+        setSearchError(
+          "Couldn't load that sample. Try another or upload your own photo."
+        )
+      );
+    } finally {
+      setLoadingSampleId(null);
+    }
+  };
 
-  const slide = slides[currentSlide];
+  const scrollSamples = (direction: "left" | "right") => {
+    const el = sampleScrollerRef.current;
+    if (!el) return;
+    const amount = el.clientWidth * 0.8;
+    el.scrollBy({
+      left: direction === "left" ? -amount : amount,
+      behavior: "smooth",
+    });
+  };
+
+  const handleSearchDispatched = () => {
+    // The thunk was just dispatched from the dropzone. Hop to the
+    // dedicated results page where pending → fulfilled/rejected will
+    // play out. `clearOnUnmount={false}` on the dropzone keeps the
+    // slice state alive for the next route.
+    navigate("/visual-search");
+  };
 
   return (
     <div className="bg-page">
       {/* HERO ============================================================ */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6">
-        <div
-          className={`relative overflow-hidden rounded-card-lg ${slide.accent} transition-colors duration-500`}
-        >
+        <div className="relative overflow-hidden rounded-card-lg bg-coral-soft">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 p-8 md:p-12 lg:p-14 min-h-[520px] md:min-h-[600px]">
-            {/* Text */}
+            {/* Pitch */}
             <div className="lg:col-span-6 flex flex-col justify-between relative z-10">
               <div>
                 <span className="chip bg-white/90 text-ink-1 border-transparent">
-                  <Sparkles size={12} /> {slide.eyebrow}
+                  <Sparkles size={12} /> AI hair try-on
                 </span>
                 <h1 className="font-display text-5xl md:text-7xl lg:text-[5.5rem] leading-[0.95] mt-6 text-ink-1">
-                  {slide.title.map((line) => (
-                    <span key={line} className="block">{line}</span>
-                  ))}
+                  <span className="block">Snap it.</span>
+                  <span className="block">Find it.</span>
+                  <span className="block">Try it on.</span>
                 </h1>
                 <p className="text-ink-muted leading-relaxed max-w-md mt-6">
-                  {slide.sub}
+                  Upload any hairstyle photo and we'll match you with the
+                  closest wigs and extensions in stock — then preview them on
+                  your selfie before you check out.
                 </p>
               </div>
 
               <div className="flex items-center gap-3 mt-8">
                 <button
-                  onClick={() => navigate("/products")}
-                  className="btn-pill btn-primary px-7 py-4"
+                  onClick={() => navigate("/visual-search")}
+                  className="btn-pill btn-light"
                 >
-                  {slide.cta}
-                  <ArrowUpRight size={16} />
+                  Browse looks
+                  <ArrowUpRight size={14} />
                 </button>
                 <button
                   onClick={() => navigate("/products")}
-                  className="btn-pill btn-light"
+                  className="btn-pill btn-ghost"
                 >
-                  Top collections
+                  All products
                 </button>
               </div>
             </div>
 
-            {/* Image */}
+            {/* Upload zone */}
             <div className="lg:col-span-6 relative">
-              <div className="relative h-full min-h-[300px] rounded-card-lg overflow-hidden bg-ink-1/5">
-                <img
-                  src={slide.image}
-                  alt=""
-                  className="absolute inset-0 w-full h-full object-cover"
+              <div className="bg-white/95 backdrop-blur rounded-card-lg p-5 md:p-6 shadow-card">
+                <p className="text-xs text-ink-muted uppercase tracking-wide mb-3">
+                  Start your search
+                </p>
+                <UploadDropzone
+                  variant="hero"
+                  presetFile={presetFile}
+                  clearOnUnmount={false}
+                  onSubmitted={handleSearchDispatched}
                 />
-
-                {/* Floating product card */}
-                <div className="absolute bottom-5 left-5 right-5 lg:right-auto lg:max-w-[260px] bg-white/95 backdrop-blur rounded-card p-3 flex items-center gap-3 shadow-card">
-                  <div className="w-12 h-12 rounded-xl bg-surface-2 shrink-0 overflow-hidden">
-                    <img src={slide.image} className="w-full h-full object-cover" />
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <p className="text-[13px] font-medium text-ink-1 truncate">Featured look</p>
-                    <p className="text-xs text-ink-muted">From Ksh 4,500</p>
-                  </div>
-                  <button
-                    onClick={() => navigate("/products")}
-                    className="w-9 h-9 rounded-full bg-ink-1 text-white flex items-center justify-center shrink-0"
-                  >
-                    <ArrowUpRight size={14} />
-                  </button>
-                </div>
               </div>
             </div>
           </div>
+        </div>
+      </section>
 
-          {/* Slide controls */}
-          <div className="absolute top-6 right-6 flex items-center gap-2 z-20">
+      {/* SAMPLE LOOKS ==================================================== */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-10">
+        <header className="flex items-end justify-between gap-3 mb-6">
+          <div>
+            <span className="chip mb-3">Sample looks</span>
+            <h2 className="font-display text-3xl md:text-4xl text-ink-1 mt-2 leading-tight">
+              Need inspiration? Tap a look.
+            </h2>
+            <p className="text-ink-muted mt-2 text-sm max-w-md">
+              We'll preload the photo into the search above — hit "Find matches"
+              to see what's in stock.
+            </p>
+          </div>
+          <div className="hidden md:flex items-center gap-2">
             <button
-              onClick={prevSlide}
-              className="w-10 h-10 rounded-full bg-white/95 backdrop-blur hover:bg-white text-ink-1 flex items-center justify-center transition-colors"
+              type="button"
+              onClick={() => scrollSamples("left")}
+              aria-label="Scroll samples left"
+              className="w-10 h-10 rounded-full bg-surface-2 hover:bg-ink-1/10 text-ink-1 flex items-center justify-center transition-colors"
             >
               <ChevronLeft size={16} />
             </button>
             <button
-              onClick={nextSlide}
-              className="w-10 h-10 rounded-full bg-white/95 backdrop-blur hover:bg-white text-ink-1 flex items-center justify-center transition-colors"
+              type="button"
+              onClick={() => scrollSamples("right")}
+              aria-label="Scroll samples right"
+              className="w-10 h-10 rounded-full bg-surface-2 hover:bg-ink-1/10 text-ink-1 flex items-center justify-center transition-colors"
             >
               <ChevronRight size={16} />
             </button>
           </div>
+        </header>
 
-          {/* Slide indicators */}
-          <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex items-center gap-2 z-20">
-            {slides.map((_, i) => (
+        <div
+          ref={sampleScrollerRef}
+          className="flex gap-4 md:gap-5 overflow-x-auto pb-4 scroll-smooth snap-x snap-mandatory"
+        >
+          {SAMPLE_LOOKS.map((sample) => {
+            const isLoading = loadingSampleId === sample.id;
+            return (
               <button
-                key={i}
-                onClick={() => setCurrentSlide(i)}
-                className={`h-1.5 rounded-full transition-all ${
-                  i === currentSlide ? "w-8 bg-ink-1" : "w-1.5 bg-ink-1/30"
-                }`}
-              />
-            ))}
-          </div>
+                key={sample.id}
+                type="button"
+                onClick={() => handleSampleClick(sample)}
+                disabled={isLoading}
+                className="group relative shrink-0 w-40 md:w-48 snap-start text-left"
+              >
+                <div className="aspect-[4/5] rounded-card overflow-hidden bg-surface-2 relative">
+                  <img
+                    src={sample.url}
+                    alt={sample.label}
+                    loading="lazy"
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
+                  {isLoading && (
+                    <div className="absolute inset-0 bg-ink-1/30 flex items-center justify-center text-white text-xs">
+                      Loading…
+                    </div>
+                  )}
+                </div>
+                <p className="text-sm font-medium text-ink-1 mt-3">
+                  {sample.label}
+                </p>
+                <p className="text-xs text-ink-muted">Try this look</p>
+              </button>
+            );
+          })}
         </div>
       </section>
 
@@ -211,4 +299,4 @@ const Index = () => {
   );
 };
 
-export default Index
+export default Index;
