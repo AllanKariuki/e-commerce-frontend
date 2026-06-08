@@ -32,12 +32,19 @@ export interface VisualSearchOptions {
 
 /**
  * Upload an image and return the top visually-similar products. We post the
- * file as multipart `FormData` through the shared axiosInstance, explicitly
- * overriding the default `application/json` Content-Type so the browser sets
- * the correct multipart boundary.
+ * file as multipart `FormData` through the shared axiosInstance. We do NOT set
+ * `Content-Type` ourselves — axios detects the FormData body and lets the
+ * browser emit `multipart/form-data; boundary=…` with the correct boundary.
+ * Setting it by hand would omit the boundary and the backend would fail to
+ * parse the upload.
  *
  * The axios response interceptor in `./axios.ts` already unwraps the body, so
  * the resolved value here is the JSON payload, not an AxiosResponse.
+ *
+ * Manual test: from the browser devtools Network tab, trigger a visual search
+ * and confirm the `POST /search/visual` request carries
+ * `Content-Type: multipart/form-data; boundary=…` (boundary present) and an
+ * `image` form field — not `application/json`.
  */
 export const visualSearch = async (
   file: File,
@@ -52,7 +59,6 @@ export const visualSearch = async (
       : "/search/visual";
 
   const response = (await axiosInstance.post(url, formData, {
-    headers: { "Content-Type": "multipart/form-data" },
     signal: options.signal,
   })) as unknown as AxiosResponse<VisualSearchResponse> | VisualSearchResponse;
 
