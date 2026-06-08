@@ -10,7 +10,7 @@ import {
   selectIsLoading,
 } from "../redux/slices/productsSlice";
 import { useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { ChevronDown, Grid3X3, List, SlidersHorizontal } from "lucide-react";
 
 const Products = () => {
@@ -84,7 +84,7 @@ const Products = () => {
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 pb-6">
         <div className="bg-surface-2 rounded-card-lg p-8 md:p-12">
           <nav className="text-xs text-ink-muted mb-4 flex items-center gap-2">
-            <a href="/" className="hover:text-ink-1">Home</a>
+            <Link to="/" className="hover:text-ink-1">Home</Link>
             <span>/</span>
             <span className="text-ink-1">Shop</span>
             {categoryName && (
