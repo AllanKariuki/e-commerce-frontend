@@ -4,13 +4,28 @@ import type { AxiosResponse, AxiosError, InternalAxiosRequestConfig } from 'axio
 
 const { VITE_API_BASE_URL } = getConfig();
 
+// No global `Content-Type` default: axios infers it per request — it sets
+// `application/json` for plain-object bodies and lets the browser set
+// `multipart/form-data` (with the correct boundary) for FormData uploads such
+// as the visual-search image post. A hard-coded default would break multipart.
 const axiosInstance = axios.create({
     baseURL: VITE_API_BASE_URL || 'http://localhost:8000/api',
-    headers: {
-        'Content-Type': 'application/json'
-    },
     withCredentials: true,
 });
+
+// Read the persisted bearer token. There is no auth store wired up yet, so we
+// read straight from localStorage under a single well-known key; once a proper
+// auth slice exists this is the one place to repoint.
+const TOKEN_STORAGE_KEY = 'token';
+
+const getToken = (): string | null => {
+    try {
+        return localStorage.getItem(TOKEN_STORAGE_KEY);
+    } catch {
+        // localStorage can throw in privacy mode / blocked-cookies contexts.
+        return null;
+    }
+};
 
 const setupInterceptors = () => {
     axiosInstance.interceptors.request.use( 
