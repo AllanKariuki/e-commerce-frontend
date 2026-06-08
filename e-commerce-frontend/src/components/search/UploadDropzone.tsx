@@ -98,12 +98,26 @@ const UploadDropzone: React.FC<UploadDropzoneProps> = ({
     [dispatch]
   );
 
-  // Adopt a preset file when the prop changes. Guard against re-running
-  // on every render by comparing identity.
+  const handleClear = useCallback(() => {
+    setFile(null);
+    dispatch(clearVisualSearch());
+    setPreviewUrl((prev) => {
+      if (prev) URL.revokeObjectURL(prev);
+      return null;
+    });
+  }, [dispatch]);
+
+  // React to the `presetFile` prop. A `File` is adopted as the current
+  // selection; `null` clears it (same as `handleClear`); `undefined` means
+  // "uncontrolled / no change" and is ignored.
   useEffect(() => {
-    if (presetFile) setSelectedFile(presetFile);
-    // We intentionally exclude `setSelectedFile` from deps — its identity
-    // changes only when `dispatch` does, which is stable.
+    if (presetFile) {
+      setSelectedFile(presetFile);
+    } else if (presetFile === null) {
+      handleClear();
+    }
+    // `setSelectedFile` and `handleClear` are stable (deps only on the stable
+    // `dispatch`), so keying the effect on `presetFile` alone is correct.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [presetFile]);
 
@@ -131,15 +145,6 @@ const UploadDropzone: React.FC<UploadDropzoneProps> = ({
     if (picked) setSelectedFile(picked);
     // Reset the input so picking the same file twice still triggers onChange.
     e.target.value = "";
-  };
-
-  const handleClear = () => {
-    setFile(null);
-    dispatch(clearVisualSearch());
-    setPreviewUrl((prev) => {
-      if (prev) URL.revokeObjectURL(prev);
-      return null;
-    });
   };
 
   const handleSubmit = () => {
